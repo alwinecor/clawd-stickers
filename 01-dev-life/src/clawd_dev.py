@@ -1,5 +1,5 @@
 """
-clawd-stickers · 01 dev-life (克码人生) — inspired by clawd-moji by Qisi3344
+clawd-stickers · 01 Dev Life (程序员日常) — inspired by clawd-moji by Qisi3344
 https://github.com/Qisi3344/clawd-moji
 Generates the animated Clawd stickers in ../gif/ and the WeChat versions in ../wechat/.
 
@@ -157,7 +157,7 @@ def box(img,x0,y0,x1,y1,col):
     if round(x1)<=round(x0) or round(y1)<=round(y0): return
     ImageDraw.Draw(img).rectangle([round(x0),round(y0),round(x1)-1,round(y1)-1],fill=col)
 
-# ---------- 思考中 ----------
+# ---------- Thinking · 思考中 ----------
 # Claude Code's spinner: · ✢ ✳ ✶ ✻ ✽ and back
 _PL=lambda r:[(2,2+k) for k in range(-r,r+1)]+[(2+k,2) for k in range(-r,r+1)]
 _X=lambda r:[(2+k,2+k) for k in range(-r,r+1)]+[(2+k,2-k) for k in range(-r,r+1)]
@@ -178,7 +178,7 @@ def thinking():
         fr.append((comp(shadow(),sp,ch),70))
     return fr
 
-# ---------- 上下文压缩 /compact ----------
+# ---------- /compact · 上下文压缩 ----------
 def compact():
     fr=[]; N=64; PL='#4A4A56'; PL2='#6B6B7A'; TXT='#E6E1DA'; ROD='#8A8A98'
     for i in range(N):
@@ -210,7 +210,7 @@ def compact():
     fr[17]=(fr[17][0],200); fr[33]=(fr[33][0],300); fr[-1]=(fr[-1][0],700)
     return fr
 
-# ---------- 克隆 git clone ----------
+# ---------- git clone · 克隆 ----------
 def clone():
     fr=[]; N=64; T='#3A3A44'; G='#4CAF6A'
     for i in range(N):
@@ -242,7 +242,7 @@ def clone():
     fr[21]=(fr[21][0],200); fr[-1]=(fr[-1][0],500)
     return fr
 
-# ---------- 合并冲突 merge conflict ----------
+# ---------- Merge Conflict · 合并冲突 ----------
 def conflict():
     fr=[]; N=56; OURS='#2F9E5A'; THEIRS='#3B6FD8'; SEP='#9A9AA6'
     cs=8; ay=264; gap=60  # half body width at cs=8
@@ -272,7 +272,7 @@ def conflict():
     fr[-1]=(fr[-1][0],300)
     return fr
 
-# ---------- rm -rf / ----------
+# ---------- rm -rf · 删库 ----------
 def rmrf():
     fr=[]; N=76; BG='#1E1E26'; ED='#3A3A48'; FG='#E6E1DA'; PR='#E8845F'; RED='#E5484D'
     cmd='rm -rf /'
@@ -320,7 +320,7 @@ def rmrf():
     fr[25]=(fr[25][0],250); fr[50]=(fr[50][0],400); fr[59]=(fr[59][0],400)
     return fr
 
-# ---------- hello, world ----------
+# ---------- hello, world · 你好，世界 ----------
 def hello():
     fr=[]; N=56; s='hello, world'
     for i in range(N):
@@ -337,7 +337,7 @@ def hello():
     fr[-1]=(fr[-1][0],500)
     return fr
 
-# ---------- LGTM 盖章 ----------
+# ---------- LGTM · 批准 ----------
 def lgtm():
     fr=[]; N=60; RED='#D23C3C'
     STAMP=["...hhh...","...hhh...","....n....","....n....",".rrrrrrr.",".RRRRRRR."]
@@ -367,7 +367,7 @@ def lgtm():
     fr[12]=(fr[12][0],200); fr[-1]=(fr[-1][0],600)
     return fr
 
-# ---------- 测试通过 passed ----------
+# ---------- Tests Passed · 测试通过 ----------
 def passed():
     fr=[]; N=56; G='#2FB15A'; G2='#1F7A3E'
     path=[(4,-3),(5,-2),(6,-1),(7,-2),(8,-3),(9,-4),(10,-5),(11,-6)]
@@ -387,7 +387,7 @@ def passed():
     fr[11]=(fr[11][0],200)
     return fr
 
-# ---------- 报错 Error ----------
+# ---------- Error · 报错 ----------
 def error():
     fr=[]; N=60
     for i in range(N):
@@ -411,7 +411,7 @@ def error():
     fr[-1]=(fr[-1][0],400)
     return fr
 
-# ---------- 咖啡续命 ----------
+# ---------- Coffee Break · 咖啡续命 ----------
 def coffee():
     fr=[]; N=64
     MUG=["wwww.","wrrwh","wwwwh","wwww."]; pal={'w':'#4F7BD9','r':'#FFFFFF','h':'#3A5FB0'}
@@ -436,7 +436,7 @@ def coffee():
     fr[30]=(fr[30][0],300)
     return fr
 
-# ---------- 周五上线 烧香 ----------
+# ---------- Friday Deploy · 周五上线 ----------
 def deploy():
     fr=[]; N=64
     for i in range(N):
@@ -455,7 +455,7 @@ def deploy():
         fr.append((comp(shadow(),img,xform(p,0,0,sy=sy),fx),70))
     return fr
 
-# ---------- 在我电脑上能跑 ----------
+# ---------- Works on My Machine · 在我电脑上能跑 ----------
 def works():
     fr=[]; N=60
     LAP=["ttttttttttttt","mmmmmmwmmmmmm","bbbbbbbbbbbbb"]; pal={'t':'#B8BDC5','m':'#9AA0A8','w':'#FFFFFF','b':'#6E747C'}
@@ -475,7 +475,7 @@ def works():
         fr.append((comp(shadow(),img,xform(p,0,dy,rot=rot),fx),70))
     return fr
 
-# ---------- 抓 bug ----------
+# ---------- Bug Hunt · 抓虫 ----------
 def bug():
     fr=[]; N=56
     BA=[".gg.","gGgk","l.l."]; BB=[".gg.","gGgk",".l.l"]; pal={'g':'#4C9A4F','G':'#2E6B30','k':'#222222','l':'#222222'}
@@ -501,7 +501,7 @@ def bug():
     fr[-1]=(fr[-1][0],400)
     return fr
 
-# ---------- 摸鱼 ----------
+# ---------- Slacking Off · 摸鱼 ----------
 def fish():
     fr=[]; N=56
     F=["..bbbbb..t",".bbbbbbbtt","bkbBbbbbtt",".wwwwwww.t"]
@@ -519,7 +519,7 @@ def fish():
         fr.append((comp(shadow(),xform(p,0,-0.3*abs(math.sin(TAU*i/28))),fx),70))
     return fr
 
-# ---------- 18:00 下班 ----------
+# ---------- Clock Out · 下班 ----------
 def offwork():
     fr=[]; N=60
     for i in range(N):
@@ -543,7 +543,7 @@ def offwork():
     fr[13]=(fr[13][0],300); fr[40]=(fr[40][0],500)
     return fr
 
-# ---------- 加班 深夜 ----------
+# ---------- Overtime · 加班 ----------
 def overtime():
     fr=[]; N=64
     MOON=[".yyy","yy..","yy..",".yyy"]
@@ -568,7 +568,7 @@ def overtime():
         fr.append((comp(sky,img,xform(p,0,dy,rot=rot),desk,fx),80))
     return fr
 
-# ---------- sleep 晚安 ----------
+# ---------- Good Night · 晚安 ----------
 def sleep():
     fr=[]; N=60
     CAP=["...........ww",".........bbww",".......bbbb..","....bbbbbb...","..bbbbbbbb...","wwwwwwwwwww.."]
@@ -584,7 +584,7 @@ def sleep():
         fr.append((comp(shadow(),xform(p,0,0,sy=sy),img),90))
     return fr
 
-# ---------- 404 ----------
+# ---------- 404 Not Found · 找不到 ----------
 def notfound():
     fr=[]; N=60; Q=[(6,-2),(7,-3),(8,-3),(9,-2),(9,-1),(8,0),(8,1),(8,3)]
     for i in range(N):
@@ -603,7 +603,7 @@ def notfound():
     fr[29]=(fr[29][0],250); fr[-1]=(fr[-1][0],300)
     return fr
 
-# ---------- while(true) 跑轮 ----------
+# ---------- while(true) · 死循环 ----------
 def loop():
     fr=[]; N=48; C=(7,5); R=10
     for i in range(N):
@@ -633,7 +633,7 @@ def loop():
         fr.append((comp(wh,xform(p,0,-0.4*f,rot=-6),fx,img),60))
     return fr
 
-# ---------- git push --force ----------
+# ---------- Force Push · 强推 ----------
 def forcepush():
     fr=[]; N=64
     for i in range(N):
