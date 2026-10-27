@@ -1,0 +1,52 @@
+# 01 · 克码人生 · Dev Life
+
+[English](README.md) | 简体中文
+
+程序员日常主题，20 个动态表情，Clawd 主演。眼睛是两个小黑方块（偶尔眯成 ^ ^ 或 > <），不画嘴，戏全靠动作和道具。这套规矩沿用 Qisi3344/clawd-moji 的 [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night)。
+
+![preview](preview.png)
+
+| # | 名字 | 动图 | 小剧情 |
+|---|---|---|---|
+| 1 | **思考中**<br>Thinking | <img src="gif/thinking.gif" width="120"> | 头顶转着 Claude Code 的 ✻ 小星星，点点点一个个冒出来，歪着头思考。 |
+| 2 | **上下文压缩**<br>/compact | <img src="gif/compact.gif" width="120"> | 写着 `/compact` 的铁板压下来，把它压成一张饼；弹回来开心了一下，头顶冒出一个「？」：刚才在干嘛来着？ |
+| 3 | **克隆**<br>git clone | <img src="gif/clone.gif" width="120"> | 敲下 `git clone`，憋气发抖，分出两只小克，三只轮流蹦，再合回一只。 |
+| 4 | **合并冲突**<br>Merge Conflict | <img src="gif/conflict.gif" width="120"> | `<<<<<<<` 和 `>>>>>>>` 下两只小克顶着脑袋互推冒火花，弹开，互相瞪。 |
+| 5 | **删库**<br>rm -rf | <img src="gif/rmrf.gif" width="120"> | 一个字一个字敲完 `rm -rf /`，回车，自己从脚开始被删光，只剩一双眼睛，然后从终端里重新掉出来。 |
+| 6 | **你好，世界**<br>hello, world | <img src="gif/hello.gif" width="120"> | 一边打出 `hello, world` 一边挥手，打招呼用。 |
+| 7 | **批准**<br>LGTM | <img src="gif/lgtm.gif" width="120"> | 举起印章，啪地盖下一个歪歪的红色 LGTM，可以当「同意 / 收到 / 没问题」用。 |
+| 8 | **测试通过**<br>Tests Passed | <img src="gif/passed.gif" width="120"> | 紧张地盯着，绿色大对勾画出来，彩纸落下，蹦蹦跳跳。 |
+| 9 | **报错**<br>Error | <img src="gif/error.gif" width="120"> | 头顶红色 Error 闪烁，抱头，然后四脚朝天翻过去，腿乱蹬、头上冒星星，再翻回来。 |
+| 10 | **咖啡续命**<br>Coffee Break | <img src="gif/coffee.gif" width="120"> | 困得眯眼晃，端起蓝色马克杯一口闷，眼睛瞬间瞪大，满血复活。 |
+| 11 | **周五上线**<br>Friday Deploy | <img src="gif/deploy.gif" width="120"> | 头顶写着 `friday deploy`，捧着三炷香闭眼连拜三下。 |
+| 12 | **在我电脑上能跑**<br>Works on My Machine | <img src="gif/works.gif" width="120"> | 抱着自己的笔记本耸肩，然后抱着电脑冒爱心。 |
+| 13 | **抓虫**<br>Bug Hunt | <img src="gif/bug.gif" width="120"> | 眼睛跟着一只小虫，起跳一屁股坐下去，正得意，结果虫从另一边溜走了。 |
+| 14 | **摸鱼**<br>Slacking Off | <img src="gif/fish.gif" width="120"> | 怀里抱着一条蓝色小鱼慢慢摸，鱼尾巴摇，冒小爱心。 |
+| 15 | **下班**<br>Clock Out | <img src="gif/offwork.gif" width="120"> | 盯着时钟从 17:59 跳到 18:00，一溜烟冲出画面；然后时间倒回 17:59，蔫蔫地走回来。 |
+| 16 | **加班**<br>Overtime | <img src="gif/overtime.gif" width="120"> | 深夜 02:00，月亮星星，趴在桌前打瞌睡往下沉，一个激灵惊醒，又慢慢闭眼。 |
+| 17 | **晚安**<br>Good Night | <img src="gif/sleep.gif" width="120"> | 戴着蓝色睡帽睡觉，一串 z 慢慢飘上去。 |
+| 18 | **找不到**<br>404 Not Found | <img src="gif/notfound.gif" width="120"> | 写着 404 的纸箱里冒出半个脑袋左右张望，发现被看到了，嗖地缩回去，留下一个「？」。 |
+| 19 | **死循环**<br>while(true) | <img src="gif/loop.gif" width="120"> | 在仓鼠轮里狂奔，跑着跑着眼睛变成 > <，汗都甩飞了。 |
+| 20 | **强推**<br>Force Push | <img src="gif/forcepush.gif" width="120"> | 顶着写着 `main` 的大方块使劲推，推飞后欢呼；然后方块又被推回来，把它挤走。 |
+
+## 下载 / 在微信里用
+
+- `gif/`：原尺寸 276×288，透明背景
+- `wechat/`：240×240、每张 ≤100KB，透明背景（个别帧数多的做了抽帧）
+
+在微信里用：把 `wechat/` 里的 GIF 发到「文件传输助手」，点开长按 →「添加到表情」。
+
+## 自己生成
+
+```bash
+cd src
+pip install pillow
+python clawd_dev.py            # 全部 20 个
+python clawd_dev.py compact    # 只生成一个
+```
+
+不需要额外字体，命令行文字用的是代码里自带的 3×5 小像素字。
+
+## 致谢
+
+思路和画法来自 [@Qisi3344](https://github.com/Qisi3344) 的 [clawd-moji](https://github.com/Qisi3344/clawd-moji)，`src/clawd_dev.py` 里的绘图工具函数改编自原作的生成代码。

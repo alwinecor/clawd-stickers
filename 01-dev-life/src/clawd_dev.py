@@ -1,5 +1,5 @@
 """
-clawd-stickers · 01 Dev Life (程序员日常) — inspired by clawd-moji by Qisi3344
+clawd-stickers · 01 Dev Life (克码人生) — inspired by clawd-moji by Qisi3344
 https://github.com/Qisi3344/clawd-moji
 Generates the animated Clawd stickers in ../gif/ and the WeChat versions in ../wechat/.
 
