@@ -1,0 +1,17 @@
+clawd-stickers — fan-made sticker collection
+
+The Clawd character is the property of Anthropic, PBC (https://www.anthropic.com).
+This repository is an unofficial fan project. It is not affiliated with or
+endorsed by Anthropic.
+
+The idea, pixel style and project structure follow clawd-moji by Qisi3344
+(https://github.com/Qisi3344/clawd-moji). The drawing helpers in
+01-dev-life/src/clawd_dev.py are adapted from that project's source code.
+
+All artwork in this repository may be used for personal, non-commercial
+purposes only. No commercial use is permitted.
+
+中文说明：本仓库为粉丝创作，与 Anthropic 无任何关联；Clawd 角色版权归
+Anthropic 所有；创作思路、像素画法和目录结构参考了 Qisi3344 的 clawd-moji，
+生成代码中的绘图工具函数改编自该项目；仓库内全部内容仅供个人非商业使用，
+禁止商用。
