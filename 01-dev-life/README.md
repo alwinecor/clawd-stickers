@@ -49,10 +49,7 @@ English | [简体中文](README.zh-CN.md)
 
 ## Download / Use in WeChat
 
-- `gif/`: full size, 288×288, transparent background
-- `wechat/`: 240×240, transparent background, every frame kept
-
-To use them in WeChat, send a GIF from `wechat/` to "File Transfer", open it, long-press, and choose "Add to Stickers".
+Every GIF in `gif/` is 288×288 with a transparent background, and works as a WeChat sticker as is: send it to "File Transfer", open it, long-press, and choose "Add to Stickers".
 
 ## Build it yourself
 

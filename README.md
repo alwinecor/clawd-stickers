@@ -9,7 +9,7 @@ A collection of pixel-art stickers starring Clawd, the Claude Code mascot. Each 
 
 ## How to use
 
-Open a set, pick a sticker you like, and right-click or long-press to save the GIF. For WeChat, use the smaller versions in that set's `wechat/` folder: send one to "File Transfer", open it, long-press, and choose "Add to Stickers".
+Open a set, pick a sticker you like, and right-click or long-press to save the GIF. The GIFs work as WeChat stickers as they are: send one to "File Transfer", open it, long-press, and choose "Add to Stickers".
 
 ## Sets
 
@@ -45,12 +45,11 @@ Open a set, pick a sticker you like, and right-click or long-press to save the G
 Each set lives in its own folder:
 
 - `gif/`: finished GIFs at full size (288×288)
-- `wechat/`: WeChat-sized versions (240×240)
 - `src/`: the code that generates the set
 - `README.md` / `README.zh-CN.md`: the sticker list and the story behind each one
 
 ## Credits
 
-- The idea, Clawd's pixel style and the set structure all come from [clawd-moji](https://github.com/Qisi3344/clawd-moji) by [@Qisi3344](https://github.com/Qisi3344): the 15×16 body grid, black-square eyes with no mouth, one theme per set, and the `gif/` + `wechat/` + `src/` layout.
+- The idea, Clawd's pixel style and the set structure all come from [clawd-moji](https://github.com/Qisi3344/clawd-moji) by [@Qisi3344](https://github.com/Qisi3344): the 15×16 body grid, black-square eyes with no mouth, one theme per set, and the one-folder-per-set layout.
 - The drawing helpers in `01-dev-life/src/clawd_dev.py` (`base`, `xform`, `squash`, `kf`, `face`, `render`, `save` and others) are adapted from that project's `clawd_movies.py` and `clawd_movies_more.py`.
 - Clawd belongs to [Anthropic](https://www.anthropic.com).

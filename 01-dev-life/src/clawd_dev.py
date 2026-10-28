@@ -1,7 +1,7 @@
 """
 clawd-stickers · 01 Dev Life (克码人生) — inspired by clawd-moji by Qisi3344
 https://github.com/Qisi3344/clawd-moji
-Generates the animated Clawd stickers in ../gif/ and the WeChat versions in ../wechat/.
+Generates the animated Clawd stickers in ../gif/ (288x288, also fine as WeChat stickers).
 
   pip install pillow
   python clawd_dev.py             # all
@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw
 S=12; W,H=23,24; OX,OY=4,7
 BODY='#D77757'; K='#1a1a1a'; WH='#FFFFFF'; BANG='#E5484D'
 HERE=os.path.dirname(os.path.abspath(__file__))
-OUT=os.path.join(HERE,'..','gif'); OUT_WX=os.path.join(HERE,'..','wechat')
+OUT=os.path.join(HERE,'..','gif')
 
 # ---------- shared helpers, adapted from Qisi3344/clawd-moji 01-movie-night ----------
 def rect(x0,y0,x1,y1): return [(x,y) for x in range(x0,x1+1) for y in range(y0,y1+1)]
@@ -1247,11 +1247,10 @@ def square(frames):
         c=Image.new('RGBA',(H*S,H*S),(0,0,0,0)); c.paste(im,((H*S-W*S)//2,0)); sq.append((c,d))
     return sq
 def save(nm,fr):
-    os.makedirs(OUT,exist_ok=True); os.makedirs(OUT_WX,exist_ok=True)
+    os.makedirs(OUT,exist_ok=True)
     fr=square(fr)
     n=to_gif(fr,os.path.join(OUT,nm+'.gif'))
-    m=to_gif([(im.resize((240,240),Image.NEAREST),d) for im,d in fr],os.path.join(OUT_WX,nm+'.gif'))
-    print(f'{nm}: {len(fr)} frames, {n//1024}KB | wechat 240x240, {m//1024}KB')
+    print(f'{nm}: {len(fr)} frames, {n//1024}KB')
 
 ALL=['thinking','compact','clone','conflict','rmrf','hello','lgtm','passed','error','coffee',
      'deploy','works','bug','fish','offwork','overtime','sleep','notfound','loop','forcepush',
