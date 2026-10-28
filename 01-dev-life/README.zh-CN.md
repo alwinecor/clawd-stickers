@@ -4,8 +4,6 @@
 
 程序员日常主题，30 个动态表情，Clawd 主演。眼睛是两个小黑方块（偶尔眯成 ^ ^ 或 > <），不画嘴，戏全靠动作和道具。第 21–30 个是 Claude Code 专属表情。这套规矩沿用 Qisi3344/clawd-moji 的 [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night)。
 
-![preview](preview.png)
-
 | # | 名字 | 动图 | 小剧情 |
 |---|---|---|---|
 | 1 | **思考中**<br>Thinking | <img src="gif/thinking.gif" width="120"> | 头顶转着 Claude Code 的 ✻ 小星星，点点点一个个冒出来，歪着头思考。 |

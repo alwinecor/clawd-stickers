@@ -4,8 +4,6 @@ English | [简体中文](README.zh-CN.md)
 
 30 animated stickers about a programmer's everyday life, starring Clawd. Clawd's eyes are two small black squares (sometimes squinting into ^ ^ or > <), and there's no mouth: every joke is told through movement and props. Stickers 21–30 are Claude Code specials. These rules follow [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night) from Qisi3344/clawd-moji.
 
-![preview](preview.png)
-
 | # | Name | Sticker | Story |
 |---|---|---|---|
 | 1 | **Thinking** | <img src="gif/thinking.gif" width="120"> | Claude Code's ✻ spinner turns above its head while dots appear one by one and it tilts its head, deep in thought. |
