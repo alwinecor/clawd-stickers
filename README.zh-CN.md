@@ -15,7 +15,7 @@ Claude Code 吉祥物 Clawd 的像素表情包合集。一套一个主题，全�
 
 | 编号 | 主题 | 内容 | 状态 |
 |---|---|---|---|
-| 01 | [克码人生 · Dev Life](01-dev-life/README.zh-CN.md) | 程序员日常 · 30 个 | 完成 |
+| 01 | [克码人生 · Dev Life](01-dev-life/README.zh-CN.md) | 程序员日常 · 31 个 | 完成 |
 
 ### 01 · 克码人生 · Dev Life
 
@@ -32,6 +32,8 @@ Claude Code 吉祥物 Clawd 的像素表情包合集。一套一个主题，全�
   <tr><td align="center"><img src="01-dev-life/gif/proceed.gif" width="110" alt="疯狂同意"></td><td align="center"><img src="01-dev-life/gif/esc.gif" width="110" alt="急停"></td><td align="center"><img src="01-dev-life/gif/limit.gif" width="110" alt="额度用完"></td><td align="center"><img src="01-dev-life/gif/plan.gif" width="110" alt="计划模式"></td><td align="center"><img src="01-dev-life/gif/clear.gif" width="110" alt="清空上下文"></td></tr>
   <tr><td align="center" width="20%"><b>深度思考</b></td><td align="center" width="20%"><b>子代理</b></td><td align="center" width="20%"><b>待办清单</b></td><td align="center" width="20%"><b>您说得对</b></td><td align="center" width="20%"><b>拜拜</b></td></tr>
   <tr><td align="center"><img src="01-dev-life/gif/ultrathink.gif" width="110" alt="深度思考"></td><td align="center"><img src="01-dev-life/gif/subagents.gif" width="110" alt="子代理"></td><td align="center"><img src="01-dev-life/gif/todo.gif" width="110" alt="待办清单"></td><td align="center"><img src="01-dev-life/gif/right.gif" width="110" alt="您说得对"></td><td align="center"><img src="01-dev-life/gif/bye.gif" width="110" alt="拜拜"></td></tr>
+  <tr><td align="center" width="20%"><b>封号</b></td></tr>
+  <tr><td align="center"><img src="01-dev-life/gif/banned.gif" width="110" alt="封号"></td></tr>
 </table>
 
 <sub>👉 每个表情的小剧情见 <a href="01-dev-life/README.zh-CN.md">01-dev-life</a>。</sub>

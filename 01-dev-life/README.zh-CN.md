@@ -2,7 +2,7 @@
 
 [English](README.md) | 简体中文
 
-程序员日常主题，30 个动态表情，Clawd 主演。眼睛是两个小黑方块（偶尔眯成 ^ ^ 或 > <），不画嘴，戏全靠动作和道具。第 21–30 个是 Claude Code 专属表情。这套规矩沿用 Qisi3344/clawd-moji 的 [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night)。
+程序员日常主题，31 个动态表情，Clawd 主演。眼睛是两个小黑方块（偶尔眯成 ^ ^ 或 > <），不画嘴，戏全靠动作和道具。第 21–31 个是 Claude Code 专属表情。这套规矩沿用 Qisi3344/clawd-moji 的 [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night)。
 
 | # | 名字 | 动图 | 小剧情 |
 |---|---|---|---|
@@ -36,6 +36,7 @@
 | 28 | **待办清单**<br>Todo List | <img src="gif/todo.gif" width="120"> | 盯着待办清单，每一项先变橙色，再被打上勾；四项全部完成时彩纸落下。 |
 | 29 | **您说得对**<br>You're Absolutely Right! | <img src="gif/right.gif" width="120"> | `You're absolutely right!` 一行行出现，它拼命点头，身边冒星星。 |
 | 30 | **拜拜**<br>/exit | <img src="gif/bye.gif" width="120"> | 敲下 `/exit`，挥手告别，然后缩小钻进终端里，只留下一句 `bye!`。 |
+| 31 | **封号**<br>Banned | <img src="gif/banned.gif" width="120"> | 正开心地敲键盘，一把大锤从天而降砸下来；红色 BANNED 印章弹出，它整个变成灰色，铁栏杆落下把它关住。 |
 
 ## 下载 / 在微信里用
 
@@ -49,7 +50,7 @@
 ```bash
 cd src
 pip install pillow
-python clawd_dev.py            # 全部 30 个
+python clawd_dev.py            # 全部 31 个
 python clawd_dev.py compact    # 只生成一个
 ```
 

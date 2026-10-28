@@ -129,6 +129,8 @@ GL={
  '6':[".xx","x..","xx.","x.x",".x."], '7':["xxx","..x",".x.",".x.",".x."],
  '8':["xxx","x.x","xxx","x.x","xxx"], '9':["xxx","x.x","xxx","..x","xx."],
  '.':[".",".",".",".","x"], '?':["xx.","..x",".x.","...",".x."], "'":["x","x",".",".","."],
+ 'B':["xx.","x.x","xx.","x.x","xx."], 'A':[".x.","x.x","xxx","x.x","x.x"],
+ 'N':["x..x","xx.x","x.xx","x..x","x..x"], 'D':["xx.","x.x","x.x","x.x","xx."],
  'Y':["x.x","x.x",".x.",".x.",".x."], 'x':["...","x.x",".x.",".x.","x.x"],
 }
 def mix(c1,c2,t):
@@ -932,6 +934,46 @@ def bye():
     fr[13]=(fr[13][0],200); fr[-1]=(fr[-1][0],600)
     return fr
 
+# ---------- Banned · 封号 ----------
+def banned():
+    fr=[]; N=64; RED='#E5484D'; GRAY='#9C9A97'
+    def gavel(ang):
+        img=canvas(); g={}
+        put(g,rect(3,0,9,5),'#6B4A3A'); put(g,rect(3,1,9,1)+rect(3,4,9,4),'#C9A27A')
+        put(g,rect(10,2,19,3),'#8B6B4E')
+        draw(img,g)
+        return img.rotate(ang,resample=Image.NEAREST,center=(cx(19),cy(2.5)))
+    for i in range(N):
+        ang=kf(i,[(0,-70),(10,-70),(16,0),(22,0),(30,-80)])
+        p=base(); dy=0; sq={}; fx={}; shake=0
+        if i<16:
+            face(p,'hap'); arms(p,UP if (i//2)%2 else MID,MID if (i//2)%2 else UP)
+        else:
+            face(p,'x') if i<34 else face(p,'n',blink=True)
+            sy=kf(i,[(16,0.62),(20,0.62),(30,0.9)]); sq=dict(sy=sy,sx=sy**-0.3)
+            if i<20: shake=0.3 if i%2 else -0.3
+            if 16<=i<24:
+                for k,(x,y) in enumerate([(1,4),(13,4),(0,7),(14,7)]):
+                    if (i+k)%2: fx[(x,y)]='#F2C14E'
+            g=kf(i,[(16,0),(24,1)])
+            p={k:(mix(BODY,GRAY,g) if c==BODY else c) for k,c in p.items()}
+            if 40<=i<56 and (i//8)%2==0: fx[(11,10)]='#7FB2E5'; fx[(11,11)]='#7FB2E5'
+        txt=None
+        if i>=16 and not (i>=40 and (i//4)%2):
+            txt=canvas(); px=[9,7,6][min(i-16,2)]; w=text_w('BANNED')*px; y0=cy(-6)
+            box(txt,138-w/2-px*2,y0,138+w/2+px*2,y0+9*px,RED)
+            box(txt,138-w/2-px,y0+px,138+w/2+px,y0+8*px,'#FFFFFF')
+            text(txt,'BANNED',round(138-w/2),y0+2*px,px,RED)
+            txt=txt.rotate(-6,resample=Image.NEAREST,center=(138,y0+4.5*px))
+        bars={}
+        if i>=30:
+            drop=round(kf(i,[(30,-14),(34,0)]))
+            for x in range(-2,18,3): put(bars,[(x,y+drop) for y in range(3,16)],'#4A4A56')
+            put(bars,[(x,3+drop) for x in range(-2,17)],'#4A4A56')
+        fr.append((comp(shadow(),xform(p,shake,dy,**sq),fx,bars,gavel(ang) if i<30 else None,txt),60))
+    fr[16]=(fr[16][0],200); fr[-1]=(fr[-1][0],600)
+    return fr
+
 def to_gif(frames,path):
     gf=[]
     for im,_ in frames:
@@ -959,7 +1001,7 @@ def save(nm,fr):
 
 ALL=['thinking','compact','clone','conflict','rmrf','hello','lgtm','passed','error','coffee',
      'deploy','works','bug','fish','offwork','overtime','sleep','notfound','loop','forcepush',
-     'proceed','esc','limit','plan','clear_ctx','ultrathink','subagents','todo','right','bye']
+     'proceed','esc','limit','plan','clear_ctx','ultrathink','subagents','todo','right','bye','banned']
 FILE={'clear_ctx':'clear'}   # clear() is already a drawing helper
 if __name__=='__main__':
     for nm in (sys.argv[1:] or ALL):

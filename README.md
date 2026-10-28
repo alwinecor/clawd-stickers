@@ -15,7 +15,7 @@ Open a set, pick a sticker you like, and right-click or long-press to save the G
 
 | # | Theme | Contents | Status |
 |---|---|---|---|
-| 01 | [Dev Life · 克码人生](01-dev-life/) | 30 stickers about a programmer's everyday life | Done |
+| 01 | [Dev Life · 克码人生](01-dev-life/) | 31 stickers about a programmer's everyday life | Done |
 
 ### 01 · Dev Life · 克码人生
 
@@ -32,6 +32,8 @@ Open a set, pick a sticker you like, and right-click or long-press to save the G
   <tr><td align="center"><img src="01-dev-life/gif/proceed.gif" width="110" alt="Yes, Proceed"></td><td align="center"><img src="01-dev-life/gif/esc.gif" width="110" alt="Esc"></td><td align="center"><img src="01-dev-life/gif/limit.gif" width="110" alt="Usage Limit"></td><td align="center"><img src="01-dev-life/gif/plan.gif" width="110" alt="Plan Mode"></td><td align="center"><img src="01-dev-life/gif/clear.gif" width="110" alt="/clear"></td></tr>
   <tr><td align="center" width="20%"><b>ultrathink</b></td><td align="center" width="20%"><b>Subagents</b></td><td align="center" width="20%"><b>Todo List</b></td><td align="center" width="20%"><b>You're Absolutely Right!</b></td><td align="center" width="20%"><b>/exit</b></td></tr>
   <tr><td align="center"><img src="01-dev-life/gif/ultrathink.gif" width="110" alt="ultrathink"></td><td align="center"><img src="01-dev-life/gif/subagents.gif" width="110" alt="Subagents"></td><td align="center"><img src="01-dev-life/gif/todo.gif" width="110" alt="Todo List"></td><td align="center"><img src="01-dev-life/gif/right.gif" width="110" alt="You're Absolutely Right!"></td><td align="center"><img src="01-dev-life/gif/bye.gif" width="110" alt="/exit"></td></tr>
+  <tr><td align="center" width="20%"><b>Banned</b></td></tr>
+  <tr><td align="center"><img src="01-dev-life/gif/banned.gif" width="110" alt="Banned"></td></tr>
 </table>
 
 <sub>👉 The story behind each sticker is in <a href="01-dev-life/">01-dev-life</a>.</sub>

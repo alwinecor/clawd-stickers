@@ -2,7 +2,7 @@
 
 English | [简体中文](README.zh-CN.md)
 
-30 animated stickers about a programmer's everyday life, starring Clawd. Clawd's eyes are two small black squares (sometimes squinting into ^ ^ or > <), and there's no mouth: every joke is told through movement and props. Stickers 21–30 are Claude Code specials. These rules follow [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night) from Qisi3344/clawd-moji.
+31 animated stickers about a programmer's everyday life, starring Clawd. Clawd's eyes are two small black squares (sometimes squinting into ^ ^ or > <), and there's no mouth: every joke is told through movement and props. Stickers 21–31 are Claude Code specials. These rules follow [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night) from Qisi3344/clawd-moji.
 
 | # | Name | Sticker | Story |
 |---|---|---|---|
@@ -36,6 +36,7 @@ English | [简体中文](README.zh-CN.md)
 | 28 | **Todo List** | <img src="gif/todo.gif" width="120"> | Watches the todo list as each item turns orange, then gets checked off. When all four are done, confetti falls. |
 | 29 | **You're Absolutely Right!** | <img src="gif/right.gif" width="120"> | Nods along eagerly as `You're absolutely right!` appears line by line, with sparkles. |
 | 30 | **/exit** | <img src="gif/bye.gif" width="120"> | Types `/exit`, waves goodbye, then shrinks away into the terminal, leaving `bye!` behind. |
+| 31 | **Banned** | <img src="gif/banned.gif" width="120"> | Typing away happily when a ban hammer swings down. A red BANNED stamp appears, it turns gray, and prison bars drop in front of it. |
 
 ## Download / Use in WeChat
 
@@ -49,7 +50,7 @@ To use them in WeChat, send a GIF from `wechat/` to "File Transfer", open it, lo
 ```bash
 cd src
 pip install pillow
-python clawd_dev.py            # all 30
+python clawd_dev.py            # all 31
 python clawd_dev.py compact    # just one
 ```
 
