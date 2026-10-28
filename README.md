@@ -42,8 +42,8 @@ Open a set, pick a sticker you like, and right-click or long-press to save the G
 
 Each set lives in its own folder:
 
-- `gif/`: finished GIFs at full size (276×288)
-- `wechat/`: WeChat-sized versions (240×240, ≤100KB)
+- `gif/`: finished GIFs at full size (288×288)
+- `wechat/`: WeChat-sized versions (240×240)
 - `src/`: the code that generates the set
 - `README.md` / `README.zh-CN.md`: the sticker list and the story behind each one
 

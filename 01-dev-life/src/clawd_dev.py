@@ -981,23 +981,18 @@ def to_gif(frames,path):
         pal.paste(255,a.point(lambda v:255 if v<128 else 0)); gf.append(pal)
     gf[0].save(path,save_all=True,append_images=gf[1:],duration=[d for _,d in frames],loop=0,transparency=255,disposal=2)
     return os.path.getsize(path)
-def wechat(frames):
-    """240x240, <=100KB: pad to square, downscale, drop frames until it fits."""
+def square(frames):
+    """Pad the 276x288 drawing canvas to 288x288, centered horizontally."""
     sq=[]
     for im,d in frames:
-        c=Image.new('RGBA',(H*S,H*S),(0,0,0,0)); c.paste(im,((H*S-W*S)//2,0))
-        sq.append((c.resize((240,240),Image.NEAREST),d))
+        c=Image.new('RGBA',(H*S,H*S),(0,0,0,0)); c.paste(im,((H*S-W*S)//2,0)); sq.append((c,d))
     return sq
 def save(nm,fr):
     os.makedirs(OUT,exist_ok=True); os.makedirs(OUT_WX,exist_ok=True)
+    fr=square(fr)
     n=to_gif(fr,os.path.join(OUT,nm+'.gif'))
-    wx=wechat(fr); step=1
-    while True:
-        sub=[(wx[k][0],sum(d for _,d in wx[k:k+step])) for k in range(0,len(wx),step)]
-        m=to_gif(sub,os.path.join(OUT_WX,nm+'.gif'))
-        if m<=100_000 or step>=3: break
-        step+=1
-    print(f'{nm}: {len(fr)} frames, {n//1024}KB | wechat {len(sub)} frames, {m//1024}KB')
+    m=to_gif([(im.resize((240,240),Image.NEAREST),d) for im,d in fr],os.path.join(OUT_WX,nm+'.gif'))
+    print(f'{nm}: {len(fr)} frames, {n//1024}KB | wechat 240x240, {m//1024}KB')
 
 ALL=['thinking','compact','clone','conflict','rmrf','hello','lgtm','passed','error','coffee',
      'deploy','works','bug','fish','offwork','overtime','sleep','notfound','loop','forcepush',
