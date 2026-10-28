@@ -17,7 +17,7 @@ Open a set, pick a sticker you like, and right-click or long-press to save the G
 
 | # | Theme | Contents | Status |
 |---|---|---|---|
-| 01 | [Dev Life · 克码人生](01-dev-life/) | 20 stickers about a programmer's everyday life | Done |
+| 01 | [Dev Life · 克码人生](01-dev-life/) | 30 stickers about a programmer's everyday life | Done |
 
 ## Structure
 

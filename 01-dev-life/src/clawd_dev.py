@@ -128,7 +128,20 @@ GL={
  '4':["x.x","x.x","xxx","..x","..x"], '5':["xxx","x..","xx.","..x","xx."],
  '6':[".xx","x..","xx.","x.x",".x."], '7':["xxx","..x",".x.",".x.",".x."],
  '8':["xxx","x.x","xxx","x.x","xxx"], '9':["xxx","x.x","xxx","..x","xx."],
+ '.':[".",".",".",".","x"], '?':["xx.","..x",".x.","...",".x."], "'":["x","x",".",".","."],
+ 'Y':["x.x","x.x",".x.",".x.",".x."], 'x':["...","x.x",".x.",".x.","x.x"],
 }
+def mix(c1,c2,t):
+    a=[int(c1[k:k+2],16) for k in (1,3,5)]; b=[int(c2[k:k+2],16) for k in (1,3,5)]
+    return '#'+''.join(f'{round(x+(y-x)*t):02X}' for x,y in zip(a,b))
+def run_legs(p,f):
+    """Alternate leg pairs for a running cycle; f is 0 or 1."""
+    clear(p,rect(3,13,11,14))
+    for x in ((3,9) if f else (5,11)): put(p,[(x,13)],BODY)
+    for x in ((5,11) if f else (3,9)): put(p,[(x,13),(x,14)],BODY)
+    return p
+def term(img,x0,y0,x1,y1):
+    box(img,x0,y0,x1,y1,'#3A3A48'); box(img,x0+4,y0+4,x1-4,y1-4,'#1E1E26')
 def textc(img,s,mid,y,px,col): return text(img,s,round(mid-text_w(s)*px/2),y,px,col)
 def spr(rows,x0,y0,pal):
     """Cell sprite from strings; chars not in pal are transparent."""
@@ -663,6 +676,251 @@ def forcepush():
     fr[-1]=(fr[-1][0],400)
     return fr
 
+# ---------- Yes, Proceed · 疯狂同意 ----------
+def proceed():
+    fr=[]; N=64; ORG='#E8845F'; FG='#E6E1DA'
+    presses=[8,18,26,32,37,41,44,47,50,53,56]
+    for i in range(N):
+        done=[t for t in presses if t<=i]; n=len(done); since=i-done[-1] if done else 99
+        img=canvas()
+        for off in (12,6):   # the queue of dialogs waiting behind
+            x0,y0=cx(-3)+off,cy(-5)-off
+            box(img,x0,y0,cx(16)+off,cy(2)-off,'#9C5A43'); box(img,x0+4,y0+4,cx(16)+off-4,cy(2)-off-4,'#1E1E26')
+        if since>=1:
+            x0,y0=cx(-3),cy(-5)
+            box(img,x0,y0,cx(16),cy(2),ORG); box(img,x0+4,y0+4,cx(16)-4,cy(2)-4,'#1E1E26')
+            text(img,'proceed?',x0+14,y0+14,4,FG)
+            box(img,x0+10,y0+44,x0+92,y0+72,'#3A3A48'); text(img,'> yes',x0+16,y0+48,4,ORG)
+        p=base(); dy=0; sq={}
+        face(p,'x' if n>=5 else 'n',0,-1 if n<5 else 0)
+        if since<1: arms(p,DOWN,MID); dy=0.5; sq=squash(0.92)
+        else: arms(p,DOWN,UP)
+        dx=0.25*math.sin(i*2.9) if n>=6 else 0
+        fr.append((comp(shadow(),img,xform(p,dx,dy,**sq)),60))
+    return fr
+
+# ---------- Esc · 急停 ----------
+def esc():
+    fr=[]; N=56
+    for i in range(N):
+        ky=round(kf(i,[(8,-22),(12,0),(44,0),(50,-24)]))
+        key={}
+        put(key,rect(12,8+ky,18,12+ky),'#E9E6E1'); put(key,rect(12,13+ky,18,14+ky),'#BDB8B0')
+        put(key,rect(12,8+ky,18,8+ky)+rect(12,8+ky,12,14+ky)+rect(18,8+ky,18,14+ky),'#8E8A84')
+        lab=canvas(); textc(lab,'esc',cx(15.5),cy(9+ky)+6,5,'#3A3A44')
+        p=base(); rot=0; fx={}
+        dx=kf(i,[(0,-14),(14,-3)]) if i<14 else -3
+        if i<14:
+            run_legs(p,(i//2)%2); face(p,'n',1 if i<11 else 0); arms(p,MID if (i//2)%2 else DOWN,DOWN if (i//2)%2 else MID)
+            for y in (8,10,12): put(fx,[(round(dx)-2-k,y) for k in range(3)],'#CFC8C0')
+        elif i<26:
+            face(p,'x'); rot=kf(i,[(14,0),(16,10),(22,10),(26,0)])
+            if i<20:
+                for k in range(3): fx[(round(dx)+1-k-(i-14),14-k%2)]='#D9D2CB'
+            if 16<=i<24 and (i//2)%2: fx.update(bang(7,0))
+        else: face(p,'n',1,0,blink=(i in (34,35)))
+        fr.append((comp(shadow(),xform(p,dx,0,rot=rot),key,lab,fx),60))
+    fr[13]=(fr[13][0],120); fr[-1]=(fr[-1][0],300)
+    return fr
+
+# ---------- Usage Limit · 额度用完 ----------
+def limit():
+    fr=[]; N=60; RED='#E5484D'; G='#2FB15A'
+    for i in range(N):
+        img=canvas(); x0,x1,y0=cx(-2),cx(17),cy(-6)
+        box(img,x0,y0,x1,y0+18,'#5B606C'); box(img,x0+3,y0+3,x1-3,y0+15,'#2A2A33')
+        f=0.05 if i<36 else kf(i,[(36,0.05),(42,1)])
+        box(img,x0+3,y0+3,x0+3+(x1-x0-6)*f,y0+15,RED if i<36 else G)
+        t=['0:03','0:02','0:01'][i//12] if i<36 else '0:00'
+        textc(img,t,138,cy(-3)+2,7,'#3A3A44' if i<36 else G)
+        p=base(); dy=0; rot=0; sq={}
+        if i<36:
+            face(p,'n',blink=True); rot=3*math.sin(TAU*i/24); sq=squash(0.9)
+            if (i//4)%2: clear(p,[(11,14)])
+        elif i<40: face(p,'n'); put(p,[(4,7),(10,7)],K)
+        else:
+            face(p,'hap'); t2=((i-40)%8)/8
+            if i<56: dy=-2.5*math.sin(math.pi*t2); arms(p,UP,UP)
+        fr.append((comp(shadow(-dy),img,xform(p,0,dy,rot=rot,**sq)),70))
+    fr[35]=(fr[35][0],300)
+    return fr
+
+# ---------- Plan Mode · 计划模式 ----------
+def plan():
+    fr=[]; N=60; TEAL='#2E9C8F'
+    HAT=["....yyyyyyy....","...yyyyyyyyy...",".ddddddddddddd."]
+    LINES=[(x,13) for x in range(4,11)]+[(4,12),(10,12)]+[(4,11),(5,11),(6,11),(7,11),(8,11),(9,11),(10,11)]+[(7,12)]
+    for i in range(N):
+        img=canvas(); tw=text_w('plan mode')*4; x0=round(138-(tw+20)/2); y0=cy(-6)
+        box(img,x0,y0+2,x0+5,y0+18,TEAL); box(img,x0+9,y0+2,x0+14,y0+18,TEAL)
+        text(img,'plan mode',x0+20,y0,4,TEAL)
+        p=base(); arms(p,MID,MID); dy=0
+        if i<10: face(p,'n')
+        elif i<40: face(p,'n',-1 if (i//8)%2 else 1,0,blink=(i in (30,31))); dy=0.4 if (i//6)%2 else 0
+        else: face(p,'hap')
+        if 42<=i<50: dy=-kf(i,[(42,0),(45,2),(48,0)])
+        p.update(spr(HAT,0,3,{'y':'#F2C14E','d':'#D9A532'}))
+        w=kf(i,[(2,1),(10,11)])
+        put(p,[(x,y) for x in range(round(7-w/2),round(7+w/2)+1) for y in range(10,15)],'#3B6FD8')
+        put(p,[(x,y) for x in range(round(7-w/2),round(7+w/2)+1) for y in (10,14)],'#2E5AB8')
+        if i>=10: put(p,LINES[:clamp((i-10)//2+1,0,len(LINES))],'#DCE8FF')
+        fr.append((comp(shadow(-dy),img,xform(p,0,dy)),70))
+    fr[-1]=(fr[-1][0],400)
+    return fr
+
+# ---------- /clear · 清空上下文 ----------
+def clear_ctx():
+    fr=[]; N=60; FG='#E6E1DA'; ORG='#E8845F'; rng=random.Random(11)
+    bars=[rng.randint(6,26) for _ in range(40)]
+    for i in range(N):
+        img=canvas(); X0,Y0,X1,Y1=cx(-3),cy(-6),cx(18),cy(4); term(img,X0,Y0,X1,Y1)
+        tx=X0+14; px=4
+        if i<18:
+            for r in range(5):
+                box(img,tx,Y0+14+r*16,tx+bars[r+i//3]*px*2,Y0+14+r*16+8,'#8A8A98')
+            typed='/clear'[:clamp((i-4)//2,0,6)]; py=Y1-30
+            x=text(img,'> ',tx,py,px,ORG); x=text(img,typed,x,py,px,FG)
+            if (i//4)%2==0: box(img,x+px,py,x+4*px,py+5*px,FG)
+        elif i<24:
+            for r in range(5-(i-18)):
+                box(img,tx,Y0+14+(r+(i-18))*16,tx+bars[r]*px*2,Y0+14+(r+(i-18))*16+8,'#8A8A98')
+        else:
+            x=text(img,'> ',tx,Y0+14,px,ORG)
+            if (i//4)%2==0: box(img,x+px,Y0+14,x+4*px,Y0+14+5*px,FG)
+        p=base(); rot=0; fx={}
+        if i<18:
+            face(p,'x'); rot=3*math.sin(i*1.3)
+            if 4<=i<16: arms(p,UP if i%2 else MID,MID if i%2 else UP)
+        else:
+            face(p,'hap' if i<48 else 'n',blink=(i in (54,55)))
+            if i<40:
+                for k,(x,y) in enumerate([(-2,7),(16,6),(0,4),(15,10)]):
+                    if (i+k)%4<2: fx.update({(x,y):'#F2C14E',(x+1,y):'#F2C14E',(x,y-1):'#F2C14E'})
+        fr.append((comp(shadow(),img,xform(p,0,0,rot=rot),fx),60))
+    fr[17]=(fr[17][0],200); fr[-1]=(fr[-1][0],400)
+    return fr
+
+# ---------- ultrathink · 深度思考 ----------
+def ultrathink():
+    fr=[]; N=60; RAIN=['#E5484D','#F2994A','#F2C14E','#2FB15A','#3B82F6','#8B5CF6']
+    BULB=[".yyy.","yyyyy","yyyyy",".yyy.",".ggg.","..g.."]
+    w='ultrathink'; px=5
+    for i in range(N):
+        img=canvas(); x=round(138-text_w(w)*px/2)
+        for k,c in enumerate(w[:clamp(i-1,0,len(w))]):
+            x=text(img,c,x,cy(-6)-4,px,RAIN[(k+i//2)%6])+px
+        p=base(); dx=0; fx={}
+        heat=kf(i,[(12,0),(40,1),(44,1),(48,0)])
+        if i<12: face(p,'n',0,-1)
+        elif i<44:
+            face(p,'x'); dx=0.25*math.sin(i*3)
+            for k in range(4):
+                t=((i+k*3)%12)/12; fx[(3+k*3+round(math.sin(t*6+k)),round(5-t*6))]='#CFC8C0' if t<0.6 else '#E6E1DA'
+        else:
+            face(p,'hap'); fx.update(spr(BULB,5,-2,{'y':'#FFE066','g':'#9AA0AA'}))
+            if (i//3)%2: fx.update({(3,-2):'#FFE066',(11,-2):'#FFE066',(3,2):'#FFE066',(11,2):'#FFE066',(7,-4):'#FFE066'})
+        hot=mix(BODY,'#E0402A',heat)
+        p={k:(hot if c==BODY else c) for k,c in p.items()}
+        fr.append((comp(shadow(),img,xform(p,dx,0),fx),60))
+    fr[44]=(fr[44][0],200); fr[-1]=(fr[-1][0],400)
+    return fr
+
+# ---------- Subagents · 子代理 ----------
+def subagents():
+    fr=[]; N=64; G='#2FB15A'; CK=[(0,1),(1,2),(2,1),(3,0)]
+    paths=[[(6,138),(20,-40),(34,-40),(48,138)],[(8,138),(22,316),(36,316),(50,138)],[(10,138),(26,-40),(38,-40),(52,138)]]
+    for i in range(N):
+        tiny=[]; img=canvas(); d=ImageDraw.Draw(img)
+        for k,pth in enumerate(paths):
+            if not pth[0][0]<=i<pth[-1][0]: continue
+            tx=kf(i,pth); back=i>=pth[2][0]
+            q=run_legs(base(),(i//2)%2); face(q,'hap' if back else 'n',(-1 if tx<138 else 1) if not back else 0)
+            tiny.append(render(q,4,tx,264))
+            if back:
+                for cx_,cy_ in CK: d.rectangle([tx-8+cx_*4,264-60+cy_*4,tx-8+cx_*4+3,264-60+cy_*4+7],fill=G)
+        p=base(); dy=0; fx={}
+        if i<12: arms(p,UP if (i//4)%2 else MID,MID if (i//4)%2 else UP); face(p,'n',-1 if (i//4)%2 else 1)
+        elif i<48: face(p,'n',-1 if (i//10)%2 else 1,blink=(i in (30,31)))
+        else:
+            face(p,'hap')
+            if i<58: dy=-2*abs(math.sin(math.pi*(i-48)/5)); arms(p,UP,UP)
+        if i>=50:
+            for k in range(3):
+                if i>=48+2*k: fx.update({(x+1+5*k,y+1):G for x,y in CK})
+        fr.append((comp(shadow(-dy),*tiny,xform(p,0,dy),img,fx),60))
+    fr[-1]=(fr[-1][0],400)
+    return fr
+
+# ---------- Todo List · 待办清单 ----------
+def todo():
+    fr=[]; N=64; FG='#E6E1DA'; ORG='#E8845F'; G='#2FB15A'
+    T=[12,24,36,48]; L=[22,16,25,13]
+    for i in range(N):
+        img=canvas(); X0,Y0,X1,Y1=cx(-3),cy(-6),cx(18),cy(4); term(img,X0,Y0,X1,Y1)
+        cur=next((r for r,t in enumerate(T) if i<t),None)
+        for r in range(4):
+            y=Y0+14+r*28; bx=X0+14
+            if i>=T[r]:
+                box(img,bx,y,bx+16,y+16,G)
+                for cx_,cy_ in [(0,2),(1,3),(2,2),(3,1),(4,0)]: box(img,bx+2+cx_*2.4,y+4+cy_*2.4,bx+5+cx_*2.4,y+7+cy_*2.4,'#FFFFFF')
+                box(img,bx+26,y+4,bx+26+L[r]*6,y+12,'#5B5B66'); box(img,bx+24,y+7,bx+28+L[r]*6,y+9,'#9A9AA6')
+            else:
+                col=ORG if r==cur else '#B5B5C0'
+                box(img,bx,y,bx+16,y+16,col); box(img,bx+3,y+3,bx+13,y+13,'#1E1E26')
+                box(img,bx+26,y+4,bx+26+L[r]*6,y+12,col)
+        p=base(); dy=0; tick=any(t-3<=i<t for t in T)
+        if i<T[-1]:
+            face(p,'n',0,-1); arms(p,DOWN,UP if tick else MID)
+        else:
+            face(p,'hap'); t2=((i-T[-1])%8)/8; dy=-2.5*math.sin(math.pi*t2); arms(p,UP,UP)
+        fr.append((comp(shadow(-dy),img,xform(p,0,dy),confetti(i,T[-1]) if i>=T[-1] else None),60))
+    return fr
+
+# ---------- You're Absolutely Right! · 您说得对 ----------
+def right():
+    fr=[]; N=56; ORG='#E8845F'; DK='#3A3A44'
+    lines=[("You're",DK),('absolutely',ORG),('right!',DK)]
+    for i in range(N):
+        img=canvas()
+        for k,(s,c) in enumerate(lines):
+            if i>=3+k*6: textc(img,s,138,4+k*30,4,c)
+        p=base(); dy=0; sq={}; fx={}
+        if i<3: face(p,'n')
+        else:
+            face(p,'hap'); t=((i-3)%8)/8; dy=0.8*max(0,math.sin(TAU*t))
+            if dy>0.4: sq=squash(0.94)
+            arms(p,UP if ((i-3)//8)%2 else MID,UP if ((i-3)//8)%2 else MID)
+        if i>=15:
+            for k,(x,y) in enumerate([(-3,9),(17,7),(-2,4),(16,12)]):
+                if (i+k*2)%6<3: fx.update({(x,y):'#F2C14E',(x+1,y):'#F2C14E',(x,y+1):'#F2C14E',(x-1,y):'#F2C14E',(x,y-1):'#F2C14E'})
+        fr.append((comp(shadow(),img,xform(p,0,dy,**sq),fx),60))
+    return fr
+
+# ---------- /exit · 拜拜 ----------
+def bye():
+    fr=[]; N=60; FG='#E6E1DA'; ORG='#E8845F'
+    for i in range(N):
+        img=canvas(); X0,Y0,X1,Y1=cx(-3),cy(-6),cx(18),cy(1); term(img,X0,Y0,X1,Y1)
+        tx,ty,px=X0+14,Y0+14,4
+        x=text(img,'> ',tx,ty,px,ORG); x=text(img,'/exit'[:clamp((i-2)//2,0,5)],x,ty,px,FG)
+        if i<14 and (i//4)%2==0: box(img,x+px,ty,x+4*px,ty+5*px,FG)
+        if i>=42:
+            x=text(img,'bye!',tx,ty+36,px,FG)
+            if (i//4)%2==0: box(img,x+px,ty+36,x+4*px,ty+36+5*px,FG)
+        p=base(); ch=None
+        if i<14:
+            face(p,'n',0,-1)
+            if 2<=i<12: arms(p,UP if i%2 else MID,MID if i%2 else UP)
+            ch=xform(p)
+        elif i<30:
+            face(p,'hap'); arms(p,DOWN,UP if (i//3)%2 else MID); ch=xform(p,0,0,rot=3*math.sin(TAU*i/12))
+        elif i<42:
+            face(p,'hap'); arms(p,UP,UP)
+            cs=round(kf(i,[(30,12),(41,1)])); ch=render(p,cs,138,kf(i,[(30,264),(41,108)]))
+        fr.append((comp(shadow() if i<30 else None,ch,img),60))
+    fr[13]=(fr[13][0],200); fr[-1]=(fr[-1][0],600)
+    return fr
+
 def to_gif(frames,path):
     gf=[]
     for im,_ in frames:
@@ -689,7 +947,10 @@ def save(nm,fr):
     print(f'{nm}: {len(fr)} frames, {n//1024}KB | wechat {len(sub)} frames, {m//1024}KB')
 
 ALL=['thinking','compact','clone','conflict','rmrf','hello','lgtm','passed','error','coffee',
-     'deploy','works','bug','fish','offwork','overtime','sleep','notfound','loop','forcepush']
+     'deploy','works','bug','fish','offwork','overtime','sleep','notfound','loop','forcepush',
+     'proceed','esc','limit','plan','clear_ctx','ultrathink','subagents','todo','right','bye']
+FILE={'clear_ctx':'clear'}   # clear() is already a drawing helper
 if __name__=='__main__':
     for nm in (sys.argv[1:] or ALL):
-        save(nm,globals()[nm]())
+        nm={v:k for k,v in FILE.items()}.get(nm,nm)
+        save(FILE.get(nm,nm),globals()[nm]())

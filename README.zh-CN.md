@@ -17,7 +17,7 @@ Claude Code 吉祥物 Clawd 的像素表情包合集。一套一个主题，全�
 
 | 编号 | 主题 | 内容 | 状态 |
 |---|---|---|---|
-| 01 | [克码人生 · Dev Life](01-dev-life/README.zh-CN.md) | 程序员日常 · 20 个 | 完成 |
+| 01 | [克码人生 · Dev Life](01-dev-life/README.zh-CN.md) | 程序员日常 · 30 个 | 完成 |
 
 ## 结构
 

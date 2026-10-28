@@ -2,7 +2,7 @@
 
 English | [简体中文](README.zh-CN.md)
 
-20 animated stickers about a programmer's everyday life, starring Clawd. Clawd's eyes are two small black squares (sometimes squinting into ^ ^ or > <), and there's no mouth: every joke is told through movement and props. These rules follow [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night) from Qisi3344/clawd-moji.
+30 animated stickers about a programmer's everyday life, starring Clawd. Clawd's eyes are two small black squares (sometimes squinting into ^ ^ or > <), and there's no mouth: every joke is told through movement and props. Stickers 21–30 are Claude Code specials. These rules follow [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night) from Qisi3344/clawd-moji.
 
 ![preview](preview.png)
 
@@ -28,6 +28,16 @@ English | [简体中文](README.zh-CN.md)
 | 18 | **404 Not Found** | <img src="gif/notfound.gif" width="120"> | Peeks out of a box marked 404, looks left and right, realizes it's been spotted, ducks back in, and leaves a "?". |
 | 19 | **while(true)** | <img src="gif/loop.gif" width="120"> | Runs flat out in a hamster wheel until its eyes go > < and sweat goes flying. |
 | 20 | **Force Push** | <img src="gif/forcepush.gif" width="120"> | Shoves a big block labeled `main` until it flies off and cheers. Then the block gets pushed back and squeezes it out. |
+| 21 | **Yes, Proceed** | <img src="gif/proceed.gif" width="120"> | Permission dialogs keep popping up and it keeps hitting yes, faster and faster, until its eyes go > <. |
+| 22 | **Esc** | <img src="gif/esc.gif" width="120"> | Charging ahead full speed when a giant Esc key slams down in front of it. It screeches to a stop, nose to the key. |
+| 23 | **Usage Limit** | <img src="gif/limit.gif" width="120"> | Sits and waits with an empty red usage bar while the timer ticks down. At 0:00 the bar refills green and it springs up. |
+| 24 | **Plan Mode** | <img src="gif/plan.gif" width="120"> | Puts on a hard hat, unrolls a blueprint and sketches a little house on it before writing any code. |
+| 25 | **/clear** | <img src="gif/clear.gif" width="120"> | The terminal is overflowing and its eyes are spinning. Types `/clear`, everything wipes away, and it sparkles with relief. |
+| 26 | **ultrathink** | <img src="gif/ultrathink.gif" width="120"> | `ultrathink` appears in rainbow letters. It thinks so hard it turns red and steams, then a light bulb goes on. |
+| 27 | **Subagents** | <img src="gif/subagents.gif" width="120"> | Sends out three tiny Clawds that run off screen. They come back one by one with check marks, and it cheers. |
+| 28 | **Todo List** | <img src="gif/todo.gif" width="120"> | Watches the todo list as each item turns orange, then gets checked off. When all four are done, confetti falls. |
+| 29 | **You're Absolutely Right!** | <img src="gif/right.gif" width="120"> | Nods along eagerly as `You're absolutely right!` appears line by line, with sparkles. |
+| 30 | **/exit** | <img src="gif/bye.gif" width="120"> | Types `/exit`, waves goodbye, then shrinks away into the terminal, leaving `bye!` behind. |
 
 ## Download / Use in WeChat
 
@@ -41,7 +51,7 @@ To use them in WeChat, send a GIF from `wechat/` to "File Transfer", open it, lo
 ```bash
 cd src
 pip install pillow
-python clawd_dev.py            # all 20
+python clawd_dev.py            # all 30
 python clawd_dev.py compact    # just one
 ```
 

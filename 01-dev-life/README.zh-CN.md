@@ -2,7 +2,7 @@
 
 [English](README.md) | 简体中文
 
-程序员日常主题，20 个动态表情，Clawd 主演。眼睛是两个小黑方块（偶尔眯成 ^ ^ 或 > <），不画嘴，戏全靠动作和道具。这套规矩沿用 Qisi3344/clawd-moji 的 [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night)。
+程序员日常主题，30 个动态表情，Clawd 主演。眼睛是两个小黑方块（偶尔眯成 ^ ^ 或 > <），不画嘴，戏全靠动作和道具。第 21–30 个是 Claude Code 专属表情。这套规矩沿用 Qisi3344/clawd-moji 的 [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night)。
 
 ![preview](preview.png)
 
@@ -28,6 +28,16 @@
 | 18 | **找不到**<br>404 Not Found | <img src="gif/notfound.gif" width="120"> | 写着 404 的纸箱里冒出半个脑袋左右张望，发现被看到了，嗖地缩回去，留下一个「？」。 |
 | 19 | **死循环**<br>while(true) | <img src="gif/loop.gif" width="120"> | 在仓鼠轮里狂奔，跑着跑着眼睛变成 > <，汗都甩飞了。 |
 | 20 | **强推**<br>Force Push | <img src="gif/forcepush.gif" width="120"> | 顶着写着 `main` 的大方块使劲推，推飞后欢呼；然后方块又被推回来，把它挤走。 |
+| 21 | **疯狂同意**<br>Yes, Proceed | <img src="gif/proceed.gif" width="120"> | 权限确认框一个接一个弹出来，它一直按 yes，越按越快，最后眼睛变成 > <。 |
+| 22 | **急停**<br>Esc | <img src="gif/esc.gif" width="120"> | 正全速往前冲，一个大 Esc 键砸在面前，急刹车，脸贴到键上。 |
+| 23 | **额度用完**<br>Usage Limit | <img src="gif/limit.gif" width="120"> | 坐着干等，用量条空空的是红色，倒计时一格格减少；到 0:00 用量条回满变绿，它立刻弹起来。 |
+| 24 | **计划模式**<br>Plan Mode | <img src="gif/plan.gif" width="120"> | 戴上安全帽，展开一张蓝图，先画个小房子再动手写代码。 |
+| 25 | **清空上下文**<br>/clear | <img src="gif/clear.gif" width="120"> | 终端满屏文字，它眼睛都转晕了；敲下 `/clear`，全部清空，开心地冒星星。 |
+| 26 | **深度思考**<br>ultrathink | <img src="gif/ultrathink.gif" width="120"> | 彩虹色的 `ultrathink` 一个个出现，它想得太用力，全身发红冒烟，最后头顶亮起一个灯泡。 |
+| 27 | **子代理**<br>Subagents | <img src="gif/subagents.gif" width="120"> | 派出三只小小克跑出画面，它们一只只带着对勾回来，主小克欢呼。 |
+| 28 | **待办清单**<br>Todo List | <img src="gif/todo.gif" width="120"> | 盯着待办清单，每一项先变橙色，再被打上勾；四项全部完成时彩纸落下。 |
+| 29 | **您说得对**<br>You're Absolutely Right! | <img src="gif/right.gif" width="120"> | `You're absolutely right!` 一行行出现，它拼命点头，身边冒星星。 |
+| 30 | **拜拜**<br>/exit | <img src="gif/bye.gif" width="120"> | 敲下 `/exit`，挥手告别，然后缩小钻进终端里，只留下一句 `bye!`。 |
 
 ## 下载 / 在微信里用
 
@@ -41,7 +51,7 @@
 ```bash
 cd src
 pip install pillow
-python clawd_dev.py            # 全部 20 个
+python clawd_dev.py            # 全部 30 个
 python clawd_dev.py compact    # 只生成一个
 ```
 
