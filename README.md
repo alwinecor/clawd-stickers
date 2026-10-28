@@ -1,10 +1,10 @@
-# clawd-stickers
+# Clawd Stickers
 
 English | [简体中文](README.zh-CN.md)
 
-A collection of pixel-art animated stickers starring **Clawd**, the Claude Code mascot. Each set follows a theme, with characters, props and frame-by-frame animation drawn in Python and ready-to-use GIFs included.
+A collection of pixel-art animated stickers starring **Clawd**, the Claude Code mascot. Characters, props and frame-by-frame animation are drawn in Python, with ready-to-use GIFs included.
 
-The collection currently contains **1 set and 40 animated stickers**, together forming **Dev Life · 克码人生**.
+The collection currently contains **40 animated stickers** with the theme **Dev Life · 克码人生**.
 
 > [!NOTE]
 > This is an unofficial fan project, unaffiliated with and not endorsed by Anthropic. Clawd belongs to Anthropic. Repository contents are for personal, non-commercial use only. See [LICENSE](LICENSE).
@@ -14,24 +14,21 @@ The collection currently contains **1 set and 40 animated stickers**, together f
 - [Features](#features)
 - [Sticker preview](#sticker-preview)
 - [Download and use](#download-and-use)
-- [Sticker sets](#sticker-sets)
 - [Generate locally](#generate-locally)
 - [Repository structure](#repository-structure)
-- [Contributing](#contributing)
 - [License and usage](#license-and-usage)
 - [Credits](#credits)
 
 ## Features
 
-- **Inspired by developer life**: merge conflicts, context compaction, slacking off and clocking out become little animated stories.
-- **Consistent pixel style**: Clawd keeps its 15×16 body grid, black-square eyes and mouthless design, expressing emotion through movement and props.
-- **Ready-to-use GIFs**: every sticker is 288×288 with a transparent background and loops continuously. No development environment is needed to use them.
-- **Generated with code**: the Python script uses Pillow and a built-in 3×5 pixel font, with no extra fonts to download. Generate the whole set or selected stickers.
-- **Organized by theme**: each set has its own finished GIFs, generator code and documentation in English and Chinese.
+- **Developer life and programmer jokes**: includes classics such as hello world, git clone and rubber duck debugging, alongside everyday scenes like slacking off, clocking out and bug hunting. There are also plenty of Claude Code references, including thinking, context compaction, usage limits and even a ban joke.
+- **Consistent pixel style**: fan art based on Clawd's pixel design.
+- **Ready-to-use GIFs**: every sticker is 288×288 with a transparent background and loops continuously. Download and use them directly, with no development environment needed.
+- **Generated with code**: the Python script uses Pillow, with no extra fonts to download. Generate all stickers or selected ones locally.
 
 ## Sticker preview
 
-All 40 stickers from **Dev Life · 克码人生** are shown below, ordered to keep related scenes together. See the [set guide](01-dev-life/README.md) for each sticker's story.
+The collection currently includes 40 stickers with the theme **Dev Life · 克码人生**. See the [set guide](01-dev-life/README.md) for details.
 
 <table>
   <tr><td align="center" width="20%"><b>hello, world</b></td><td align="center" width="20%"><b>Thinking</b></td><td align="center" width="20%"><b>ultrathink</b></td><td align="center" width="20%"><b>Plan Mode</b></td><td align="center" width="20%"><b>Todo List</b></td></tr>
@@ -56,23 +53,17 @@ All 40 stickers from **Dev Life · 克码人生** are shown below, ordered to ke
 
 ### Save a single sticker
 
-1. Open the [set guide](01-dev-life/README.md) and choose a sticker.
-2. Click its GIF to open the original, then right-click or long-press to save the `.gif` file.
+1. Choose a sticker from the preview above or open the [set guide](01-dev-life/README.md).
+2. Click its GIF to open the original, then right-click to save the `.gif` file.
 3. Send it or add it as a custom sticker in a chat app that supports GIFs.
 
 ### Download the whole set
 
-Select **Code → Download ZIP** on the repository home page, extract the archive and open [`01-dev-life/gif/`](01-dev-life/gif/) to find all finished stickers. You can also clone the repository with the Git commands below.
+Select **Code → Download ZIP** on the repository home page, extract the archive and open [`01-dev-life/gif/`](01-dev-life/gif/) to find the whole sticker collection. You can also clone the repository with the Git commands below.
 
-### Add stickers in WeChat
+### Add and use stickers in chat apps
 
-Send the saved GIF as a file to **File Transfer**, open it in WeChat, then long-press and choose **Add to Stickers**. The exact menu may vary by WeChat client.
-
-## Sticker sets
-
-| # | Theme | Contents | Stickers | Status |
-| --- | --- | --- | --- | --- |
-| 01 | [Dev Life · 克码人生](01-dev-life/README.md) | A developer's work and life | 40 | Complete |
+Saved GIFs can be sent directly in chat apps such as WeChat, Xiaohongshu and WhatsApp. If the app supports custom stickers, you can also add them manually. All GIFs are 288×288 with a transparent background and loop continuously.
 
 ## Generate locally
 
@@ -119,24 +110,12 @@ clawd-stickers/
 ├── README.zh-CN.md            # Chinese project guide
 ├── LICENSE                    # License and usage terms
 └── 01-dev-life/               # Dev Life sticker set
-    ├── README.md              # English sticker list and stories
-    ├── README.zh-CN.md        # Chinese sticker list and stories
-    ├── gif/                   # 40 finished GIFs (288×288)
+    ├── README.md              # English sticker content guide
+    ├── README.zh-CN.md        # Chinese sticker content guide
+    ├── gif/                   # 40 finished GIFs
     └── src/
         └── clawd_dev.py       # Drawing, animation and GIF export
 ```
-
-## Contributing
-
-Suggest new themes or stickers, or report problems through [Issues](https://github.com/alwinecor/clawd-stickers/issues). Pull requests improving animations, generator code and documentation are welcome.
-
-When adding or changing stickers:
-
-1. Keep Clawd's existing pixel design and the set's visual style.
-2. Add a generator function for each new animation and register it in `ALL`. Add a `FILE` mapping if its output name differs.
-3. Generate the GIF and check playback, transparency and output dimensions.
-4. Update the set's English and Chinese lists. Add a link to the root guides when introducing a new set.
-5. Preserve source attribution and credits, and follow the usage terms in [LICENSE](LICENSE).
 
 ## License and usage
 
@@ -144,10 +123,10 @@ This repository uses a custom fan-project usage statement. See [LICENSE](LICENSE
 
 - Clawd belongs to Anthropic.
 - This is an unofficial fan project, unaffiliated with and not endorsed by Anthropic.
-- Repository contents are for personal, non-commercial use only. Commercial use is prohibited.
+- Repository contents are for personal use only. Commercial use is prohibited.
 
 ## Credits
 
-- [clawd-moji](https://github.com/Qisi3344/clawd-moji) by [@Qisi3344](https://github.com/Qisi3344), especially its [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night) set, inspired the project concept, Clawd's pixel style and the directory structure organized by theme.
+- Thanks to [@Qisi3344](https://github.com/Qisi3344) and [clawd-moji](https://github.com/Qisi3344/clawd-moji) for the drawing tools and creative inspiration used in this project!
 - Drawing helpers in this repository's [`clawd_dev.py`](01-dev-life/src/clawd_dev.py), including `base`, `xform`, `squash`, `kf`, `face` and `render`, are adapted from that project's `clawd_movies.py` and `clawd_movies_more.py`.
 - [Anthropic](https://www.anthropic.com) owns the Clawd character.
