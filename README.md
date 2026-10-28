@@ -55,7 +55,6 @@ The collection currently includes 40 stickers with the theme **Dev Life · 克�
 
 1. Choose a sticker from the preview above or open the [set guide](01-dev-life/README.md).
 2. Click its GIF to open the original, then right-click to save the `.gif` file.
-3. Send it or add it as a custom sticker in a chat app that supports GIFs.
 
 ### Download the whole set
 
