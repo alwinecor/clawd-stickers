@@ -1252,10 +1252,14 @@ def save(nm,fr):
     n=to_gif(fr,os.path.join(OUT,nm+'.gif'))
     print(f'{nm}: {len(fr)} frames, {n//1024}KB')
 
-ALL=['thinking','compact','clone','conflict','rmrf','hello','lgtm','passed','error','coffee',
-     'deploy','works','bug','fish','offwork','overtime','sleep','notfound','loop','forcepush',
-     'proceed','esc','limit','plan','clear_ctx','ultrathink','subagents','todo','right','bye','banned',
-     'blame','stash','detached','cherry','duck','deadline','overflow','leak','simple']
+ALL=['hello','thinking','ultrathink','plan','todo',
+     'simple','subagents','proceed','lgtm','right',
+     'compact','clear_ctx','limit','esc','banned',
+     'clone','stash','cherry','conflict','forcepush',
+     'blame','rmrf','detached','notfound','error',
+     'bug','duck','loop','overflow','leak',
+     'works','passed','deploy','deadline','overtime',
+     'coffee','fish','offwork','sleep','bye']
 FILE={'clear_ctx':'clear'}   # clear() is already a drawing helper
 if __name__=='__main__':
     for nm in (sys.argv[1:] or ALL):
