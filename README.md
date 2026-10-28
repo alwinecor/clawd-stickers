@@ -7,7 +7,7 @@ A collection of pixel-art animated stickers starring **Clawd**, the Claude Code 
 The collection currently contains **40 animated stickers** with the theme **Dev Life · 克码人生**.
 
 > [!NOTE]
-> This is an unofficial fan project, unaffiliated with and not endorsed by Anthropic. Clawd belongs to Anthropic. Repository contents are for personal, non-commercial use only. See [LICENSE](LICENSE).
+> This is an unofficial fan project, unaffiliated with and not endorsed by Anthropic. Content whose copyright is held by this project's contributors is [MIT-licensed](LICENSE) by default. Third-party rights, including the Claude Code mascot, are excluded.
 
 ## Contents
 
@@ -107,7 +107,7 @@ Arguments generally match GIF filenames without the `.gif` extension, such as `t
 clawd-stickers/
 ├── README.md                  # English project guide
 ├── README.zh-CN.md            # Chinese project guide
-├── LICENSE                    # License and usage terms
+├── LICENSE                    # Standard MIT License
 └── 01-dev-life/               # Dev Life sticker set
     ├── README.md              # English sticker content guide
     ├── README.zh-CN.md        # Chinese sticker content guide
@@ -118,11 +118,10 @@ clawd-stickers/
 
 ## License and usage
 
-This repository uses a custom fan-project usage statement. See [LICENSE](LICENSE) for its full text:
+Except for third-party material and rights otherwise noted, this project's code, documentation and original artistic contributions are licensed under the [MIT License](LICENSE), to the extent that contributors hold the relevant copyright. This includes original contributions to the sticker artwork.
 
-- Clawd belongs to Anthropic.
-- This is an unofficial fan project, unaffiliated with and not endorsed by Anthropic.
-- Repository contents are for personal use only. Commercial use is prohibited.
+- **Content covered by MIT**: use, modification, distribution and commercial use are permitted. Retain applicable copyright and license notices when distributing copies or substantial portions, including attribution for adapted upstream code.
+- **Third-party material and rights**: The Claude Code mascot belongs to Anthropic.
 
 ## Credits
 

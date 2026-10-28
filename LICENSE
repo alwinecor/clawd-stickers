@@ -1,17 +1,22 @@
-clawd-stickers — fan-made sticker collection
+MIT License
 
-The Clawd character is the property of Anthropic, PBC (https://www.anthropic.com).
-This repository is an unofficial fan project. It is not affiliated with or
-endorsed by Anthropic.
+Copyright (c) 2026 alwinecor and contributors
+Copyright (c) Qisi3344, for portions adapted from clawd-moji
 
-The idea, pixel style and project structure follow clawd-moji by Qisi3344
-(https://github.com/Qisi3344/clawd-moji). The drawing helpers in
-01-dev-life/src/clawd_dev.py are adapted from that project's source code.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-All artwork in this repository may be used for personal, non-commercial
-purposes only. No commercial use is permitted.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-中文说明：本仓库为粉丝创作，与 Anthropic 无任何关联；Clawd 角色版权归
-Anthropic 所有；创作思路、像素画法和目录结构参考了 Qisi3344 的 clawd-moji，
-生成代码中的绘图工具函数改编自该项目；仓库内全部内容仅供个人非商业使用，
-禁止商用。
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+# License: ../../LICENSE
 """
 clawd-stickers · 01 Dev Life (克码人生) — inspired by clawd-moji by Qisi3344
 https://github.com/Qisi3344/clawd-moji

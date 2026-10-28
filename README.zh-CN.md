@@ -7,7 +7,7 @@
 当前收录 **40 个动态表情**，主题为「克码人生 · Dev Life」。
 
 > [!NOTE]
-> 本项目为非官方粉丝创作，与 Anthropic 无关联，亦未获得其背书。Clawd 角色归 Anthropic 所有，仓库内容仅供个人非商业使用。详见 [LICENSE](LICENSE)。
+> 本项目为非官方粉丝创作，与 Anthropic 无关联，亦未获得其背书。本项目贡献者拥有版权的内容默认采用 [MIT 许可](LICENSE)；Claude Code 吉祥物等第三方权利除外。
 
 ## 目录
 
@@ -107,7 +107,7 @@ python 01-dev-life/src/clawd_dev.py thinking compact clear
 clawd-stickers/
 ├── README.md                  # 英文项目说明
 ├── README.zh-CN.md            # 中文项目说明
-├── LICENSE                    # 许可与使用范围
+├── LICENSE                    # 标准 MIT 许可
 └── 01-dev-life/               # 克码人生主题套装
     ├── README.md              # 英文表情包内容说明
     ├── README.zh-CN.md        # 中文表情包内容说明
@@ -118,11 +118,10 @@ clawd-stickers/
 
 ## 许可与使用范围
 
-本仓库使用自定义的粉丝创作使用声明，具体内容见 [LICENSE](LICENSE)：
+除另有注明的第三方内容及权利外，本项目贡献者拥有版权的代码、文档与原创美术贡献默认采用 [MIT 许可](LICENSE)，包括表情素材中的原创部分。
 
-- Clawd 角色归 Anthropic 所有。
-- 本项目为非官方粉丝创作，与 Anthropic 无关联，亦未获得其背书。
-- 仓库内容仅供个人使用，禁止商用。
+- **MIT 覆盖的内容**：允许使用、修改、分发和商用；分发副本或实质性部分时须保留适用的版权及许可声明，包括上游改编代码的署名。
+- **第三方内容与权利**：Claude Code 吉祥物角色归 Anthropic 所有。
 
 ## 致谢
 
