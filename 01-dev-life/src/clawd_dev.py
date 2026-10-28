@@ -8,6 +8,7 @@ Generates the animated Clawd stickers in ../gif/ (288x288, also fine as WeChat s
   pip install pillow
   python clawd_dev.py             # all
   python clawd_dev.py compact     # just one
+  python clawd_dev.py --dark      # dark-background set -> ../gif-dark/
 
 No external font needed: command text uses the tiny pixel font defined below.
 
@@ -19,7 +20,14 @@ from PIL import Image, ImageDraw
 S=12; W,H=23,24; OX,OY=4,7
 BODY='#D77757'; K='#1a1a1a'; WH='#FFFFFF'; BANG='#E5484D'
 HERE=os.path.dirname(os.path.abspath(__file__))
-OUT=os.path.join(HERE,'..','gif')
+DARK_MODE='--dark' in sys.argv
+OUT=os.path.join(HERE,'..','gif-dark' if DARK_MODE else 'gif')
+# Dark-background theme: colours that vanish or glare on a dark chat are swapped at draw time.
+DARK={'#3A3A44':'#E6E1DA',   # text / outlines
+      '#D9D2CB':'#3A3A42',   # ground shadow, dust
+      '#CFC8C0':'#8F8A84',   # speed lines, smoke
+      '#3A3A48':'#6A6A7A'}   # terminal frame
+def tc(c): return DARK.get(c.upper(),c) if DARK_MODE and isinstance(c,str) else c
 
 # ---------- shared helpers, adapted from Qisi3344/clawd-moji 01-movie-night ----------
 def rect(x0,y0,x1,y1): return [(x,y) for x in range(x0,x1+1) for y in range(y0,y1+1)]
@@ -68,7 +76,7 @@ def draw(img,p,pad=0):
     d=ImageDraw.Draw(img)
     for (x,y),c in p.items():
         X,Y=x+OX+pad,y+OY+pad
-        if 0<=X<W+2*pad and 0<=Y<H+2*pad: d.rectangle([X*S,Y*S,(X+1)*S-1,(Y+1)*S-1],fill=c)
+        if 0<=X<W+2*pad and 0<=Y<H+2*pad: d.rectangle([X*S,Y*S,(X+1)*S-1,(Y+1)*S-1],fill=tc(c))
     return img
 def xform(p,dx=0,dy=0,sx=1,sy=1,rot=0,piv=(7.5,15)):
     img=draw(canvas(M),p,M)
@@ -83,7 +91,7 @@ def render(p,cs,ax,ay,rot=0,sx=1,sy=1):
     img=canvas(); d=ImageDraw.Draw(img)
     for (x,y),c in p.items():
         X=math.floor(ax+(x-7.5)*cs+0.5); Y=math.floor(ay+(y-15)*cs+0.5)
-        d.rectangle([X,Y,X+cs-1,Y+cs-1],fill=c)
+        d.rectangle([X,Y,X+cs-1,Y+cs-1],fill=tc(c))
     if rot or sx!=1 or sy!=1:
         a=math.radians(rot); c,s_=math.cos(a),math.sin(a)
         co=(c/sx,-s_/sx,ax-(c*ax-s_*ay)/sx, s_/sy,c/sy,ay-(s_*ax+c*ay)/sy)
@@ -163,7 +171,7 @@ def confetti(i,start,n=16,seed=3):
 def text_w(s): return sum(len(GL[c][0])+1 for c in s)-1
 def text(img,s,x,y,px,col):
     """Draw s with its top-left at (x,y) px, each font pixel px wide."""
-    d=ImageDraw.Draw(img)
+    d=ImageDraw.Draw(img); col=tc(col)
     for c in s:
         g=GL[c]
         for r,row in enumerate(g):
@@ -173,7 +181,7 @@ def text(img,s,x,y,px,col):
     return x
 def box(img,x0,y0,x1,y1,col):
     if round(x1)<=round(x0) or round(y1)<=round(y0): return
-    ImageDraw.Draw(img).rectangle([round(x0),round(y0),round(x1)-1,round(y1)-1],fill=col)
+    ImageDraw.Draw(img).rectangle([round(x0),round(y0),round(x1)-1,round(y1)-1],fill=tc(col))
 
 # ---------- Thinking · 思考中 ----------
 # Claude Code's spinner: · ✢ ✳ ✶ ✻ ✽ and back
@@ -712,7 +720,7 @@ def esc():
         key={}
         put(key,rect(12,8+ky,18,12+ky),'#E9E6E1'); put(key,rect(12,13+ky,18,14+ky),'#BDB8B0')
         put(key,rect(12,8+ky,18,8+ky)+rect(12,8+ky,12,14+ky)+rect(18,8+ky,18,14+ky),'#8E8A84')
-        lab=canvas(); textc(lab,'esc',cx(15.5),cy(9+ky)+6,5,'#3A3A44')
+        lab=canvas(); textc(lab,'esc',cx(15.5),cy(9+ky)+6,5,(0x3A,0x3A,0x44))   # tuple skips the dark theme: sits on the light keycap
         p=base(); rot=0; fx={}
         dx=kf(i,[(0,-14),(14,-3)]) if i<14 else -3
         if i<14:
@@ -1219,7 +1227,8 @@ def simple():
             if y>=-3 and (y-int(s))%2==0: put(pap,rect(5,yy,5+(3+(y-int(s))*7)%5,yy),LINE)
         img=canvas(); ty=cy(-6+drop+s)+2
         if ty<cy(4):
-            textc(img,"it's",cx(7.5),round(ty),3,'#3A3A44'); textc(img,'simple',cx(7.5),round(ty)+20,3,'#3A3A44')
+            INK=(0x3A,0x3A,0x44)   # tuple skips the dark theme: printed on the light paper
+            textc(img,"it's",cx(7.5),round(ty),3,INK); textc(img,'simple',cx(7.5),round(ty)+20,3,INK)
         pile={}
         for side,(x0,x1),start in (('r',(13,18),12),('l',(-4,1),30)):
             h=round(kf(i,[(start,0),(60,9 if side=='r' else 6)]))
@@ -1264,6 +1273,6 @@ ALL=['hello','thinking','ultrathink','plan','todo',
      'coffee','fish','offwork','sleep','bye']
 FILE={'clear_ctx':'clear'}   # clear() is already a drawing helper
 if __name__=='__main__':
-    for nm in (sys.argv[1:] or ALL):
+    for nm in ([a for a in sys.argv[1:] if a!='--dark'] or ALL):
         nm={v:k for k,v in FILE.items()}.get(nm,nm)
         save(FILE.get(nm,nm),globals()[nm]())

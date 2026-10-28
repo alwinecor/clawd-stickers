@@ -24,6 +24,7 @@ The collection currently contains **40 animated stickers** with the theme **Dev 
 - **Developer life and programmer jokes**: includes classics such as hello world, git clone and rubber duck debugging, alongside everyday scenes like slacking off, clocking out and bug hunting. There are also plenty of Claude Code references, including thinking, context compaction, usage limits and even a ban joke.
 - **Consistent pixel style**: fan art based on Clawd's pixel design.
 - **Ready-to-use GIFs**: every sticker is 288×288 with a transparent background and loops continuously. Download and use them directly, with no development environment needed.
+- **Light and dark sets**: the dark set brightens text and outlines and darkens ground shadows for dark-mode chats.
 - **Generated with code**: the Python script uses Pillow, with no extra fonts to download. Generate all stickers or selected ones locally.
 
 ## Sticker preview
@@ -58,7 +59,7 @@ The collection currently includes 40 stickers with the theme **Dev Life · 克�
 
 ### Download the whole set
 
-Select **Code → Download ZIP** on the repository home page, extract the archive and open [`01-dev-life/gif/`](01-dev-life/gif/) to find the whole sticker collection. You can also clone the repository with the Git commands below.
+Select **Code → Download ZIP** on the repository home page, extract the archive and open [`01-dev-life/gif/`](01-dev-life/gif/) to find the whole sticker collection for light backgrounds. The dark-background set is in [`01-dev-life/gif-dark/`](01-dev-life/gif-dark/). You can also clone the repository with the Git commands below.
 
 ### Add and use stickers in chat apps
 
@@ -95,9 +96,12 @@ python 01-dev-life/src/clawd_dev.py compact
 
 # Generate several selected stickers
 python 01-dev-life/src/clawd_dev.py thinking compact clear
+
+# Generate the dark-background set (combines with the arguments above)
+python 01-dev-life/src/clawd_dev.py --dark
 ```
 
-Output is saved to [`01-dev-life/gif/`](01-dev-life/gif/), replacing GIFs with the same names. The script prints each sticker's name, frame count and file size.
+Output is saved to [`01-dev-life/gif/`](01-dev-life/gif/), or [`01-dev-life/gif-dark/`](01-dev-life/gif-dark/) with `--dark`, replacing GIFs with the same names. The dark colour swaps are listed in the `DARK` table at the top of the script. The script prints each sticker's name, frame count and file size.
 
 Arguments generally match GIF filenames without the `.gif` extension, such as `thinking`, `compact` and `clear`. Browse the output directory for the full list. The script's `ALL` list and `FILE` mapping define the generator entry points and output names; `clear` maps to the `clear_ctx()` function.
 
@@ -112,6 +116,7 @@ clawd-stickers/
     ├── README.md              # English sticker content guide
     ├── README.zh-CN.md        # Chinese sticker content guide
     ├── gif/                   # 40 finished GIFs
+    ├── gif-dark/              # 40 finished GIFs (dark background)
     └── src/
         └── clawd_dev.py       # Drawing, animation and GIF export
 ```

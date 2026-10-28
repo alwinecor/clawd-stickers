@@ -24,6 +24,7 @@
 - **围绕开发者日常，融入程序员梗**：包含 hello world、git clone、Rubber Duck 等程序员梗，以及摸鱼、下班、捉虫之类日常剧场。还有许多 Claude Code 个性化内容，比如 thinking、上下文压缩、额度上限等，以及一个封号梗。
 - **统一的像素风格**：沿用 Clawd 的像素形象进行二创。
 - **成品直接可用**：全部 GIF 均为 288×288 像素、透明背景、循环播放，可以直接下载使用，无需安装开发环境。
+- **浅色、深色背景各一套**：深色版调亮了文字与描边、压暗了地面阴影，适合深色模式聊天界面。
 - **可用代码重新生成**：生成脚本依赖 Pillow，无需额外下载字体文件，支持本地生成全部或指定表情。
 
 ## 表情预览
@@ -58,7 +59,7 @@
 
 ### 下载全套
 
-在仓库首页选择 **Code → Download ZIP**，解压后打开 [`01-dev-life/gif/`](01-dev-life/gif/) 即可获取全套表情包。也可以通过下方的 Git 命令克隆仓库。
+在仓库首页选择 **Code → Download ZIP**，解压后打开 [`01-dev-life/gif/`](01-dev-life/gif/) 即可获取全套表情包，适用于浅色背景。适用深色背景的版本见 [`01-dev-life/gif-dark/`](01-dev-life/gif-dark/)。也可以通过下方的 Git 命令克隆仓库。
 
 ### 在聊天应用中添加和使用
 
@@ -95,9 +96,12 @@ python 01-dev-life/src/clawd_dev.py compact
 
 # 一次生成多个指定表情
 python 01-dev-life/src/clawd_dev.py thinking compact clear
+
+# 生成深色背景版（可与上面的参数组合）
+python 01-dev-life/src/clawd_dev.py --dark
 ```
 
-生成结果写入 [`01-dev-life/gif/`](01-dev-life/gif/)，会覆盖同名 GIF。脚本会输出每个表情的名称、帧数与文件大小。
+生成结果写入 [`01-dev-life/gif/`](01-dev-life/gif/)，加 `--dark` 时写入 [`01-dev-life/gif-dark/`](01-dev-life/gif-dark/)，会覆盖同名 GIF。深色版的换色规则见脚本开头的 `DARK` 表。脚本会输出每个表情的名称、帧数与文件大小。
 
 参数通常与 GIF 文件名一致，不含 `.gif` 后缀，例如 `thinking`、`compact`、`clear`。完整名称可查看成品目录；脚本中的 `ALL` 列表及 `FILE` 映射定义了生成入口与输出名称，其中 `clear` 对应函数 `clear_ctx()`。
 
@@ -112,6 +116,7 @@ clawd-stickers/
     ├── README.md              # 英文表情包内容说明
     ├── README.zh-CN.md        # 中文表情包内容说明
     ├── gif/                   # 40 个成品 GIF
+    ├── gif-dark/              # 40 个成品 GIF（深色背景）
     └── src/
         └── clawd_dev.py       # 绘图、动画与 GIF 导出脚本
 ```
