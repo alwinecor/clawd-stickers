@@ -30,7 +30,7 @@
 | 20 | **强推**<br>Force Push | <img src="gif/forcepush.gif" width="120"> | 顶着写着 `main` 的大方块使劲推，推飞后欢呼；然后方块又被推回来，把它挤走。 |
 | 21 | **疯狂同意**<br>Yes, Proceed | <img src="gif/proceed.gif" width="120"> | 权限确认框一个接一个弹出来，它一直按 yes，越按越快，最后眼睛变成 > <。 |
 | 22 | **急停**<br>Esc | <img src="gif/esc.gif" width="120"> | 正全速往前冲，一个大 Esc 键砸在面前，急刹车，脸贴到键上。 |
-| 23 | **额度用完**<br>Usage Limit | <img src="gif/limit.gif" width="120"> | 坐着干等，用量条空空的是红色，倒计时一格格减少；到 0:00 用量条回满变绿，它立刻弹起来。 |
+| 23 | **额度用完**<br>Usage Limit | <img src="gif/limit.gif" width="120"> | 一边敲键盘，头顶的电池一边从绿掉到红；电量耗尽时出现 `limit reached`，它瘫成一张饼，等电池充满才弹起来。 |
 | 24 | **计划模式**<br>Plan Mode | <img src="gif/plan.gif" width="120"> | 戴上安全帽，展开一张蓝图，先画个小房子再动手写代码。 |
 | 25 | **清空上下文**<br>/clear | <img src="gif/clear.gif" width="120"> | 终端满屏文字，它眼睛都转晕了；敲下 `/clear`，全部清空，开心地冒星星。 |
 | 26 | **深度思考**<br>ultrathink | <img src="gif/ultrathink.gif" width="120"> | 彩虹色的 `ultrathink` 一个个出现，它想得太用力，全身发红冒烟，最后头顶亮起一个灯泡。 |

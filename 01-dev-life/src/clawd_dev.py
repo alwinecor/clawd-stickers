@@ -725,24 +725,35 @@ def esc():
 
 # ---------- Usage Limit · 额度用完 ----------
 def limit():
-    fr=[]; N=60; RED='#E5484D'; G='#2FB15A'
+    """A battery drains while Clawd types; at empty it reads 'limit reached' and Clawd melts flat."""
+    fr=[]; N=72; RED='#E5484D'; YEL='#F2C14E'; G='#2FB15A'; OL='#3A3A44'
     for i in range(N):
-        img=canvas(); x0,x1,y0=cx(-2),cx(17),cy(-6)
-        box(img,x0,y0,x1,y0+18,'#5B606C'); box(img,x0+3,y0+3,x1-3,y0+15,'#2A2A33')
-        f=0.05 if i<36 else kf(i,[(36,0.05),(42,1)])
-        box(img,x0+3,y0+3,x0+3+(x1-x0-6)*f,y0+15,RED if i<36 else G)
-        t=['0:03','0:02','0:01'][i//12] if i<36 else '0:00'
-        textc(img,t,138,cy(-3)+2,7,'#3A3A44' if i<36 else G)
-        p=base(); dy=0; rot=0; sq={}
-        if i<36:
-            face(p,'n',blink=True); rot=3*math.sin(TAU*i/24); sq=squash(0.9)
-            if (i//4)%2: clear(p,[(11,14)])
-        elif i<40: face(p,'n'); put(p,[(4,7),(10,7)],K)
+        f=kf(i,[(0,1),(28,0),(56,0),(62,1)]) if i<62 else 1
+        img=canvas(); bx0,bx1,by0,by1=cx(2),cx(12),cy(-6),cy(-2)
+        empty=f<0.02
+        if not (empty and 32<=i<56 and (i//3)%2):   # empty battery blinks
+            box(img,bx0,by0,bx1,by1,OL); box(img,bx0+5,by0+5,bx1-5,by1-5,(0,0,0,0))
+            box(img,bx1,by0+14,bx1+8,by1-14,OL)
+            col=G if f>0.5 else YEL if f>0.2 else RED
+            if f>0: box(img,bx0+9,by0+9,bx0+9+(bx1-bx0-18)*f,by1-9,col)
+        if 30<=i<58: textc(img,'limit reached',138,cy(-1)-2,5,RED)
+        p=base(); dx=0; dy=0; sq={}; fx={}
+        if i<28:
+            slow=1+2*(i>=18)          # typing slows as the battery runs low
+            face(p,'n',0,1 if i<18 else 0,blink=(i>=20))
+            tap=(i//slow)%2; arms(p,UP if tap else MID,MID if tap else UP)
+            if i>=20: sq=dict(sy=kf(i,[(20,1),(28,0.92)]),sx=1)
+        elif i<56:
+            face(p,'n',blink=True); arms(p,DOWN,DOWN)
+            sy=kf(i,[(28,0.92),(34,0.5)]); sq=dict(sy=sy,sx=sy**-0.4)
+            if 36<=i<54 and (i//6)%2==0:
+                fx[(15,8)]='#7FB2E5'; fx[(15,9)]='#7FB2E5'
         else:
-            face(p,'hap'); t2=((i-40)%8)/8
-            if i<56: dy=-2.5*math.sin(math.pi*t2); arms(p,UP,UP)
-        fr.append((comp(shadow(-dy),img,xform(p,0,dy,rot=rot,**sq)),70))
-    fr[35]=(fr[35][0],300)
+            face(p,'hap'); arms(p,UP,UP)
+            sy=kf(i,[(56,0.5),(60,1.2),(63,0.9),(66,1)]); sq=dict(sy=sy,sx=sy**-0.4)
+            dy=-kf(i,[(58,0),(61,2),(64,0)])
+        fr.append((comp(shadow(-dy),img,xform(p,dx,dy,**sq),fx),70))
+    fr[31]=(fr[31][0],300); fr[-1]=(fr[-1][0],300)
     return fr
 
 # ---------- Plan Mode · 计划模式 ----------

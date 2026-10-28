@@ -30,7 +30,7 @@ English | [简体中文](README.zh-CN.md)
 | 20 | **Force Push** | <img src="gif/forcepush.gif" width="120"> | Shoves a big block labeled `main` until it flies off and cheers. Then the block gets pushed back and squeezes it out. |
 | 21 | **Yes, Proceed** | <img src="gif/proceed.gif" width="120"> | Permission dialogs keep popping up and it keeps hitting yes, faster and faster, until its eyes go > <. |
 | 22 | **Esc** | <img src="gif/esc.gif" width="120"> | Charging ahead full speed when a giant Esc key slams down in front of it. It screeches to a stop, nose to the key. |
-| 23 | **Usage Limit** | <img src="gif/limit.gif" width="120"> | Sits and waits with an empty red usage bar while the timer ticks down. At 0:00 the bar refills green and it springs up. |
+| 23 | **Usage Limit** | <img src="gif/limit.gif" width="120"> | Types away while a battery drains from green to red. At empty, `limit reached` appears and it melts flat until the battery recharges and it bounces back. |
 | 24 | **Plan Mode** | <img src="gif/plan.gif" width="120"> | Puts on a hard hat, unrolls a blueprint and sketches a little house on it before writing any code. |
 | 25 | **/clear** | <img src="gif/clear.gif" width="120"> | The terminal is overflowing and its eyes are spinning. Types `/clear`, everything wipes away, and it sparkles with relief. |
 | 26 | **ultrathink** | <img src="gif/ultrathink.gif" width="120"> | `ultrathink` appears in rainbow letters. It thinks so hard it turns red and steams, then a light bulb goes on. |
