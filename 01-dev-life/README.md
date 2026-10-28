@@ -2,7 +2,7 @@
 
 English | [简体中文](README.zh-CN.md)
 
-31 animated stickers about a programmer's everyday life, starring Clawd. Clawd's eyes are two small black squares (sometimes squinting into ^ ^ or > <), and there's no mouth: every joke is told through movement and props. Stickers 21–31 are Claude Code specials. These rules follow [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night) from Qisi3344/clawd-moji.
+40 animated stickers about a programmer's everyday life, starring Clawd. Clawd's eyes are two small black squares (sometimes squinting into ^ ^ or > <), and there's no mouth: every joke is told through movement and props. Stickers 21–31 are Claude Code specials, and 32–40 are more developer classics. These rules follow [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night) from Qisi3344/clawd-moji.
 
 | # | Name | Sticker | Story |
 |---|---|---|---|
@@ -37,6 +37,15 @@ English | [简体中文](README.zh-CN.md)
 | 29 | **You're Absolutely Right!** | <img src="gif/right.gif" width="120"> | Nods along eagerly as `You're absolutely right!` appears line by line, with sparkles. |
 | 30 | **/exit** | <img src="gif/bye.gif" width="120"> | Types `/exit`, waves goodbye, then shrinks away into the terminal, leaving `bye!` behind. |
 | 31 | **Banned** | <img src="gif/banned.gif" width="120"> | Typing away happily when a ban hammer swings down. A red BANNED stamp appears, it turns gray, and prison bars drop in front of it. |
+| 32 | **git blame** | <img src="gif/blame.gif" width="120"> | Furiously points at a broken line under `git blame`, until the author turns out to be itself. Lowers its claw and sidles away, sweating. |
+| 33 | **git stash** | <img src="gif/stash.gif" width="120"> | Panics and shoves every loose change into a treasure chest, slams the lid, then looks away whistling. |
+| 34 | **detached HEAD** | <img src="gif/detached.gif" width="120"> | Its head pops off and floats in place while its body wanders around looking for it, until they click back together. |
+| 35 | **cherry-pick** | <img src="gif/cherry.gif" width="120"> | Hops up and picks exactly two cherries off a branch into its basket, leaving the rest. |
+| 36 | **Rubber Duck** | <img src="gif/duck.gif" width="120"> | Explains its code to a rubber duck, waving its claws. A pause... then a light bulb goes on. |
+| 37 | **Deadline** | <img src="gif/deadline.gif" width="120"> | Types so fast the keyboard catches fire as the red countdown hits zero, then `sent!` appears and it melts flat. |
+| 38 | **Stack Overflow** | <img src="gif/overflow.gif" width="120"> | Plates keep stacking up on its head and wobbling harder, until the whole stack topples and leaves it dazed. |
+| 39 | **Memory Leak** | <img src="gif/leak.gif" width="120"> | Holds a jar labeled RAM that springs leak after leak. It flails as the water runs out and the puddle grows. |
+| 40 | **It's Simple** | <img src="gif/simple.gif" width="120"> | Pulls on a requirements sheet titled "it's simple" that just keeps unrolling, piling up paper on both sides. |
 
 ## Download / Use in WeChat
 
@@ -50,7 +59,7 @@ To use them in WeChat, send a GIF from `wechat/` to "File Transfer", open it, lo
 ```bash
 cd src
 pip install pillow
-python clawd_dev.py            # all 31
+python clawd_dev.py            # all 40
 python clawd_dev.py compact    # just one
 ```
 

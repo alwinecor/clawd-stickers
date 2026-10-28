@@ -129,7 +129,8 @@ GL={
  '6':[".xx","x..","xx.","x.x",".x."], '7':["xxx","..x",".x.",".x.",".x."],
  '8':["xxx","x.x","xxx","x.x","xxx"], '9':["xxx","x.x","xxx","..x","xx."],
  '.':[".",".",".",".","x"], '?':["xx.","..x",".x.","...",".x."], "'":["x","x",".",".","."],
- 'B':["xx.","x.x","xx.","x.x","xx."], 'A':[".x.","x.x","xxx","x.x","x.x"],
+ 'B':["xx.","x.x","xx.","x.x","xx."],
+ 'H':["x.x","x.x","xxx","x.x","x.x"], 'R':["xx.","x.x","xx.","x.x","x.x"], 'v':["...","x.x","x.x","x.x",".x."], 'A':[".x.","x.x","xxx","x.x","x.x"],
  'N':["x..x","xx.x","x.xx","x..x","x..x"], 'D':["xx.","x.x","x.x","x.x","xx."],
  'Y':["x.x","x.x",".x.",".x.",".x."], 'x':["...","x.x",".x.",".x.","x.x"],
 }
@@ -974,6 +975,264 @@ def banned():
     fr[16]=(fr[16][0],200); fr[-1]=(fr[-1][0],600)
     return fr
 
+SWEAT='#7FB2E5'
+NOTE=["..xx","..x.","..x.","xxx.","xx.."]
+
+# ---------- git blame · 甩锅 ----------
+def blame():
+    fr=[]; N=64; ORG='#E8845F'
+    for i in range(N):
+        img=canvas(); X0,Y0,X1,Y1=cx(-3),cy(-6),cx(18),cy(3); term(img,X0,Y0,X1,Y1)
+        text(img,'git blame',X0+14,Y0+12,4,ORG)
+        for r,L in enumerate([18,24,14]):
+            y=Y0+44+r*18; col='#8A8A98'
+            if r==1:
+                box(img,X0+8,y-4,X1-8,y+12,'#5A2A2E'); col='#E5484D' if (i//3)%2 or i>=24 else '#B03A3E'
+            box(img,X0+14,y,X0+14+L*6,y+8,col)
+        if i>=24:   # the author avatar is... Clawd
+            ax,ay=X1-46,Y0+52
+            box(img,ax,ay,ax+30,ay+20,BODY); box(img,ax+7,ay+6,ax+10,ay+13,K); box(img,ax+20,ay+6,ax+23,ay+13,K)
+        p=base(); dx=0; dy=0; fx={}
+        if i<6: face(p,'n',0,-1)
+        elif i<24:
+            face(p,'x'); arms(p,DOWN,UP); dy=-kf(i%6,[(0,0),(2,1),(4,0)])
+            if (i//3)%2: fx.update(bang(-2,3))
+        elif i<40:
+            face(p,'n',1,-1); arms(p,DOWN,UP)
+        else:
+            face(p,'n',-1,0,blink=(i in (50,51))); arms(p,DOWN,MID if i<44 else DOWN); dx=kf(i,[(40,0),(56,-3)])
+        if i>=30: fx.update({(round(dx)+15,7):SWEAT,(round(dx)+15,8):SWEAT})
+        fr.append((comp(shadow(),img,xform(p,dx,dy),fx),60))
+    fr[29]=(fr[29][0],300); fr[-1]=(fr[-1][0],400)
+    return fr
+
+# ---------- git stash · 藏起来 ----------
+def stash():
+    fr=[]; N=60
+    items=[((-3,2),'#E5484D'),((1,0),'#3B82F6'),((6,-2),'#F2C14E'),((10,1),'#2FB15A'),((-2,8),'#8B5CF6'),((5,3),'#F59A9A')]
+    for i in range(N):
+        img=canvas(); textc(img,'git stash',138,cy(-6),4,'#3A3A44')
+        chest={}
+        put(chest,rect(12,10,18,14),'#8B5A2B'); put(chest,rect(12,12,18,12),'#6B4423'); chest[(15,12)]='#F2C14E'
+        if i<30: put(chest,rect(13,6,18,7),'#A0522D'); put(chest,rect(12,8,12,9),'#A0522D')
+        else: put(chest,rect(12,9,18,9),'#A0522D')
+        fx={}
+        for k,((x,y),c) in enumerate(items):
+            t0=10+3*k
+            if i<t0: pos=(x,y+round(0.6*math.sin(i*0.7+k)))
+            elif i<t0+4: t=(i-t0)/4; pos=(round(lerp(x,15,t)),round(lerp(y,8,t)-2*math.sin(math.pi*t)))
+            else: continue
+            put(fx,rect(pos[0],pos[1],pos[0]+1,pos[1]+1),c)
+        p=base(); dy=0; notes={}
+        if i<30:
+            face(p,'x'); arms(p,UP if (i//2)%2 else MID,MID if (i//2)%2 else UP)
+        elif i<34: face(p,'x'); dy=-kf(i,[(30,0),(31,1),(33,0)])
+        else:
+            face(p,'n',-1,-1,blink=(i in (46,47)))
+            for k in range(2):
+                t=((i-34+k*7)%14)/14
+                if t<0.85: notes.update(spr(NOTE,13+k*2+round(t*2),round(4-t*9),{'x':'#3A3A44'}))
+        if 30<=i<33: fx.update({(11,8):'#CFC8C0',(19,8):'#CFC8C0',(11,10):'#CFC8C0'})
+        fr.append((comp(shadow(),img,xform(p,-3,dy),chest,fx,notes),60))
+    fr[-1]=(fr[-1][0],300)
+    return fr
+
+# ---------- detached HEAD · 头掉了 ----------
+def detached():
+    fr=[]; N=64
+    for i in range(N):
+        img=canvas(); textc(img,'detached HEAD',138,cy(-6),4,'#3A3A44')
+        bx=kf(i,[(12,0),(20,5),(28,-5),(36,0)])
+        p=base(); fx={}
+        if i<8: face(p,'n')
+        elif i<12: face(p,'x')
+        elif i<44: face(p,'n',1 if bx>0.5 else -1 if bx<-0.5 else 0)
+        else: face(p,'hap')
+        apart=12<=i<44
+        if 12<=i<36: run_legs(p,(i//2)%2)
+        if 8<=i<46:
+            hy=-kf(i,[(8,0),(12,2.5),(40,2.5),(44,0)])+(0.3*math.sin(i*0.6) if apart else 0)
+            head={k:c for k,c in p.items() if k[1]<=9 and 2<=k[0]<=12}
+            body={k:c for k,c in p.items() if k not in head}
+            layers=[xform(body,bx,0),xform(head,0,hy)]
+            if 8<=i<12: fx={(1,4):'#F2C14E',(13,4):'#F2C14E',(7,1):'#F2C14E'}
+        else:
+            sq=squash(kf(i,[(46,0.85),(49,1)])) if 46<=i<49 else {}
+            layers=[xform(p,0,0,**sq)]
+        fr.append((comp(shadow(),img,*layers,fx),60))
+    fr[-1]=(fr[-1][0],300)
+    return fr
+
+# ---------- cherry-pick · 摘樱桃 ----------
+def cherry():
+    fr=[]; N=60; R='#D7263D'; HI='#FF7A8A'; STEM='#4C9A4F'
+    xs=[-1,3,7,11,15]
+    for i in range(N):
+        img=canvas(); textc(img,'cherry-pick',138,4,4,'#3A3A44')
+        tree={}; put(tree,rect(-4,-3,18,-3),'#7A4E2D')
+        gotA,gotB=i>=17,i>=33
+        for k,x in enumerate(xs):
+            if (k==1 and gotA) or (k==3 and gotB): continue
+            tree[(x+1,-2)]=STEM; put(tree,rect(x,-1,x+1,0),R); tree[(x,-1)]=HI
+        dx=kf(i,[(8,0),(13,-4),(21,-4),(27,4),(37,4),(43,0)])
+        dy=-max(kf(i,[(13,0),(16,4),(20,0)]) if 13<=i<20 else 0, kf(i,[(29,0),(32,4),(36,0)]) if 29<=i<36 else 0)
+        p=base()
+        moving=(8<=i<13) or (21<=i<27) or (37<=i<43)
+        if moving: run_legs(p,(i//2)%2)
+        if i<8: face(p,'n',-1 if (i//4)%2 else 1,-1)
+        elif i<43: face(p,'n',0,-1)
+        else: face(p,'hap')
+        if 13<=i<20 or 29<=i<36: arms(p,UP,UP)
+        put(p,rect(2,10,12,10),'#8B5A2B')
+        for x in range(3,12):
+            for y in range(11,14): p[(x,y)]='#B07A3E' if (x+y)%2 else '#8B5A2B'
+        if gotA and not 17<=i<20: put(p,[(5,9),(6,9)],R)
+        if gotB and not 33<=i<36: put(p,[(8,9),(9,9)],R)
+        if 17<=i<20 or 33<=i<36: put(p,rect(6,3,7,4),R); p[(7,2)]=STEM
+        fr.append((comp(shadow(-dy),img,tree,xform(p,dx,dy)),60))
+    fr[-1]=(fr[-1][0],400)
+    return fr
+
+# ---------- Rubber Duck · 小黄鸭调试 ----------
+def duck():
+    fr=[]; N=64; rng=random.Random(4)
+    DUCK=[".yyy...","oykyy..",".yyy...","..yyyyy",".yyyyyy","..YYYY."]
+    BULB=[".yyy.","yyyyy","yyyyy",".yyy.",".ggg.","..g.."]
+    bars=[[rng.randint(4,13) for _ in range(3)] for _ in range(20)]
+    for i in range(N):
+        img=canvas()
+        if i<36:
+            X0,Y0,X1,Y1=cx(-3),cy(-6),cx(12),cy(1)
+            box(img,X0,Y0,X1,Y1,'#3A3A44'); box(img,X0+4,Y0+4,X1-4,Y1-4,'#FFFFFF')
+            box(img,cx(3),Y1-4,cx(4),Y1+10,'#3A3A44')
+            if i<28:
+                for r,L in enumerate(bars[i//4]): box(img,X0+14,Y0+14+r*18,X0+14+L*10,Y0+22+r*18,'#8A8A98')
+            elif (i//4)%2==0: textc(img,'...',(X0+X1)/2,Y0+30,6,'#8A8A98')
+        p=base(); dy=0; fx={}
+        if i<28: face(p,'n',1); arms(p,UP if (i//3)%2 else MID,MID if (i//3)%2 else UP)
+        elif i<36: face(p,'n',1,blink=(i in (32,33)))
+        else:
+            face(p,'hap'); fx.update(spr(BULB,1,-3,{'y':'#FFE066','g':'#9AA0AA'}))
+            if (i//3)%2: fx.update({(-1,-3):'#FFE066',(7,-3):'#FFE066',(-1,1):'#FFE066',(7,1):'#FFE066'})
+            if i<52: dy=-2*abs(math.sin(math.pi*(i-36)/6)); arms(p,UP,UP)
+        db=-1 if (i//4)%2 and i<28 else 0
+        if i>=36 and (i//3)%2: db=-1
+        dk=spr(DUCK,12,9+db,{'y':'#FFD43B','Y':'#E6B800','o':'#F2994A','k':'#222222'})
+        fr.append((comp(shadow(-dy),img,xform(p,-4,dy),dk,fx),60))
+    fr[35]=(fr[35][0],300); fr[-1]=(fr[-1][0],300)
+    return fr
+
+# ---------- Deadline · 赶工 ----------
+def deadline():
+    fr=[]; N=60; RED='#E5484D'; G='#2FB15A'; rng=random.Random(9)
+    for i in range(N):
+        img=canvas(); t=max(0,10-i//4)
+        if t>0 or i<44:
+            if not (t<=3 and i%2): textc(img,'deadline',138,cy(-6),5,RED)
+            textc(img,f'0:{t:02d}',138,cy(-3),7,RED)
+        else:
+            textc(img,'sent!',138,cy(-5),7,G)
+        kb={}; put(kb,rect(0,12,14,14),'#5B606C')
+        for x in range(1,14,2): kb[(x,12)]='#9AA0AA'; kb[(x+1 if x<13 else x,13)]='#9AA0AA'
+        p=base(); sq={}; fx={}
+        if i<40:
+            face(p,'x' if i>=12 else 'n',0,1); f=i%2 if i>=12 else (i//2)%2
+            arms(p,UP if f else MID,MID if f else UP)
+            if i>=16:
+                for x in range(1,14):
+                    if rng.random()<0.35: fx[(x,11)]='#F2994A' if rng.random()<0.6 else '#F2C14E'
+                    if rng.random()<0.15: fx[(x,10)]='#F2C14E'
+                fx[(16 if i%2 else -2,5+(i%3))]=SWEAT
+        else:
+            face(p,'n',blink=True); sy=kf(i,[(40,1),(46,0.6)]); sq=dict(sy=sy,sx=sy**-0.3)
+        fr.append((comp(shadow(),img,xform(p,0.15*math.sin(i*3) if 12<=i<40 else 0,0,**sq),fx,kb),60))
+    fr[43]=(fr[43][0],200); fr[-1]=(fr[-1][0],600)
+    return fr
+
+# ---------- Stack Overflow · 栈溢出 ----------
+def overflow():
+    fr=[]; N=64; C=['#BFD7EA','#9CC3E0']; EDGE='#7FA7C9'
+    for i in range(N):
+        img=canvas(); textc(img,'stack overflow',138,4,4,'#3A3A44')
+        n=clamp((i-2)//4+1,0,9) if i<38 else 9
+        amp=0.18*n; plates={}; p=base(); fx={}; sq={}
+        if i<38:
+            for k in range(n):
+                slot=5-k; y=slot
+                if k==n-1 and i<36: y=round(lerp(-8,slot,clamp(((i-2)%4)/3)))
+                dxk=round(amp*math.sin(TAU*i/10)*(k+1)/5)
+                put(plates,rect(3+dxk,y,11+dxk,y),C[k%2]); plates[(3+dxk,y)]=EDGE; plates[(11+dxk,y)]=EDGE
+            arms(p,UP,UP); face(p,'x' if n>=6 else 'n',0,-1 if n<6 else 0)
+            bdx=0.25*amp*math.sin(TAU*i/10)
+        else:
+            t=i-38; bdx=0
+            for k in range(9):
+                d=1 if k%2 else -1; x=round(7+d*(1+0.6*k)*t*0.9); y=round(5-k-1.5*t+0.35*t*t)
+                if y<15: put(plates,rect(x-4,y,x+4,y),C[k%2])
+                else:
+                    lx=clamp(7+d*(3+k),-4,18)
+                    put(fx,[(lx,15),(lx+1,15),(lx-1,14)],C[k%2])
+            face(p,'x') if i<54 else face(p,'n',blink=(i in (58,59)))
+            if i>=44: sq=squash(0.85)
+            for k in range(3):
+                a=TAU*(i/10+k/3); fx[(round(7+4*math.cos(a)),round(4+1.2*math.sin(a)))]='#F2C14E'
+        fr.append((comp(shadow(),img,xform(p,bdx,0,**sq),plates,fx),60))
+    fr[37]=(fr[37][0],250); fr[-1]=(fr[-1][0],400)
+    return fr
+
+# ---------- Memory Leak · 内存泄漏 ----------
+def leak():
+    fr=[]; N=60; W_='#3B82F6'; SP='#5DA9E9'
+    for i in range(N):
+        img=canvas(); textc(img,'memory leak',138,cy(-6),5,'#3A3A44')
+        p=base(); fx={}; dx=0
+        if i<6: face(p,'hap'); arms(p,MID,MID)
+        elif i<50:
+            face(p,'x'); arms(p,UP if (i//2)%2 else MID,MID if (i//2)%2 else UP); dx=0.2*math.sin(i*2.7)
+        else: face(p,'n',blink=True)
+        put(p,rect(3,10,11,13),'#EAF4FB'); put(p,rect(3,9,11,9),'#5E86A8')
+        put(p,rect(3,10,3,14)+rect(11,10,11,14)+rect(3,14,11,14),'#7FA7C9')
+        lvl=round(kf(i,[(0,4),(54,0)]))
+        for y in range(14-lvl,14): put(p,rect(4,y,10,y),W_)
+        lab=canvas(); textc(lab,'RAM',cx(7.5)+dx*S,cy(10)+6,3,'#1E3A5F')
+        for start,(hx,hy),dirx in ((6,(3,12),-1),(20,(11,12),1),(32,(7,14),0)):
+            if i<start or lvl==0 and i>=54: continue
+            for k in range(3):
+                t=((i+k*3)%9)/9
+                fx[(hx+dirx*round(1+t*4),hy+round(t*t*3) if dirx else hy+1+round(t))]=SP
+        w=kf(i,[(6,0),(56,10)]); pud={(x,15):SP for x in range(round(7-w),round(7+w)+1)}
+        fr.append((comp(shadow(),pud,img,xform(p,dx,0),lab,fx),60))
+    fr[-1]=(fr[-1][0],400)
+    return fr
+
+# ---------- It's Simple · 很简单 ----------
+def simple():
+    fr=[]; N=64; PAPER='#FFFDF5'; EDGE='#C9C2B5'; LINE='#B5AFA4'
+    for i in range(N):
+        drop=round(kf(i,[(0,-13),(6,0)])); s=max(0,(i-8)*0.5)
+        pap={}
+        for y in range(-7,6):
+            yy=y+drop
+            put(pap,rect(5,yy,9,yy),PAPER); pap[(4,yy)]=EDGE; pap[(10,yy)]=EDGE
+            if y>=-3 and (y-int(s))%2==0: put(pap,rect(5,yy,5+(3+(y-int(s))*7)%5,yy),LINE)
+        img=canvas(); ty=cy(-6+drop+s)+2
+        if ty<cy(4):
+            textc(img,"it's",cx(7.5),round(ty),3,'#3A3A44'); textc(img,'simple',cx(7.5),round(ty)+20,3,'#3A3A44')
+        pile={}
+        for side,(x0,x1),start in (('r',(13,18),12),('l',(-4,1),30)):
+            h=round(kf(i,[(start,0),(60,9 if side=='r' else 6)]))
+            for k in range(h):
+                o=k%2; put(pile,rect(x0+o,14-k,x1-1+o,14-k),PAPER if k%2 else '#F1EADC'); pile[(x0+o,14-k)]=EDGE; pile[(x1-1+o,14-k)]=EDGE
+        p=base(); fx={}
+        if i<12: face(p,'hap')
+        elif i<30: face(p,'n',0,-1)
+        elif i<46: face(p,'n',blink=True)
+        else: face(p,'x'); fx[(16 if i%2 else -2,5)]=SWEAT
+        arms(p,UP if (i//3)%2 else MID,MID if (i//3)%2 else UP)
+        fr.append((comp(shadow(),pap,img,xform(p,0,0),pile,fx),60))
+    fr[-1]=(fr[-1][0],500)
+    return fr
+
 def to_gif(frames,path):
     gf=[]
     for im,_ in frames:
@@ -996,7 +1255,8 @@ def save(nm,fr):
 
 ALL=['thinking','compact','clone','conflict','rmrf','hello','lgtm','passed','error','coffee',
      'deploy','works','bug','fish','offwork','overtime','sleep','notfound','loop','forcepush',
-     'proceed','esc','limit','plan','clear_ctx','ultrathink','subagents','todo','right','bye','banned']
+     'proceed','esc','limit','plan','clear_ctx','ultrathink','subagents','todo','right','bye','banned',
+     'blame','stash','detached','cherry','duck','deadline','overflow','leak','simple']
 FILE={'clear_ctx':'clear'}   # clear() is already a drawing helper
 if __name__=='__main__':
     for nm in (sys.argv[1:] or ALL):

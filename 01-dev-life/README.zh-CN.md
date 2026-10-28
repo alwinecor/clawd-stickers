@@ -2,7 +2,7 @@
 
 [English](README.md) | 简体中文
 
-程序员日常主题，31 个动态表情，Clawd 主演。眼睛是两个小黑方块（偶尔眯成 ^ ^ 或 > <），不画嘴，戏全靠动作和道具。第 21–31 个是 Claude Code 专属表情。这套规矩沿用 Qisi3344/clawd-moji 的 [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night)。
+程序员日常主题，40 个动态表情，Clawd 主演。眼睛是两个小黑方块（偶尔眯成 ^ ^ 或 > <），不画嘴，戏全靠动作和道具。第 21–31 个是 Claude Code 专属表情，第 32–40 个是更多程序员经典梗。这套规矩沿用 Qisi3344/clawd-moji 的 [01-movie-night](https://github.com/Qisi3344/clawd-moji/tree/main/01-movie-night)。
 
 | # | 名字 | 动图 | 小剧情 |
 |---|---|---|---|
@@ -37,6 +37,15 @@
 | 29 | **您说得对**<br>You're Absolutely Right! | <img src="gif/right.gif" width="120"> | `You're absolutely right!` 一行行出现，它拼命点头，身边冒星星。 |
 | 30 | **拜拜**<br>/exit | <img src="gif/bye.gif" width="120"> | 敲下 `/exit`，挥手告别，然后缩小钻进终端里，只留下一句 `bye!`。 |
 | 31 | **封号**<br>Banned | <img src="gif/banned.gif" width="120"> | 正开心地敲键盘，一把大锤从天而降砸下来；红色 BANNED 印章弹出，它整个变成灰色，铁栏杆落下把它关住。 |
+| 32 | **甩锅**<br>git blame | <img src="gif/blame.gif" width="120"> | 在 `git blame` 下气冲冲地指着出错的那行，结果作者是自己；默默放下钳子，冒着汗挪走了。 |
+| 33 | **藏起来**<br>git stash | <img src="gif/stash.gif" width="120"> | 慌慌张张把散落的改动一股脑塞进宝箱，啪地合上盖子，然后望天吹口哨。 |
+| 34 | **头掉了**<br>detached HEAD | <img src="gif/detached.gif" width="120"> | 脑袋「啵」地分离浮在原地，身体到处乱跑找头，最后咔哒一下装回去。 |
+| 35 | **摘樱桃**<br>cherry-pick | <img src="gif/cherry.gif" width="120"> | 在一排樱桃下面挑着蹦起来，只摘了两颗放进篮子，其余的不碰。 |
+| 36 | **小黄鸭调试**<br>Rubber Duck | <img src="gif/duck.gif" width="120"> | 对着一只小黄鸭比划着讲代码，讲着讲着停下来……头顶亮起灯泡，想通了。 |
+| 37 | **赶工**<br>Deadline | <img src="gif/deadline.gif" width="120"> | 红色倒计时一路逼近，键盘敲到冒火；归零那一刻出现 `sent!`，整个瘫成一张饼。 |
+| 38 | **栈溢出**<br>Stack Overflow | <img src="gif/overflow.gif" width="120"> | 头顶的盘子越叠越高、越晃越厉害，最后整摞倒塌，它晕乎乎地冒星星。 |
+| 39 | **内存泄漏**<br>Memory Leak | <img src="gif/leak.gif" width="120"> | 抱着一个写着 RAM 的罐子，漏洞一个接一个冒出来，水越漏越少，地上积起一滩水。 |
+| 40 | **很简单**<br>It's Simple | <img src="gif/simple.gif" width="120"> | 拽着一张标题写着 "it's simple" 的需求单，越拉越长，两边的纸堆得越来越高。 |
 
 ## 下载 / 在微信里用
 
@@ -50,7 +59,7 @@
 ```bash
 cd src
 pip install pillow
-python clawd_dev.py            # 全部 31 个
+python clawd_dev.py            # 全部 40 个
 python clawd_dev.py compact    # 只生成一个
 ```
 
