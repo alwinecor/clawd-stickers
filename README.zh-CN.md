@@ -112,14 +112,14 @@ clawd-stickers/
 ├── README.md                  # 英文项目说明
 ├── README.zh-CN.md            # 中文项目说明
 ├── LICENSE                    # 标准 MIT 许可
+├── promo/                     # 分享图（3:4，每张 20 个表情）
+│   ├── covers/                # 深浅两版动图与静态图
+│   └── make_covers.py         # 分享图生成脚本
 └── dev-life/                  # 克码人生主题套装
     ├── README.md              # 英文表情包内容说明
     ├── README.zh-CN.md        # 中文表情包内容说明
     ├── gif/                   # 40 个成品 GIF
     ├── gif-dark/              # 40 个成品 GIF（深色背景）
-    ├── promo/                 # 分享图（3:4，每张 20 个表情）
-    │   ├── covers/            # 深浅两版动图与静态图
-    │   └── make_covers.py     # 分享图生成脚本
     └── src/
         └── clawd_dev.py       # 绘图、动画与 GIF 导出脚本
 ```

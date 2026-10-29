@@ -3,9 +3,9 @@
 Animated 3:4 pages (1080x1440) for sharing the set on Xiaohongshu:
 the 40 stickers split over two pages, 5 x 4 each, with their English names.
 
-  python dev-life/promo/make_covers.py                # both pages, dark terminal theme
-  python dev-life/promo/make_covers.py 2              # just page 2
-  python dev-life/promo/make_covers.py --light 1 2    # cream theme
+  python promo/make_covers.py                # both pages, dark terminal theme
+  python promo/make_covers.py 2              # just page 2
+  python promo/make_covers.py --light 1 2    # cream theme
 
 Output: page-N-{dark,light}.gif, plus page-N-{dark,light}-static.png, a still
 built from a hand-picked key frame per sticker (KEY below) rather than one
@@ -20,7 +20,7 @@ Stickers are scaled by whole pixels so the pixel art stays crisp.
 import os, sys
 from PIL import Image, ImageDraw, ImageFont
 HERE=os.path.dirname(os.path.abspath(__file__))
-SET=os.path.join(HERE,'..')
+SET=os.path.join(HERE,'..','dev-life')
 OUT=os.path.join(HERE,'covers')
 
 CW,CH=1080,1440
