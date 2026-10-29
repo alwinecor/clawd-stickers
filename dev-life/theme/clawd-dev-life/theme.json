@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "name": "Dev Life · 克码人生",
+  "author": "alwinecor",
+  "version": "1.0.0",
+  "description": "Clawd Stickers 的 Dev Life 主题：思考、写码、压缩上下文、报错都有对应的小剧场。非官方同人作品，与 Anthropic 无关。",
+  "preview": "idle.svg",
+  "viewBox": {
+    "x": -4.5,
+    "y": -7,
+    "width": 24,
+    "height": 24
+  },
+  "layout": {
+    "contentBox": {
+      "x": 0,
+      "y": 6,
+      "width": 15,
+      "height": 10
+    },
+    "centerX": 7.5,
+    "baselineY": 16,
+    "visibleHeightRatio": 0.29,
+    "baselineBottomRatio": 0.05
+  },
+  "eyeTracking": {
+    "enabled": true,
+    "states": [
+      "idle"
+    ],
+    "eyeRatioX": 0.5,
+    "eyeRatioY": 0.667,
+    "maxOffset": 3,
+    "bodyScale": 0.33,
+    "shadowStretch": 0.15,
+    "shadowShift": 0.3,
+    "ids": {
+      "eyes": "eyes-js",
+      "body": "body-js",
+      "shadow": "shadow-js"
+    },
+    "shadowOrigin": "7.5px 15px"
+  },
+  "customization": {
+    "petTint": false
+  },
+  "states": {
+    "idle": [
+      "idle.svg"
+    ],
+    "thinking": [
+      "thinking.apng",
+      "ultrathink.apng",
+      "plan.apng"
+    ],
+    "working": [
+      "todo.apng",
+      "simple.apng",
+      "bug.apng"
+    ],
+    "juggling": [
+      "subagents.apng"
+    ],
+    "sweeping": [
+      "compact.apng"
+    ],
+    "carrying": [
+      "clone.apng"
+    ],
+    "notification": [
+      "proceed.apng"
+    ],
+    "attention": [
+      "passed.apng"
+    ],
+    "error": [
+      "error.apng"
+    ],
+    "sleeping": [
+      "sleep.apng"
+    ],
+    "roam": [
+      "roam.svg"
+    ]
+  },
+  "sleepSequence": {
+    "mode": "direct"
+  },
+  "workingTiers": [
+    {
+      "minSessions": 3,
+      "file": "deadline.apng"
+    },
+    {
+      "minSessions": 2,
+      "file": "loop.apng"
+    },
+    {
+      "minSessions": 1,
+      "file": "todo.apng",
+      "files": [
+        "todo.apng",
+        "simple.apng",
+        "bug.apng"
+      ]
+    }
+  ],
+  "idleAnimations": [
+    {
+      "file": "fish.apng",
+      "duration": 3920
+    },
+    {
+      "file": "coffee.apng",
+      "duration": 4710
+    },
+    {
+      "file": "duck.apng",
+      "duration": 4320
+    },
+    {
+      "file": "hello.apng",
+      "duration": 4350
+    },
+    {
+      "file": "works.apng",
+      "duration": 4200
+    }
+  ],
+  "reactions": {
+    "drag": {
+      "file": "drag.svg"
+    },
+    "clickLeft": {
+      "file": "blame.apng",
+      "duration": 4420
+    },
+    "clickRight": {
+      "file": "esc.apng",
+      "duration": 3660
+    },
+    "annoyed": {
+      "file": "forcepush.apng",
+      "duration": 4180
+    },
+    "double": {
+      "files": [
+        "rmrf.apng",
+        "detached.apng",
+        "banned.apng"
+      ],
+      "duration": 5430
+    }
+  },
+  "timings": {
+    "minDisplay": {
+      "attention": 3500,
+      "error": 3940,
+      "notification": 3840,
+      "carrying": 4420,
+      "sweeping": 4860,
+      "working": 1000,
+      "thinking": 1000
+    },
+    "autoReturn": {
+      "attention": 3500,
+      "error": 3940,
+      "notification": 3840,
+      "carrying": 4420,
+      "sweeping": 300000
+    },
+    "mouseIdleTimeout": 20000,
+    "mouseSleepTimeout": 60000
+  },
+  "hitBoxes": {
+    "default": {
+      "x": -1,
+      "y": 5,
+      "w": 17,
+      "h": 11
+    }
+  },
+  "miniMode": {
+    "supported": false
+  }
+}

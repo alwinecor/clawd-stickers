@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4.5 -7 24 24" width="288" height="288">
+  <defs>
+    <style>
+      .sway { transform-origin: 7.5px 4px; animation: sway 0.9s infinite alternate ease-in-out; }
+      .kick-a, .kick-b, .flail-a, .flail-b { animation: kick 0.24s infinite step-end; }
+      .kick-b, .flail-b { animation-delay: -0.12s; }
+      .flail-a, .flail-b { animation-name: flail; }
+      .drop-l, .drop-r { animation: drop-l 0.8s infinite ease-out; }
+      .drop-r { animation-name: drop-r; animation-delay: -0.4s; }
+      .shadow { transform-origin: 7.5px 15.5px; animation: shadow 0.9s infinite alternate ease-in-out; }
+      @keyframes sway { 0% { transform: translate(0, -1px) rotate(-7deg); } 100% { transform: translate(0, -1px) rotate(7deg); } }
+      @keyframes kick { 0% { transform: translate(0, -1px); } 50% { transform: none; } }
+      @keyframes flail { 0% { transform: translate(0, -1px); } 50% { transform: translate(0, 1px); } }
+      @keyframes drop-l { 0% { transform: none; opacity: 1; } 100% { transform: translate(-3px, 2px); opacity: 0; } }
+      @keyframes drop-r { 0% { transform: none; opacity: 1; } 100% { transform: translate(3px, 2px); opacity: 0; } }
+      @keyframes shadow { 0% { transform: translateX(-1px) scaleX(0.9); } 100% { transform: translateX(1px) scaleX(0.9); } }
+    </style>
+  </defs>
+  <g class="shadow" opacity="0.6"><rect x="5" y="15" width="5" height="1" fill="#3A3A42"/></g>
+  <g class="sway" fill="#D77757">
+    <g class="kick-a"><rect x="3" y="11" width="1" height="4"/></g><g class="kick-b"><rect x="5" y="11" width="1" height="4"/></g><g class="kick-a"><rect x="9" y="11" width="1" height="4"/></g><g class="kick-b"><rect x="11" y="11" width="1" height="4"/></g>
+    <rect x="2" y="6" width="11" height="7"/><g class="flail-a"><rect x="0" y="7" width="2" height="2"/></g><g class="flail-b"><rect x="13" y="7" width="2" height="2"/></g>
+    <g fill="#1a1a1a"><rect x="3" y="7" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="3" y="9" width="1" height="1"/><rect x="11" y="7" width="1" height="1"/><rect x="10" y="8" width="1" height="1"/><rect x="11" y="9" width="1" height="1"/></g>
+    <g fill="#7FB2E5"><g class="drop-l"><rect x="0" y="4" width="1" height="1"/></g><g class="drop-r"><rect x="14" y="4" width="1" height="1"/></g></g>
+  </g>
+</svg>

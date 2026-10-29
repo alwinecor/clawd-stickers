@@ -65,6 +65,34 @@
 
 保存好的 GIF 文件都可以在聊天应用中直接发送，如：微信，小红书，Whatsapp 等。如果应用支持，也可以手动添加为自定义表情。全部 GIF 均为 288×288 像素、透明背景、循环播放。
 
+### 用作 clawd-on-desk 桌宠主题
+
+这套表情也打包成了 [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk) 的桌宠主题：小克会随着 Claude Code 的状态切换动画。
+
+1. 把 [`dev-life/theme/`](dev-life/theme/) 下的 `clawd-dev-life` 文件夹（深色桌面用 `clawd-dev-life-dark`）整个复制到主题目录：
+   - Windows：`%APPDATA%/clawd-on-desk/themes/`
+   - macOS：`~/Library/Application Support/clawd-on-desk/themes/`
+   - Linux：`~/.config/clawd-on-desk/themes/`
+2. 打开 clawd-on-desk 的 `Settings...` → `Theme`，选择 **Dev Life · 克码人生**。如果没出现，重启一下 clawd-on-desk。
+
+| 状态 | 动画 |
+|---|---|
+| 待机 | 呼吸眨眼，眼睛跟着鼠标转，偶尔随机播放摸鱼、咖啡续命、小黄鸭调试、hello world、在我电脑上能跑 |
+| 思考 | 思考中 / ultrathink / 计划模式，随机一个 |
+| 工作 | 1 个会话：待办清单 / 很简单 / 抓虫；2 个：死循环；3 个以上：赶工 |
+| 子代理 | 子代理 |
+| 上下文压缩 | /compact |
+| 创建 worktree | git clone |
+| 等待授权 | 疯狂同意 |
+| 任务完成 | 测试通过 |
+| 报错 | 报错 |
+| 睡觉 | 晚安 |
+| 在桌面上走动 | 甩手迈步地散步 |
+| 拖拽 | 被拎起来，手脚乱蹬、眼睛变成 > <、汗珠乱飞 |
+| 双击 / 连点 | 甩锅、急停、强推；删库、头掉了、封号 |
+
+目前还不支持迷你模式。
+
 ## 本地生成
 
 如需调整动画或重新生成 GIF，可运行仓库内的 Python 脚本。
@@ -99,9 +127,12 @@ python dev-life/src/clawd_dev.py thinking compact clear
 
 # 生成深色背景版（可与上面的参数组合）
 python dev-life/src/clawd_dev.py --dark
+
+# 生成 clawd-on-desk 主题（加 --dark 生成深色版）
+python dev-life/src/clawd_dev.py --theme
 ```
 
-生成结果写入 [`dev-life/gif/`](dev-life/gif/)，加 `--dark` 时写入 [`dev-life/gif-dark/`](dev-life/gif-dark/)，会覆盖同名 GIF。深色版的换色规则见脚本开头的 `DARK` 表。脚本会输出每个表情的名称、帧数与文件大小。
+生成结果写入 [`dev-life/gif/`](dev-life/gif/)，加 `--dark` 时写入 [`dev-life/gif-dark/`](dev-life/gif-dark/)，会覆盖同名 GIF；`--theme` 写入 [`dev-life/theme/`](dev-life/theme/)，包含 APNG 动画和 `theme.json`，状态与动画的对应关系见脚本里的 `THEME` 表。深色版的换色规则见脚本开头的 `DARK` 表。脚本会输出每个表情的名称、帧数与文件大小。
 
 参数通常与 GIF 文件名一致，不含 `.gif` 后缀，例如 `thinking`、`compact`、`clear`。完整名称可查看成品目录；脚本中的 `ALL` 列表及 `FILE` 映射定义了生成入口与输出名称，其中 `clear` 对应函数 `clear_ctx()`。
 
@@ -120,8 +151,9 @@ clawd-stickers/
     ├── README.zh-CN.md        # 中文表情包内容说明
     ├── gif/                   # 40 个成品 GIF
     ├── gif-dark/              # 40 个成品 GIF（深色背景）
+    ├── theme/                 # clawd-on-desk 桌宠主题（浅色、深色）
     └── src/
-        └── clawd_dev.py       # 绘图、动画与 GIF 导出脚本
+        └── clawd_dev.py       # 绘图、动画、GIF 与主题导出脚本
 ```
 
 ## 许可与使用范围

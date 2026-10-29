@@ -9,6 +9,7 @@ Generates the animated Clawd stickers in ../gif/ (288x288, also fine as WeChat s
   python clawd_dev.py             # all
   python clawd_dev.py compact     # just one
   python clawd_dev.py --dark      # dark-background set -> ../gif-dark/
+  python clawd_dev.py --theme     # clawd-on-desk theme -> ../theme/ (add --dark for the dark one)
 
 No external font needed: command text uses the tiny pixel font defined below.
 
@@ -1244,6 +1245,78 @@ def simple():
     fr[-1]=(fr[-1][0],500)
     return fr
 
+# ---------- clawd-on-desk theme-only SVGs: Idle · 待机, Roam · 散步, Drag · 拎起来 ----------
+# SVG + CSS rather than frames: the browser animates them smoothly at sub-pixel steps.
+# Coordinates are body cells, the same grid as base(); legs run up behind the torso so lifting them leaves no gap.
+def svg_rect(x,y,w,h,c=None): return f'<rect x="{x}" y="{y}" width="{w}" height="{h}"'+(f' fill="{c}"' if c else '')+'/>'
+def svg_doc(vb,css,body):
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb["x"]} {vb["y"]} {vb["width"]} {vb["height"]}" width="{H*S}" height="{H*S}">\n'
+            f'  <defs>\n    <style>\n{css}    </style>\n  </defs>\n{body}</svg>\n')
+def svg_legs(cls=('','','','')):
+    return ''.join(f'<g class="{c}">{svg_rect(x,11,1,4)}</g>' if c else svg_rect(x,11,1,4) for x,c in zip((3,5,9,11),cls))
+# Same structure and ids as clawd-on-desk's built-in clawd-idle-follow.svg, so its eye tracking drives #eyes-js.
+def idle_svg(vb):
+    r=svg_rect
+    return svg_doc(vb,"""      .breathe { transform-origin: 7.5px 13px; animation: breathe 3.2s infinite ease-in-out; }
+      .blink { transform-origin: 7.5px 9px; animation: blink 4s infinite ease-in-out; }
+      #eyes-js, #body-js, #shadow-js { transition: transform 0.2s ease-out; }
+      #shadow-js { transform-origin: 7.5px 15px; }
+      @keyframes breathe { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.02, 0.98) translate(0, 0.5px); } }
+      @keyframes blink { 0%, 10%, 100% { transform: scaleY(1); } 5% { transform: scaleY(0.1); } }
+""",f'''  <g id="shadow-js">{r(3,15,9,1,tc('#D9D2CB'))}</g>
+  <g id="legs" fill="{BODY}">{svg_legs()}</g>
+  <g id="body-js">
+    <g class="breathe" fill="{BODY}">
+      {r(2,6,11,7)}{r(0,9,2,2)}{r(13,9,2,2)}
+      <g id="eyes-js" fill="{K}"><g class="blink">{r(4,8,1,2)}{r(10,8,1,2)}</g></g>
+    </g>
+  </g>
+''')
+# Walks right (clawd-on-desk mirrors it for leftward walks): legs and arms step in pairs, body bobs on each step.
+def roam_svg(vb):
+    r=svg_rect
+    return svg_doc(vb,"""      .bob { animation: bob 0.3s infinite ease-in-out; }
+      .step-a, .step-b { animation: step 0.6s infinite step-end; }
+      .step-b { animation-delay: -0.3s; }
+      .blink { transform-origin: 7.5px 9px; animation: blink 3.6s infinite ease-in-out; }
+      .shadow { transform-origin: 7.5px 15.5px; animation: shadow 0.3s infinite ease-in-out; }
+      @keyframes bob { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0, -0.6px); } }
+      @keyframes step { 0% { transform: translate(0, -1px); } 50% { transform: none; } }
+      @keyframes blink { 0%, 8%, 100% { transform: scaleY(1); } 4% { transform: scaleY(0.1); } }
+      @keyframes shadow { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.9); } }
+""",f'''  <g class="shadow">{r(3,15,9,1,tc('#D9D2CB'))}</g>
+  <g class="bob" fill="{BODY}">
+    {svg_legs(('step-a','step-b','step-a','step-b'))}
+    {r(2,6,11,7)}<g class="step-a">{r(0,9,2,2)}</g><g class="step-b">{r(13,9,2,2)}</g>
+    <g fill="{K}"><g class="blink">{r(5,8,1,2)}{r(11,8,1,2)}</g></g>
+  </g>
+''')
+# Held up by the scruff: swings from the top, arms flail, legs kick, > < eyes and flying sweat.
+def drag_svg(vb):
+    r=svg_rect; eyes=''.join(r(x,y,1,1) for x,y in [(3,7),(4,8),(3,9),(11,7),(10,8),(11,9)])
+    return svg_doc(vb,"""      .sway { transform-origin: 7.5px 4px; animation: sway 0.9s infinite alternate ease-in-out; }
+      .kick-a, .kick-b, .flail-a, .flail-b { animation: kick 0.24s infinite step-end; }
+      .kick-b, .flail-b { animation-delay: -0.12s; }
+      .flail-a, .flail-b { animation-name: flail; }
+      .drop-l, .drop-r { animation: drop-l 0.8s infinite ease-out; }
+      .drop-r { animation-name: drop-r; animation-delay: -0.4s; }
+      .shadow { transform-origin: 7.5px 15.5px; animation: shadow 0.9s infinite alternate ease-in-out; }
+      @keyframes sway { 0% { transform: translate(0, -1px) rotate(-7deg); } 100% { transform: translate(0, -1px) rotate(7deg); } }
+      @keyframes kick { 0% { transform: translate(0, -1px); } 50% { transform: none; } }
+      @keyframes flail { 0% { transform: translate(0, -1px); } 50% { transform: translate(0, 1px); } }
+      @keyframes drop-l { 0% { transform: none; opacity: 1; } 100% { transform: translate(-3px, 2px); opacity: 0; } }
+      @keyframes drop-r { 0% { transform: none; opacity: 1; } 100% { transform: translate(3px, 2px); opacity: 0; } }
+      @keyframes shadow { 0% { transform: translateX(-1px) scaleX(0.9); } 100% { transform: translateX(1px) scaleX(0.9); } }
+""",f'''  <g class="shadow" opacity="0.6">{r(5,15,5,1,tc('#D9D2CB'))}</g>
+  <g class="sway" fill="{BODY}">
+    {svg_legs(('kick-a','kick-b','kick-a','kick-b'))}
+    {r(2,6,11,7)}<g class="flail-a">{r(0,7,2,2)}</g><g class="flail-b">{r(13,7,2,2)}</g>
+    <g fill="{K}">{eyes}</g>
+    <g fill="{SWEAT}"><g class="drop-l">{r(0,4,1,1)}</g><g class="drop-r">{r(14,4,1,1)}</g></g>
+  </g>
+''')
+SVGS={'idle':idle_svg,'roam':roam_svg,'drag':drag_svg}
+
 def to_gif(frames,path):
     gf=[]
     for im,_ in frames:
@@ -1272,7 +1345,77 @@ ALL=['hello','thinking','ultrathink','plan','todo',
      'works','passed','deploy','deadline','overtime',
      'coffee','fish','offwork','sleep','bye']
 FILE={'clear_ctx':'clear'}   # clear() is already a drawing helper
+
+# ---------- clawd-on-desk theme (--theme) ----------
+# https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/docs/guides/guide-theme-creation.md
+# viewBox is in body cells, the same grid as the built-in Clawd theme (body x 0..15, feet at y=15).
+THEME_ID='clawd-dev-life'+('-dark' if DARK_MODE else '')
+THEME={
+ 'states':{'idle':['idle'],'thinking':['thinking','ultrathink','plan'],'working':['todo','simple','bug'],
+           'juggling':['subagents'],'sweeping':['compact'],'carrying':['clone'],'notification':['proceed'],
+           'attention':['passed'],'error':['error'],'sleeping':['sleep'],'roam':['roam']},
+ 'workingTiers':[(3,['deadline']),(2,['loop']),(1,['todo','simple','bug'])],
+ 'idleAnimations':['fish','coffee','duck','hello','works'],
+ 'reactions':{'drag':'drag','clickLeft':'blame','clickRight':'esc','annoyed':'forcepush','double':['rmrf','detached','banned']},
+}
+ONESHOT=['attention','error','notification','carrying']   # hold until the animation has played once
+def to_apng(frames,path):
+    frames[0][0].save(path,format='PNG',save_all=True,append_images=[im for im,_ in frames[1:]],
+                      duration=[d for _,d in frames],loop=0,disposal=0,blend=0)
+    return os.path.getsize(path)
+def theme():
+    import json
+    out=os.path.join(HERE,'..','theme',THEME_ID); ad=os.path.join(out,'assets')
+    os.makedirs(ad,exist_ok=True)
+    names=list(dict.fromkeys(n for v in THEME['states'].values() for n in v))
+    names+=[n for _,ns in THEME['workingTiers'] for n in ns]+THEME['idleAnimations']
+    names+=[n for v in THEME['reactions'].values() for n in ([v] if isinstance(v,str) else v)]
+    vb={'x':-OX-(H-W)/2,'y':-OY,'width':H,'height':H}
+    for nm,fn in SVGS.items():
+        with open(os.path.join(ad,nm+'.svg'),'w',encoding='utf-8') as fp: fp.write(fn(vb))
+    ms={}; f=lambda n:n+('.svg' if n in SVGS else '.apng')
+    for nm in dict.fromkeys(n for n in names if n not in SVGS):
+        fr=square(globals()[{v:k for k,v in FILE.items()}.get(nm,nm)]())
+        ms[nm]=sum(d for _,d in fr); n=to_apng(fr,os.path.join(ad,f(nm)))
+        print(f'{nm}: {len(fr)} frames, {ms[nm]}ms, {n//1024}KB')
+    st=THEME['states']; first=lambda s:ms[st[s][0]]
+    cfg={
+     'schemaVersion':1,
+     'name':'Dev Life · 克码人生'+(' (Dark)' if DARK_MODE else ''),
+     'author':'alwinecor','version':'1.0.0',
+     'description':'Clawd Stickers 的 Dev Life 主题：思考、写码、压缩上下文、报错都有对应的小剧场。'
+                   '非官方同人作品，与 Anthropic 无关。'+('适合深色桌面。' if DARK_MODE else ''),
+     'preview':f('idle'),
+     'viewBox':vb,
+     'layout':{'contentBox':{'x':0,'y':6,'width':15,'height':10},'centerX':7.5,'baselineY':16,
+               'visibleHeightRatio':0.29,'baselineBottomRatio':0.05},
+     # Same values as the built-in Clawd; the ratios place the eyes (7.5, 9) inside our viewBox.
+     'eyeTracking':{'enabled':True,'states':['idle'],
+                    'eyeRatioX':(7.5-vb['x'])/vb['width'],'eyeRatioY':round((9-vb['y'])/vb['height'],3),
+                    'maxOffset':3,'bodyScale':0.33,'shadowStretch':0.15,'shadowShift':0.3,
+                    'ids':{'eyes':'eyes-js','body':'body-js','shadow':'shadow-js'},'shadowOrigin':'7.5px 15px'},
+     'customization':{'petTint':False},
+     'states':{s:[f(n) for n in v] for s,v in st.items()},
+     'sleepSequence':{'mode':'direct'},
+     'workingTiers':[{'minSessions':k,'file':f(ns[0]),**({'files':[f(n) for n in ns]} if len(ns)>1 else {})}
+                     for k,ns in THEME['workingTiers']],
+     'idleAnimations':[{'file':f(n),'duration':ms[n]} for n in THEME['idleAnimations']],
+     'reactions':{k:({'file':f(v)} if k=='drag' else {'file':f(v),'duration':ms[v]} if isinstance(v,str) else
+                     {'files':[f(n) for n in v],'duration':max(ms[n] for n in v)})
+                  for k,v in THEME['reactions'].items()},
+     'timings':{'minDisplay':{**{s:first(s) for s in ONESHOT},'sweeping':first('sweeping'),
+                              'working':1000,'thinking':1000},
+                'autoReturn':{**{s:first(s) for s in ONESHOT},'sweeping':300000},
+                'mouseIdleTimeout':20000,'mouseSleepTimeout':60000},
+     'hitBoxes':{'default':{'x':-1,'y':5,'w':17,'h':11}},
+     'miniMode':{'supported':False},
+    }
+    with open(os.path.join(out,'theme.json'),'w',encoding='utf-8') as fp:
+        json.dump(cfg,fp,ensure_ascii=False,indent=2); fp.write('\n')
+    print(f'theme -> {os.path.normpath(out)}')
+
 if __name__=='__main__':
+    if '--theme' in sys.argv: theme(); sys.exit()
     for nm in ([a for a in sys.argv[1:] if a!='--dark'] or ALL):
         nm={v:k for k,v in FILE.items()}.get(nm,nm)
         save(FILE.get(nm,nm),globals()[nm]())

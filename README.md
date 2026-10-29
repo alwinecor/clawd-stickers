@@ -65,6 +65,34 @@ Select **Code → Download ZIP** on the repository home page, extract the archiv
 
 Saved GIFs can be sent directly in chat apps such as WeChat, Xiaohongshu and WhatsApp. If the app supports custom stickers, you can also add them manually. All GIFs are 288×288 with a transparent background and loop continuously.
 
+### Use as a clawd-on-desk theme
+
+The set is also packaged as a desktop pet theme for [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk), so Clawd switches animations as Claude Code changes state.
+
+1. Copy the `clawd-dev-life` folder from [`dev-life/theme/`](dev-life/theme/) (or `clawd-dev-life-dark` for dark desktops) into the themes directory:
+   - Windows: `%APPDATA%/clawd-on-desk/themes/`
+   - macOS: `~/Library/Application Support/clawd-on-desk/themes/`
+   - Linux: `~/.config/clawd-on-desk/themes/`
+2. In clawd-on-desk, open `Settings...` → `Theme` and select **Dev Life · 克码人生**. Restart clawd-on-desk if it doesn't appear.
+
+| State | Animation |
+|---|---|
+| Idle | Breathing and blinking, eyes following the mouse, with occasional Slacking Off, Coffee Break, Rubber Duck, hello world and Works on My Machine |
+| Thinking | One of Thinking / ultrathink / Plan Mode at random |
+| Working | 1 session: Todo List / It's Simple / Bug Hunt; 2: while(true); 3 or more: Deadline |
+| Subagents | Subagents |
+| Context compaction | /compact |
+| Creating a worktree | git clone |
+| Waiting for permission | Yes, Proceed |
+| Task complete | Tests Passed |
+| Error | Error |
+| Sleeping | Good Night |
+| Walking around the desktop | Strolling along, swinging its arms |
+| Dragging | Picked up and dangling: arms and legs flailing, > < eyes, sweat flying |
+| Double-click / rapid clicks | git blame, Esc, Force Push; rm -rf, detached HEAD, Banned |
+
+Mini mode isn't supported yet.
+
 ## Generate locally
 
 Run the included Python script to edit animations or regenerate GIFs.
@@ -99,9 +127,12 @@ python dev-life/src/clawd_dev.py thinking compact clear
 
 # Generate the dark-background set (combines with the arguments above)
 python dev-life/src/clawd_dev.py --dark
+
+# Generate the clawd-on-desk theme (add --dark for the dark version)
+python dev-life/src/clawd_dev.py --theme
 ```
 
-Output is saved to [`dev-life/gif/`](dev-life/gif/), or [`dev-life/gif-dark/`](dev-life/gif-dark/) with `--dark`, replacing GIFs with the same names. The dark colour swaps are listed in the `DARK` table at the top of the script. The script prints each sticker's name, frame count and file size.
+Output is saved to [`dev-life/gif/`](dev-life/gif/), or [`dev-life/gif-dark/`](dev-life/gif-dark/) with `--dark`, replacing GIFs with the same names. `--theme` writes APNG animations and a `theme.json` to [`dev-life/theme/`](dev-life/theme/); the `THEME` table in the script maps states to animations. The dark colour swaps are listed in the `DARK` table at the top of the script. The script prints each sticker's name, frame count and file size.
 
 Arguments generally match GIF filenames without the `.gif` extension, such as `thinking`, `compact` and `clear`. Browse the output directory for the full list. The script's `ALL` list and `FILE` mapping define the generator entry points and output names; `clear` maps to the `clear_ctx()` function.
 
@@ -120,8 +151,9 @@ clawd-stickers/
     ├── README.zh-CN.md        # Chinese sticker content guide
     ├── gif/                   # 40 finished GIFs
     ├── gif-dark/              # 40 finished GIFs (dark background)
+    ├── theme/                 # clawd-on-desk desktop pet themes (light, dark)
     └── src/
-        └── clawd_dev.py       # Drawing, animation and GIF export
+        └── clawd_dev.py       # Drawing, animation, GIF and theme export
 ```
 
 ## License and usage
