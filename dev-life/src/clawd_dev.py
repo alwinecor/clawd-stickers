@@ -1359,6 +1359,7 @@ THEME={
  'reactions':{'drag':'drag','clickLeft':'blame','clickRight':'esc','annoyed':'forcepush','double':['rmrf','detached','banned']},
 }
 ONESHOT=['attention','error','notification','carrying']   # hold until the animation has played once
+HOLD=300   # ms of extra stillness on the last frame of an animation played once for a fixed time
 def to_apng(frames,path):
     frames[0][0].save(path,format='PNG',save_all=True,append_images=[im for im,_ in frames[1:]],
                       duration=[d for _,d in frames],loop=0,disposal=0,blend=0)
@@ -1373,12 +1374,26 @@ def theme():
     vb={'x':-OX-(H-W)/2,'y':-OY,'width':H,'height':H}
     for nm,fn in SVGS.items():
         with open(os.path.join(ad,nm+'.svg'),'w',encoding='utf-8') as fp: fp.write(fn(vb))
-    ms={}; f=lambda n:n+('.svg' if n in SVGS else '.apng')
+    st=THEME['states']; first=lambda s:ms[st[s][0]]
+    # Animations clawd-on-desk plays once for a fixed time. Each gets HOLD ms of extra stillness on its
+    # last frame, so a timer firing a little late never shows the loop restart. A reaction pool shares one
+    # duration, so its shorter members hold their last frame until the longest one ends.
+    once=set(THEME['idleAnimations'])|{st[s][0] for s in ONESHOT}
+    once|={n for k,v in THEME['reactions'].items() if k!='drag' for n in ([v] if isinstance(v,str) else v)}
+    pools=[v for v in THEME['reactions'].values() if not isinstance(v,str)]
+    ms={}; pending={}; f=lambda n:n+('.svg' if n in SVGS else '.apng')
+    def write(nm,fr,pad=0):
+        if nm in once: fr[-1]=(fr[-1][0],fr[-1][1]+pad+HOLD)
+        n=to_apng(fr,os.path.join(ad,f(nm)))
+        print(f'{nm}: {len(fr)} frames, {ms[nm]}ms'+(f' (+{pad}ms hold)' if pad else '')+f', {n//1024}KB')
     for nm in dict.fromkeys(n for n in names if n not in SVGS):
         fr=square(globals()[{v:k for k,v in FILE.items()}.get(nm,nm)]())
-        ms[nm]=sum(d for _,d in fr); n=to_apng(fr,os.path.join(ad,f(nm)))
-        print(f'{nm}: {len(fr)} frames, {ms[nm]}ms, {n//1024}KB')
-    st=THEME['states']; first=lambda s:ms[st[s][0]]
+        ms[nm]=sum(d for _,d in fr)
+        if any(nm in p for p in pools): pending[nm]=fr
+        else: write(nm,fr)
+    for p in pools:
+        T=max(ms[n] for n in p)
+        for n in p: pad=T-ms[n]; ms[n]=T; write(n,pending[n],pad)
     cfg={
      'schemaVersion':1,
      'name':'Dev Life · 克码人生'+(' (Dark)' if DARK_MODE else ''),
