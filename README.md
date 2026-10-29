@@ -117,6 +117,9 @@ clawd-stickers/
     ├── README.zh-CN.md        # Chinese sticker content guide
     ├── gif/                   # 40 finished GIFs
     ├── gif-dark/              # 40 finished GIFs (dark background)
+    ├── promo/                 # Share images (3:4, 20 stickers per page)
+    │   ├── covers/            # Animated pages and stills, dark and light
+    │   └── make_covers.py     # Share image generator
     └── src/
         └── clawd_dev.py       # Drawing, animation and GIF export
 ```
