@@ -81,6 +81,9 @@
     ],
     "roam": [
       "roam.svg"
+    ],
+    "dizzy": [
+      "dizzy.apng"
     ]
   },
   "sleepSequence": {
@@ -158,6 +161,7 @@
       "error": 3940,
       "notification": 3840,
       "carrying": 4420,
+      "dizzy": 5500,
       "sweeping": 4860,
       "working": 1000,
       "thinking": 1000
@@ -167,6 +171,7 @@
       "error": 3940,
       "notification": 3840,
       "carrying": 4420,
+      "dizzy": 5500,
       "sweeping": 300000
     },
     "mouseIdleTimeout": 20000,

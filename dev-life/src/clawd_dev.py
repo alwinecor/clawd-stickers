@@ -738,10 +738,14 @@ def esc():
     return fr
 
 # ---------- Usage Limit · 额度用完 ----------
-def limit():
-    """A battery drains while Clawd types; at empty it reads 'limit reached' and Clawd melts flat."""
+ROLL=[(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]   # eye offsets going round clockwise
+def limit(spin=False):
+    """A battery drains while Clawd types; at empty it reads 'limit reached' and Clawd melts flat.
+    spin=True is the clawd-on-desk dizzy state: no keyboard, the eyes roll round and Clawd sways as it drains."""
     fr=[]; N=72; RED='#E5484D'; YEL='#F2C14E'; G='#2FB15A'; OL='#3A3A44'
-    for i in range(N):
+    # i counts 70 ms steps; the spin runs at half steps so its eyes and sway move smoothly
+    ts=[k/2 for k in range(56)]+list(range(28,N)) if spin else range(N)
+    for i in ts:
         f=kf(i,[(0,1),(28,0),(56,0),(62,1)]) if i<62 else 1
         img=canvas(); bx0,bx1,by0,by1=cx(2),cx(12),cy(-6),cy(-2)
         empty=f<0.02
@@ -752,7 +756,12 @@ def limit():
             if f>0: box(img,bx0+9,by0+9,bx0+9+(bx1-bx0-18)*f,by1-9,col)
         if 30<=i<58: textc(img,'limit reached',138,cy(-1)-2,5,RED)
         p=base(); dx=0; dy=0; sq={}; fx={}
-        if i<28:
+        if i<28 and spin:
+            ph=i if i<18 else 18+(i-18)/1.5   # spin winds down with the battery
+            face(p,'n',*ROLL[int(ph)%8]); arms(p,MID,MID)
+            rot=6*math.sin(TAU*ph/6)
+            sq=dict(sy=kf(i,[(20,1),(28,0.92)]),sx=1,rot=rot)
+        elif i<28:
             slow=1+2*(i>=18)          # typing slows as the battery runs low
             face(p,'n',0,1 if i<18 else 0,blink=(i>=20))
             tap=(i//slow)%2; arms(p,UP if tap else MID,MID if tap else UP)
@@ -766,8 +775,8 @@ def limit():
             face(p,'hap'); arms(p,UP,UP)
             sy=kf(i,[(56,0.5),(60,1.2),(63,0.9),(66,1)]); sq=dict(sy=sy,sx=sy**-0.4)
             dy=-kf(i,[(58,0),(61,2),(64,0)])
-        fr.append((comp(shadow(-dy),img,xform(p,dx,dy,**sq),fx),70))
-    fr[31]=(fr[31][0],300); fr[-1]=(fr[-1][0],300)
+        fr.append((comp(shadow(-dy),img,xform(p,dx,dy,**sq),fx),70 if i==int(i) and i>=28 or not spin else 35))
+    k=list(ts).index(31); fr[k]=(fr[k][0],300); fr[-1]=(fr[-1][0],300)
     return fr
 
 # ---------- Plan Mode · 计划模式 ----------
@@ -1316,6 +1325,7 @@ def drag_svg(vb):
   </g>
 ''')
 SVGS={'idle':idle_svg,'roam':roam_svg,'drag':drag_svg}
+def dizzy(): return limit(spin=True)   # theme only: usage limit, spun round by the mouse
 
 def to_gif(frames,path):
     gf=[]
@@ -1353,12 +1363,13 @@ THEME_ID='clawd-dev-life'+('-dark' if DARK_MODE else '')
 THEME={
  'states':{'idle':['idle'],'thinking':['thinking','ultrathink','plan'],'working':['todo','simple','bug'],
            'juggling':['subagents'],'sweeping':['compact'],'carrying':['clone'],'notification':['proceed'],
-           'attention':['passed'],'error':['error'],'sleeping':['sleep'],'roam':['roam']},
+           'attention':['passed'],'error':['error'],'sleeping':['sleep'],'roam':['roam'],
+           'dizzy':['dizzy']},
  'workingTiers':[(3,['deadline']),(2,['loop']),(1,['todo','simple','bug'])],
  'idleAnimations':['fish','coffee','duck','hello','works'],
  'reactions':{'drag':'drag','clickLeft':'blame','clickRight':'esc','annoyed':'forcepush','double':['rmrf','detached','banned']},
 }
-ONESHOT=['attention','error','notification','carrying']   # hold until the animation has played once
+ONESHOT=['attention','error','notification','carrying','dizzy']   # hold until the animation has played once
 HOLD=300   # ms of extra stillness on the last frame of an animation played once for a fixed time
 def to_apng(frames,path):
     frames[0][0].save(path,format='PNG',save_all=True,append_images=[im for im,_ in frames[1:]],

@@ -88,6 +88,7 @@ The set is also packaged as a desktop pet theme for [clawd-on-desk](https://gith
 | Error | Error |
 | Sleeping | Good Night |
 | Walking around the desktop | Strolling along, swinging its arms |
+| Dizzy (circling the mouse around it) | A theme version of Usage Limit: no keyboard, its eyes roll and it sways while the battery drains |
 | Dragging | Picked up and dangling: arms and legs flailing, > < eyes, sweat flying |
 | Double-click / rapid clicks | git blame, Esc, Force Push; rm -rf, detached HEAD, Banned |
 
