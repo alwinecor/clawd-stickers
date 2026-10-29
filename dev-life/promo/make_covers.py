@@ -3,16 +3,16 @@
 Animated 3:4 pages (1080x1440) for sharing the set on Xiaohongshu:
 the 40 stickers split over two pages, 5 x 4 each, with their English names.
 
-  python 01-dev-life/promo/make_covers.py                # both pages, dark terminal theme
-  python 01-dev-life/promo/make_covers.py 2              # just page 2
-  python 01-dev-life/promo/make_covers.py --light 1 2    # cream theme
+  python dev-life/promo/make_covers.py                # both pages, dark terminal theme
+  python dev-life/promo/make_covers.py 2              # just page 2
+  python dev-life/promo/make_covers.py --light 1 2    # cream theme
 
 Output: page-N-{dark,light}.gif, plus page-N-{dark,light}-static.png, a still
 built from a hand-picked key frame per sticker (KEY below) rather than one
 moment of the whole page.
 
-The dark theme uses the dark-background set in 01-dev-life/gif-dark/,
-the cream theme the regular set in 01-dev-life/gif/.
+The dark theme uses the dark-background set in dev-life/gif-dark/,
+the cream theme the regular set in dev-life/gif/.
 
 Every sticker plays once and holds its last frame, so the page loops cleanly.
 Stickers are scaled by whole pixels so the pixel art stays crisp.
