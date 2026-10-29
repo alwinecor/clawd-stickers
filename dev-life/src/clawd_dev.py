@@ -596,19 +596,37 @@ def overtime():
     return fr
 
 # ---------- Good Night · 晚安 ----------
-def sleep():
-    fr=[]; N=60
-    CAP=["...........ww",".........bbww",".......bbbb..","....bbbbbb...","..bbbbbbbb...","wwwwwwwwwww.."]
-    for i in range(N):
-        p=base(); face(p,'n'); clear(p,[(4,8),(4,9),(10,8),(10,9)]); put(p,[(4,8),(4,9),(10,8),(10,9)],BODY)
+CAP=["...........ww",".........bbww",".......bbbb..","....bbbbbb...","..bbbbbbbb...","wwwwwwwwwww.."]
+def sleep_scene(i,born=None,cap=0,eyes='shut'):
+    """Frame i of Good Night. born: only z's at most this many frames old exist yet; cap: nightcap raised
+    this many cells; eyes: 'open', 'half' (squinting) or 'shut' (the sleeping lines)."""
+    p=base(); face(p,'n',blink=eyes=='half')
+    if eyes=='shut':
+        clear(p,[(4,8),(4,9),(10,8),(10,9)]); put(p,[(4,8),(4,9),(10,8),(10,9)],BODY)
         put(p,[(3,9),(4,9),(10,9),(11,9)],K)
-        p.update(spr(CAP,2,0,{'b':'#4C6EF5','w':'#C9D3F2'}))
-        sy=1-0.035*(1+math.sin(TAU*i/30))
-        img=canvas()
-        for k in range(3):
-            t=((i+k*20)%60)/60
-            text(img,'z',round(cx(-3)+t*24),round(cy(5)-t*110),[3,4,5,6][min(3,int(t*4))],'#7C8FD9')
-        fr.append((comp(shadow(),xform(p,0,0,sy=sy),img),90))
+    p.update(spr(CAP,2,-cap,{'b':'#4C6EF5','w':'#C9D3F2'}))
+    sy=1-0.035*(1+math.sin(TAU*i/30))
+    img=canvas()
+    for k in range(3):
+        a=(i+k*20)%60; t=a/60
+        if born is not None and a>born: continue
+        text(img,'z',round(cx(-3)+t*24),round(cy(5)-t*110),[3,4,5,6][min(3,int(t*4))],'#7C8FD9')
+    return comp(shadow(),xform(p,0,0,sy=sy),img)
+def sleep():
+    return [(sleep_scene(i),90) for i in range(60)]
+
+# ---------- Yawn · 打哈欠 (clawd-on-desk theme only) ----------
+def yawn():
+    """Drowsy like Overtime: the eyes squint, fight to stay open, squint again and shut; then the nightcap
+    drops on and the z's start. Breathing runs on Good Night's clock throughout, so the last frame leads
+    straight into its frame 0, which the theme plays next."""
+    EYES=[(0,'open'),(8,'half'),(12,'open'),(14,'half'),(20,'shut')]
+    fr=[]
+    for i in range(24):
+        eyes=[e for k,e in EYES if i>=k][-1]
+        fr.append((sleep_scene(i-64,born=-1,cap=16,eyes=eyes),90))
+    for j in range(40):   # lead-in: Good Night frames -40..-1, cap falling, z's appearing one by one
+        fr.append((sleep_scene(j-40,born=j,cap=round(kf(j,[(0,16),(9,0)]))),90))
     return fr
 
 # ---------- 404 Not Found · 找不到 ----------
@@ -1364,7 +1382,8 @@ THEME={
  'states':{'idle':['idle'],'thinking':['thinking','ultrathink','plan'],'working':['todo','simple','bug'],
            'juggling':['subagents'],'sweeping':['compact'],'carrying':['clone'],'notification':['proceed'],
            'attention':['passed'],'error':['error'],'sleeping':['sleep'],'roam':['roam'],
-           'dizzy':['dizzy']},
+           'dizzy':['dizzy'],
+           'yawning':['yawn'],'dozing':['sleep'],'collapsing':['sleep'],'waking':['coffee']},
  'workingTiers':[(3,['deadline']),(2,['loop']),(1,['todo','simple','bug'])],
  'idleAnimations':['fish','coffee','duck','hello','works'],
  'reactions':{'drag':'drag','clickLeft':'blame','clickRight':'esc','annoyed':'forcepush','double':['rmrf','detached','banned']},
@@ -1389,7 +1408,7 @@ def theme():
     # Animations clawd-on-desk plays once for a fixed time. Each gets HOLD ms of extra stillness on its
     # last frame, so a timer firing a little late never shows the loop restart. A reaction pool shares one
     # duration, so its shorter members hold their last frame until the longest one ends.
-    once=set(THEME['idleAnimations'])|{st[s][0] for s in ONESHOT}
+    once=set(THEME['idleAnimations'])|{st[s][0] for s in ONESHOT+['yawning','waking']}
     once|={n for k,v in THEME['reactions'].items() if k!='drag' for n in ([v] if isinstance(v,str) else v)}
     pools=[v for v in THEME['reactions'].values() if not isinstance(v,str)]
     ms={}; pending={}; f=lambda n:n+('.svg' if n in SVGS else '.apng')
@@ -1422,7 +1441,9 @@ def theme():
                     'ids':{'eyes':'eyes-js','body':'body-js','shadow':'shadow-js'},'shadowOrigin':'7.5px 15px'},
      'customization':{'petTint':False},
      'states':{s:[f(n) for n in v] for s,v in st.items()},
-     'sleepSequence':{'mode':'direct'},
+     # yawning hands over to dozing/collapsing/sleeping, which all show Good Night: the yawn ends on its
+     # first frame, and deepSleepTimeout/collapseDuration move on at once so the picture never changes.
+     'sleepSequence':{'mode':'full'},
      'workingTiers':[{'minSessions':k,'file':f(ns[0]),**({'files':[f(n) for n in ns]} if len(ns)>1 else {})}
                      for k,ns in THEME['workingTiers']],
      'idleAnimations':[{'file':f(n),'duration':ms[n]} for n in THEME['idleAnimations']],
@@ -1432,7 +1453,9 @@ def theme():
      'timings':{'minDisplay':{**{s:first(s) for s in ONESHOT},'sweeping':first('sweeping'),
                               'working':1000,'thinking':1000},
                 'autoReturn':{**{s:first(s) for s in ONESHOT},'sweeping':300000},
-                'mouseIdleTimeout':20000,'mouseSleepTimeout':60000},
+                'mouseIdleTimeout':20000,'mouseSleepTimeout':60000,
+                'yawnDuration':first('yawning'),'deepSleepTimeout':60000+first('yawning'),'collapseDuration':100,
+                'wakeDuration':first('waking')},
      'hitBoxes':{'default':{'x':-1,'y':5,'w':17,'h':11}},
      'miniMode':{'supported':False},
     }

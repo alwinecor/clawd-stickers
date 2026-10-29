@@ -84,10 +84,22 @@
     ],
     "dizzy": [
       "dizzy.apng"
+    ],
+    "yawning": [
+      "yawn.apng"
+    ],
+    "dozing": [
+      "sleep.apng"
+    ],
+    "collapsing": [
+      "sleep.apng"
+    ],
+    "waking": [
+      "coffee.apng"
     ]
   },
   "sleepSequence": {
-    "mode": "direct"
+    "mode": "full"
   },
   "workingTiers": [
     {
@@ -175,7 +187,11 @@
       "sweeping": 300000
     },
     "mouseIdleTimeout": 20000,
-    "mouseSleepTimeout": 60000
+    "mouseSleepTimeout": 60000,
+    "yawnDuration": 5760,
+    "deepSleepTimeout": 65760,
+    "collapseDuration": 100,
+    "wakeDuration": 4710
   },
   "hitBoxes": {
     "default": {
