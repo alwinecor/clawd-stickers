@@ -14,7 +14,7 @@ import json, os, sys
 THEME_DIR=os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0,os.path.join(THEME_DIR,'..','src'))
 from clawd_dev import *
-from animations import banned_long, detached_long, dizzy, passed_long, wake, yawn
+from animations import banned_long, detached_long, dizzy, passed_long, team2, team3, wake, yawn
 from svg import SVGS
 
 # viewBox is in body cells, the same grid as the built-in Clawd theme (body x 0..15, feet at y=15).
@@ -25,13 +25,14 @@ THEME={
            'attention':['passed_long','lgtm'],'error':['error'],'sleeping':['sleep'],'roam':['roam'],
            'dizzy':['dizzy'],
            'yawning':['yawn'],'dozing':['sleep'],'collapsing':['sleep'],'waking':['wake']},
- 'workingTiers':[(3,['deadline']),(2,['loop']),(1,['todo','simple','bug'])],
+ 'workingTiers':[(3,['team3']),(2,['team2']),(1,['todo','simple','bug'])],
  'idleAnimations':['fish','coffee','duck','hello','works','blame','deploy','overtime'],
+ 'hitBoxes':{'team2':{'x':-3,'y':2,'w':21,'h':14},'team3':{'x':-3,'y':-4,'w':21,'h':20}},   # wider than one Clawd
  'reactions':{'drag':'drag','clickLeft':'hello','clickRight':'right','annoyed':'notfound','double':['rmrf','detached_long','banned_long']},
 }
 ONESHOT=['attention','error','notification','carrying','dizzy']   # hold until the animation has played once
 HOLD=300   # ms of extra stillness on the last frame of an animation played once for a fixed time
-ANIMATIONS={f.__name__:f for f in (banned_long,detached_long,dizzy,passed_long,wake,yawn)}
+ANIMATIONS={f.__name__:f for f in (banned_long,detached_long,dizzy,passed_long,team2,team3,wake,yawn)}
 def to_apng(frames,path):
     frames[0][0].save(path,format='PNG',save_all=True,append_images=[im for im,_ in frames[1:]],
                       duration=[d for _,d in frames],loop=0,disposal=0,blend=0)
@@ -105,6 +106,7 @@ def theme():
                 'yawnDuration':first('yawning'),'deepSleepTimeout':60000+first('yawning'),'collapseDuration':100,
                 'wakeDuration':first('waking')},
      'hitBoxes':{'default':{'x':-1,'y':5,'w':17,'h':11}},
+     'fileHitBoxes':{f(n):b for n,b in THEME['hitBoxes'].items()},
      'miniMode':{'supported':False},
     }
     with open(os.path.join(out,'theme.json'),'w',encoding='utf-8') as fp:

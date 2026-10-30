@@ -175,3 +175,53 @@ def wake():
         scene=sleep_scene(min(8+j,22.5),born=-1,cap=cap,eyes='shut' if j<4 else 'half')
         fr.append((comp(scene,spr(MUG,mx,8,MUG_PAL)),70))
     return fr+coffee()
+
+# ---------- Team · 多人协作 (2 and 3 sessions) ----------
+# Two Clawds at 2/3 size work side by side at their own screens; with 3 sessions a third stands on top of the
+# screens, so nothing else moves between the two. Both loop every 72 frames.
+CS=8; FOOT=cy(15); LEFT,RIGHT,TOP=72,204,138; DESK=106   # DESK: top edge of the screens, where the third stands
+LINES=[(13,'#E8845F'),(8,'#9A9AA6'),(12,'#2FB15A'),(6,'#9A9AA6'),(10,'#7FB2E5'),(13,'#9A9AA6')]
+FAILS=4   # which of the six tests goes red
+def screen(ax):
+    img=canvas(); term(img,ax-58,DESK,ax+58,DESK+70)
+    return img
+def ground(ax):
+    img=canvas(); box(img,ax-36,FOOT,ax+36,FOOT+CS,'#D9D2CB')
+    return img
+def coder(i):
+    img=screen(LEFT); x=LEFT-46
+    for r in range(3):
+        w,c=LINES[(i//12+r)%6]
+        if r==2: w*=(i%12+1)/12   # the bottom line is the one being typed
+        box(img,x,DESK+14+r*16,x+w*7,DESK+24+r*16,c)
+    q=base(); face(q,'n',0,-1,blink=i%32<2); tap=(i//2)%2; arms(q,UP if tap else MID,MID if tap else UP)
+    return img,ground(LEFT),render(q,CS,LEFT,FOOT)
+def tester(i):
+    """Runs the tests one by one and panics for a moment when one fails."""
+    img=screen(RIGHT); x=RIGHT-46; s=i//12
+    for r in range(3):
+        k=(s+r)%6; y=DESK+14+r*16; running=r==2 and i%12<8
+        col='#E8845F' if running else '#E5484D' if k==FAILS else '#2FB15A'
+        if not (running and (i//2)%2): box(img,x,y,x+10,y+10,col)
+        box(img,x+18,y+2,x+18+(LINES[k][0]*6),y+8,'#9A9AA6')
+    q=base(); h=0; fx=canvas()
+    if 32<=i<44:
+        face(q,'x'); arms(q,UP,UP); h=round(10*abs(math.sin(math.pi*(i-32)/6)))
+        if (i//2)%2: box(fx,RIGHT+64,FOOT-74,RIGHT+68,FOOT-58,BANG); box(fx,RIGHT+64,FOOT-54,RIGHT+68,FOOT-50,BANG)
+    else: face(q,'n',0,-1,blink=(i+11)%40<2); arms(q,MID,MID)
+    return img,ground(RIGHT),render(q,CS,RIGHT,FOOT-h),fx
+def lookout(i):
+    """Stands on the screens sipping coffee while the other two work."""
+    c=i%36; sip=14<=c<26; my=round(kf(c,[(10,9),(14,5),(26,5),(30,9)]))
+    q=base(); face(q,'n',0,1,blink=sip); arms(q,UP if sip else MID,DOWN)
+    q.update(spr(MUG,-3,my,MUG_PAL))
+    img=canvas()
+    if not sip:
+        for k in range(2):
+            t=((c+k*9)%18)/18; x=TOP-74+k*12+round(3*math.sin(t*6)); y=DESK+(my-16)*CS-round(t*20)
+            box(img,x,y,x+CS,y+CS,'#D8D2CA')
+    return render(q,CS,TOP,DESK),img
+def team2():
+    return [(comp(*coder(i),*tester(i)),60) for i in range(72)]
+def team3():
+    return [(comp(*coder(i),*tester(i),*lookout(i)),60) for i in range(72)]

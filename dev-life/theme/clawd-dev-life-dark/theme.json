@@ -105,11 +105,11 @@
   "workingTiers": [
     {
       "minSessions": 3,
-      "file": "deadline.apng"
+      "file": "team3.apng"
     },
     {
       "minSessions": 2,
-      "file": "loop.apng"
+      "file": "team2.apng"
     },
     {
       "minSessions": 1,
@@ -212,6 +212,20 @@
       "y": 5,
       "w": 17,
       "h": 11
+    }
+  },
+  "fileHitBoxes": {
+    "team2.apng": {
+      "x": -3,
+      "y": 2,
+      "w": 21,
+      "h": 14
+    },
+    "team3.apng": {
+      "x": -3,
+      "y": -4,
+      "w": 21,
+      "h": 20
     }
   },
   "miniMode": {

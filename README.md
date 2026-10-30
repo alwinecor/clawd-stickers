@@ -79,7 +79,7 @@ The set is also packaged as a desktop pet theme for [clawd-on-desk](https://gith
 |---|---|
 | Idle | Breathing and blinking, eyes following the mouse, with occasional Slacking Off, Coffee Break, Rubber Duck, hello world, Works on My Machine, git blame, Friday Deploy and Overtime |
 | Thinking | One of Thinking / ultrathink / Plan Mode at random |
-| Working | 1 session: Todo List / It's Simple / Bug Hunt; 2: while(true); 3 or more: Deadline |
+| Working | 1 session: Todo List / It's Simple / Bug Hunt; 2: two Clawds side by side, one coding and one running tests; 3 or more: a third stands on their screens sipping coffee |
 | Subagents | Subagents |
 | Context compaction | /compact |
 | Creating a worktree | git clone |
