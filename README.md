@@ -84,7 +84,7 @@ The set is also packaged as a desktop pet theme for [clawd-on-desk](https://gith
 | Context compaction | /compact |
 | Creating a worktree | git clone |
 | Waiting for permission | Yes, Proceed |
-| Task complete | Tests Passed |
+| Task complete | One of Tests Passed / LGTM at random |
 | Error | Error |
 | Falling asleep | Its eyes slowly narrow, fight to stay open and close, then the nightcap goes on and it runs straight into Good Night |
 | Sleeping | Good Night |
@@ -92,7 +92,7 @@ The set is also packaged as a desktop pet theme for [clawd-on-desk](https://gith
 | Walking around the desktop | Strolling along, swinging its arms |
 | Dizzy (circling the mouse around it) | A theme version of Usage Limit: no keyboard, its eyes roll and it sways while the battery drains |
 | Dragging | Picked up and dangling: arms and legs flailing, > < eyes, sweat flying |
-| Double-click / rapid clicks | git blame, Esc, Force Push; rm -rf, detached HEAD, Banned |
+| Clicking | Left: hello world; right: You're Absolutely Right!; annoyed: 404 Not Found; double-click: one of rm -rf / detached HEAD / Banned at random |
 
 Mini mode isn't supported yet.
 

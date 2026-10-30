@@ -395,8 +395,8 @@ def lgtm():
     return fr
 
 # ---------- Tests Passed · 测试通过 ----------
-def passed():
-    fr=[]; N=56; G='#2FB15A'; G2='#1F7A3E'
+def passed(N=56):
+    fr=[]; G='#2FB15A'; G2='#1F7A3E'
     path=[(4,-3),(5,-2),(6,-1),(7,-2),(8,-3),(9,-4),(10,-5),(11,-6)]
     for i in range(N):
         n=clamp(i-3,0,len(path)); ck={}
@@ -410,7 +410,9 @@ def passed():
             face(p,'hap')
             if dy<-0.8: arms(p,UP,UP)
             if t<0.1: sq=squash(0.86)
-        fr.append((comp(shadow(-dy),ck,xform(p,dx,dy,**sq),confetti(i,12)),60))
+        conf=confetti(i,12)
+        if N>56: conf.update(confetti(i,48,seed=5))   # second wave: the first has landed by now
+        fr.append((comp(shadow(-dy),ck,xform(p,dx,dy,**sq),conf),60))
     fr[11]=(fr[11][0],200)
     return fr
 
@@ -985,8 +987,8 @@ def bye():
     return fr
 
 # ---------- Banned · 封号 ----------
-def banned():
-    fr=[]; N=64; RED='#E5484D'; GRAY='#9C9A97'
+def banned(N=64):
+    fr=[]; RED='#E5484D'; GRAY='#9C9A97'
     def gavel(ang):
         img=canvas(); g={}
         put(g,rect(3,0,9,5),'#6B4A3A'); put(g,rect(3,1,9,1)+rect(3,4,9,4),'#C9A27A')
@@ -1007,7 +1009,7 @@ def banned():
                     if (i+k)%2: fx[(x,y)]='#F2C14E'
             g=kf(i,[(16,0),(24,1)])
             p={k:(mix(BODY,GRAY,g) if c==BODY else c) for k,c in p.items()}
-            if 40<=i<56 and (i//8)%2==0: fx[(11,10)]='#7FB2E5'; fx[(11,11)]='#7FB2E5'
+            if 40<=i<N-8 and (i//8)%2==0: fx[(11,10)]='#7FB2E5'; fx[(11,11)]='#7FB2E5'
         txt=None
         if i>=16 and not (i>=40 and (i//4)%2):
             txt=canvas(); px=[9,7,6][min(i-16,2)]; w=text_w('BANNED')*px; y0=cy(-6)
@@ -1021,7 +1023,8 @@ def banned():
             for x in range(-2,18,3): put(bars,[(x,y+drop) for y in range(3,16)],'#4A4A56')
             put(bars,[(x,3+drop) for x in range(-2,17)],'#4A4A56')
         fr.append((comp(shadow(),xform(p,shake,dy,**sq),fx,bars,gavel(ang) if i<30 else None,txt),60))
-    fr[16]=(fr[16][0],200); fr[-1]=(fr[-1][0],600)
+    fr[16]=(fr[16][0],200)
+    if N==64: fr[-1]=(fr[-1][0],600)
     return fr
 
 SWEAT='#7FB2E5'
@@ -1087,12 +1090,12 @@ def stash():
     return fr
 
 # ---------- detached HEAD · 头掉了 ----------
-def detached():
-    fr=[]; N=64
+def detached(N=64):
+    fr=[]
     for i in range(N):
         img=canvas(); textc(img,'detached HEAD',138,cy(-6),4,'#3A3A44')
         bx=kf(i,[(12,0),(20,5),(28,-5),(36,0)])
-        p=base(); fx={}
+        p=base(); fx={}; dy=0
         if i<8: face(p,'n')
         elif i<12: face(p,'x')
         elif i<44: face(p,'n',1 if bx>0.5 else -1 if bx<-0.5 else 0)
@@ -1107,9 +1110,13 @@ def detached():
             if 8<=i<12: fx={(1,4):'#F2C14E',(13,4):'#F2C14E',(7,1):'#F2C14E'}
         else:
             sq=squash(kf(i,[(46,0.85),(49,1)])) if 46<=i<49 else {}
-            layers=[xform(p,0,0,**sq)]
-        fr.append((comp(shadow(),img,*layers,fx),60))
-    fr[-1]=(fr[-1][0],300)
+            if N>64 and i>=50:   # longer takes hop, relieved, soon after the head is back
+                t=((i-50)%10)/10; dy=-2.5*math.sin(math.pi*t)
+                if dy<-0.8: arms(p,UP,UP)
+                if t<0.1: sq=squash(0.86)
+            layers=[xform(p,0,dy,**sq)]
+        fr.append((comp(shadow(-dy),img,*layers,fx),60))
+    if N==64: fr[-1]=(fr[-1][0],300)
     return fr
 
 # ---------- cherry-pick · 摘樱桃 ----------
@@ -1355,6 +1362,9 @@ def drag_svg(vb):
 ''')
 SVGS={'idle':idle_svg,'roam':roam_svg,'drag':drag_svg}
 def dizzy(): return limit(spin=True)   # theme only: usage limit, spun round by the mouse
+def passed_long(): return passed(N=72)   # theme only: keeps hopping for as long as LGTM, ending on a full hop
+def detached_long(): return detached(N=90)   # theme only: fills the double-click pool instead of freezing
+def banned_long(): return banned(N=88)
 
 def to_gif(frames,path):
     gf=[]
@@ -1392,12 +1402,12 @@ THEME_ID='clawd-dev-life'+('-dark' if DARK_MODE else '')
 THEME={
  'states':{'idle':['idle'],'thinking':['thinking','ultrathink','plan'],'working':['todo','simple','bug'],
            'juggling':['subagents'],'sweeping':['compact'],'carrying':['clone'],'notification':['proceed'],
-           'attention':['passed'],'error':['error'],'sleeping':['sleep'],'roam':['roam'],
+           'attention':['passed_long','lgtm'],'error':['error'],'sleeping':['sleep'],'roam':['roam'],
            'dizzy':['dizzy'],
            'yawning':['yawn'],'dozing':['sleep'],'collapsing':['sleep'],'waking':['wake']},
  'workingTiers':[(3,['deadline']),(2,['loop']),(1,['todo','simple','bug'])],
  'idleAnimations':['fish','coffee','duck','hello','works'],
- 'reactions':{'drag':'drag','clickLeft':'blame','clickRight':'esc','annoyed':'forcepush','double':['rmrf','detached','banned']},
+ 'reactions':{'drag':'drag','clickLeft':'hello','clickRight':'right','annoyed':'notfound','double':['rmrf','detached_long','banned_long']},
 }
 ONESHOT=['attention','error','notification','carrying','dizzy']   # hold until the animation has played once
 HOLD=300   # ms of extra stillness on the last frame of an animation played once for a fixed time
@@ -1417,11 +1427,11 @@ def theme():
         with open(os.path.join(ad,nm+'.svg'),'w',encoding='utf-8') as fp: fp.write(fn(vb))
     st=THEME['states']; first=lambda s:ms[st[s][0]]
     # Animations clawd-on-desk plays once for a fixed time. Each gets HOLD ms of extra stillness on its
-    # last frame, so a timer firing a little late never shows the loop restart. A reaction pool shares one
-    # duration, so its shorter members hold their last frame until the longest one ends.
-    once=set(THEME['idleAnimations'])|{st[s][0] for s in ONESHOT+['yawning','waking']}
+    # last frame, so a timer firing a little late never shows the loop restart. A reaction or state pool
+    # shares one duration, so its shorter members hold their last frame until the longest one ends.
+    once=set(THEME['idleAnimations'])|{n for s in ONESHOT+['yawning','waking'] for n in st[s]}
     once|={n for k,v in THEME['reactions'].items() if k!='drag' for n in ([v] if isinstance(v,str) else v)}
-    pools=[v for v in THEME['reactions'].values() if not isinstance(v,str)]
+    pools=[v for v in THEME['reactions'].values() if not isinstance(v,str)]+[st[s] for s in ONESHOT if len(st[s])>1]
     ms={}; pending={}; f=lambda n:n+('.svg' if n in SVGS else '.apng')
     def write(nm,fr,pad=0):
         if nm in once: fr[-1]=(fr[-1][0],fr[-1][1]+pad+HOLD)

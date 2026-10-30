@@ -71,7 +71,8 @@
       "proceed.apng"
     ],
     "attention": [
-      "passed.apng"
+      "passed_long.apng",
+      "lgtm.apng"
     ],
     "error": [
       "error.apng"
@@ -147,29 +148,29 @@
       "file": "drag.svg"
     },
     "clickLeft": {
-      "file": "blame.apng",
-      "duration": 4420
+      "file": "hello.apng",
+      "duration": 4350
     },
     "clickRight": {
-      "file": "esc.apng",
-      "duration": 3660
+      "file": "right.apng",
+      "duration": 3360
     },
     "annoyed": {
-      "file": "forcepush.apng",
-      "duration": 4180
+      "file": "notfound.apng",
+      "duration": 4030
     },
     "double": {
       "files": [
         "rmrf.apng",
-        "detached.apng",
-        "banned.apng"
+        "detached_long.apng",
+        "banned_long.apng"
       ],
       "duration": 5430
     }
   },
   "timings": {
     "minDisplay": {
-      "attention": 3500,
+      "attention": 4460,
       "error": 3940,
       "notification": 3840,
       "carrying": 4420,
@@ -179,7 +180,7 @@
       "thinking": 1000
     },
     "autoReturn": {
-      "attention": 3500,
+      "attention": 4460,
       "error": 3940,
       "notification": 3840,
       "carrying": 4420,
