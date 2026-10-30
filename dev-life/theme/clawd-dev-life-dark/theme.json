@@ -56,7 +56,9 @@
     "working": [
       "todo.apng",
       "simple.apng",
-      "bug.apng"
+      "bug.apng",
+      "loop.apng",
+      "deadline.apng"
     ],
     "juggling": [
       "subagents.apng"
@@ -117,7 +119,9 @@
       "files": [
         "todo.apng",
         "simple.apng",
-        "bug.apng"
+        "bug.apng",
+        "loop.apng",
+        "deadline.apng"
       ]
     }
   ],
