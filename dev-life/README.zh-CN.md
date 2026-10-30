@@ -1,4 +1,4 @@
-# 01 · 克码人生 · Dev Life
+# 克码人生 · Dev Life
 
 [返回首页](../README.zh-CN.md) · [English](README.md) | 简体中文
 
