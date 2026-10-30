@@ -9,7 +9,6 @@ Generates the animated Clawd stickers in ../gif/ (288x288, also fine as WeChat s
   python clawd_dev.py             # all
   python clawd_dev.py compact     # just one
   python clawd_dev.py --dark      # dark-background set -> ../gif-dark/
-  python clawd_dev.py --theme     # clawd-on-desk theme -> ../theme/ (add --dark for the dark one)
 
 No external font needed: command text uses the tiny pixel font defined below.
 
@@ -395,8 +394,8 @@ def lgtm():
     return fr
 
 # ---------- Tests Passed · 测试通过 ----------
-def passed(N=56):
-    fr=[]; G='#2FB15A'; G2='#1F7A3E'
+def passed():
+    fr=[]; N=56; G='#2FB15A'; G2='#1F7A3E'
     path=[(4,-3),(5,-2),(6,-1),(7,-2),(8,-3),(9,-4),(10,-5),(11,-6)]
     for i in range(N):
         n=clamp(i-3,0,len(path)); ck={}
@@ -410,9 +409,7 @@ def passed(N=56):
             face(p,'hap')
             if dy<-0.8: arms(p,UP,UP)
             if t<0.1: sq=squash(0.86)
-        conf=confetti(i,12)
-        if N>56: conf.update(confetti(i,48,seed=5))   # second wave: the first has landed by now
-        fr.append((comp(shadow(-dy),ck,xform(p,dx,dy,**sq),conf),60))
+        fr.append((comp(shadow(-dy),ck,xform(p,dx,dy,**sq),confetti(i,12)),60))
     fr[11]=(fr[11][0],200)
     return fr
 
@@ -441,9 +438,9 @@ def error():
     return fr
 
 # ---------- Coffee Break · 咖啡续命 ----------
-MUG=["wwww.","wrrwh","wwwwh","wwww."]; MUG_PAL={'w':'#4F7BD9','r':'#FFFFFF','h':'#3A5FB0'}
 def coffee():
     fr=[]; N=64
+    MUG=["wwww.","wrrwh","wwwwh","wwww."]; pal={'w':'#4F7BD9','r':'#FFFFFF','h':'#3A5FB0'}
     for i in range(N):
         p=base(); dx=0; dy=0; rot=0; fx={}
         mx=round(kf(i,[(18,14),(24,9),(34,9),(40,14)])); my=round(kf(i,[(18,8),(24,5),(34,5),(40,8)]))
@@ -457,24 +454,13 @@ def coffee():
             if i<50: fx.update(bang(-2,3))
             for k,(x,y) in enumerate([(-2,9),(16,5),(0,1)]):
                 if (i+k)%4<2: fx.update({(x,y):'#F2C14E',(x+1,y-1):'#F2C14E'})
-        p.update(spr(MUG,mx,my,MUG_PAL))
+        p.update(spr(MUG,mx,my,pal))
         if not 22<=i<36:
             for k in range(3):
                 t=((i+k*5)%15)/15; fx[(mx+1+k%2+round(0.6*math.sin(t*6)),my-1-round(t*4))]='#D8D2CA'
         fr.append((comp(shadow(),xform(p,dx,dy,rot=rot),fx),70))
     fr[30]=(fr[30][0],300)
     return fr
-
-# ---------- Wake · 醒来 (clawd-on-desk theme only) ----------
-def wake():
-    """From the Good Night pose the eyes crack open, the nightcap lifts away and the mug slides in,
-    landing on frame 0 of Coffee Break, which then plays through."""
-    fr=[]
-    for j in range(14):
-        cap=round(kf(j,[(5,0),(13,16)])); mx=round(kf(j,[(5,24),(13,14)]))
-        scene=sleep_scene(min(8+j,22.5),born=-1,cap=cap,eyes='shut' if j<4 else 'half')
-        fr.append((comp(scene,spr(MUG,mx,8,MUG_PAL)),70))
-    return fr+coffee()
 
 # ---------- Friday Deploy · 周五上线 ----------
 def deploy():
@@ -609,37 +595,19 @@ def overtime():
     return fr
 
 # ---------- Good Night · 晚安 ----------
-CAP=["...........ww",".........bbww",".......bbbb..","....bbbbbb...","..bbbbbbbb...","wwwwwwwwwww.."]
-def sleep_scene(i,born=None,cap=0,eyes='shut'):
-    """Frame i of Good Night. born: only z's at most this many frames old exist yet; cap: nightcap raised
-    this many cells; eyes: 'open', 'half' (squinting) or 'shut' (the sleeping lines)."""
-    p=base(); face(p,'n',blink=eyes=='half')
-    if eyes=='shut':
-        clear(p,[(4,8),(4,9),(10,8),(10,9)]); put(p,[(4,8),(4,9),(10,8),(10,9)],BODY)
-        put(p,[(3,9),(4,9),(10,9),(11,9)],K)
-    p.update(spr(CAP,2,-cap,{'b':'#4C6EF5','w':'#C9D3F2'}))
-    sy=1-0.035*(1+math.sin(TAU*i/30))
-    img=canvas()
-    for k in range(3):
-        a=(i+k*20)%60; t=a/60
-        if born is not None and a>born: continue
-        text(img,'z',round(cx(-3)+t*24),round(cy(5)-t*110),[3,4,5,6][min(3,int(t*4))],'#7C8FD9')
-    return comp(shadow(),xform(p,0,0,sy=sy),img)
 def sleep():
-    return [(sleep_scene(i),90) for i in range(60)]
-
-# ---------- Yawn · 打哈欠 (clawd-on-desk theme only) ----------
-def yawn():
-    """Drowsy like Overtime: the eyes squint, fight to stay open, squint again and shut; then the nightcap
-    drops on and the z's start. Breathing runs on Good Night's clock throughout, so the last frame leads
-    straight into its frame 0, which the theme plays next."""
-    EYES=[(0,'open'),(8,'half'),(12,'open'),(14,'half'),(20,'shut')]
-    fr=[]
-    for i in range(24):
-        eyes=[e for k,e in EYES if i>=k][-1]
-        fr.append((sleep_scene(i-64,born=-1,cap=16,eyes=eyes),90))
-    for j in range(40):   # lead-in: Good Night frames -40..-1, cap falling, z's appearing one by one
-        fr.append((sleep_scene(j-40,born=j,cap=round(kf(j,[(0,16),(9,0)]))),90))
+    fr=[]; N=60
+    CAP=["...........ww",".........bbww",".......bbbb..","....bbbbbb...","..bbbbbbbb...","wwwwwwwwwww.."]
+    for i in range(N):
+        p=base(); face(p,'n'); clear(p,[(4,8),(4,9),(10,8),(10,9)]); put(p,[(4,8),(4,9),(10,8),(10,9)],BODY)
+        put(p,[(3,9),(4,9),(10,9),(11,9)],K)
+        p.update(spr(CAP,2,0,{'b':'#4C6EF5','w':'#C9D3F2'}))
+        sy=1-0.035*(1+math.sin(TAU*i/30))
+        img=canvas()
+        for k in range(3):
+            t=((i+k*20)%60)/60
+            text(img,'z',round(cx(-3)+t*24),round(cy(5)-t*110),[3,4,5,6][min(3,int(t*4))],'#7C8FD9')
+        fr.append((comp(shadow(),xform(p,0,0,sy=sy),img),90))
     return fr
 
 # ---------- 404 Not Found · 找不到 ----------
@@ -769,14 +737,10 @@ def esc():
     return fr
 
 # ---------- Usage Limit · 额度用完 ----------
-ROLL=[(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]   # eye offsets going round clockwise
-def limit(spin=False):
-    """A battery drains while Clawd types; at empty it reads 'limit reached' and Clawd melts flat.
-    spin=True is the clawd-on-desk dizzy state: no keyboard, the eyes roll round and Clawd sways as it drains."""
+def limit():
+    """A battery drains while Clawd types; at empty it reads 'limit reached' and Clawd melts flat."""
     fr=[]; N=72; RED='#E5484D'; YEL='#F2C14E'; G='#2FB15A'; OL='#3A3A44'
-    # i counts 70 ms steps; the spin runs at half steps so its eyes and sway move smoothly
-    ts=[k/2 for k in range(56)]+list(range(28,N)) if spin else range(N)
-    for i in ts:
+    for i in range(N):
         f=kf(i,[(0,1),(28,0),(56,0),(62,1)]) if i<62 else 1
         img=canvas(); bx0,bx1,by0,by1=cx(2),cx(12),cy(-6),cy(-2)
         empty=f<0.02
@@ -787,12 +751,7 @@ def limit(spin=False):
             if f>0: box(img,bx0+9,by0+9,bx0+9+(bx1-bx0-18)*f,by1-9,col)
         if 30<=i<58: textc(img,'limit reached',138,cy(-1)-2,5,RED)
         p=base(); dx=0; dy=0; sq={}; fx={}
-        if i<28 and spin:
-            ph=i if i<18 else 18+(i-18)/1.5   # spin winds down with the battery
-            face(p,'n',*ROLL[int(ph)%8]); arms(p,MID,MID)
-            rot=6*math.sin(TAU*ph/6)
-            sq=dict(sy=kf(i,[(20,1),(28,0.92)]),sx=1,rot=rot)
-        elif i<28:
+        if i<28:
             slow=1+2*(i>=18)          # typing slows as the battery runs low
             face(p,'n',0,1 if i<18 else 0,blink=(i>=20))
             tap=(i//slow)%2; arms(p,UP if tap else MID,MID if tap else UP)
@@ -806,8 +765,8 @@ def limit(spin=False):
             face(p,'hap'); arms(p,UP,UP)
             sy=kf(i,[(56,0.5),(60,1.2),(63,0.9),(66,1)]); sq=dict(sy=sy,sx=sy**-0.4)
             dy=-kf(i,[(58,0),(61,2),(64,0)])
-        fr.append((comp(shadow(-dy),img,xform(p,dx,dy,**sq),fx),70 if i==int(i) and i>=28 or not spin else 35))
-    k=list(ts).index(31); fr[k]=(fr[k][0],300); fr[-1]=(fr[-1][0],300)
+        fr.append((comp(shadow(-dy),img,xform(p,dx,dy,**sq),fx),70))
+    fr[31]=(fr[31][0],300); fr[-1]=(fr[-1][0],300)
     return fr
 
 # ---------- Plan Mode · 计划模式 ----------
@@ -987,8 +946,8 @@ def bye():
     return fr
 
 # ---------- Banned · 封号 ----------
-def banned(N=64):
-    fr=[]; RED='#E5484D'; GRAY='#9C9A97'
+def banned():
+    fr=[]; N=64; RED='#E5484D'; GRAY='#9C9A97'
     def gavel(ang):
         img=canvas(); g={}
         put(g,rect(3,0,9,5),'#6B4A3A'); put(g,rect(3,1,9,1)+rect(3,4,9,4),'#C9A27A')
@@ -1009,7 +968,7 @@ def banned(N=64):
                     if (i+k)%2: fx[(x,y)]='#F2C14E'
             g=kf(i,[(16,0),(24,1)])
             p={k:(mix(BODY,GRAY,g) if c==BODY else c) for k,c in p.items()}
-            if 40<=i<N-8 and (i//8)%2==0: fx[(11,10)]='#7FB2E5'; fx[(11,11)]='#7FB2E5'
+            if 40<=i<56 and (i//8)%2==0: fx[(11,10)]='#7FB2E5'; fx[(11,11)]='#7FB2E5'
         txt=None
         if i>=16 and not (i>=40 and (i//4)%2):
             txt=canvas(); px=[9,7,6][min(i-16,2)]; w=text_w('BANNED')*px; y0=cy(-6)
@@ -1023,8 +982,7 @@ def banned(N=64):
             for x in range(-2,18,3): put(bars,[(x,y+drop) for y in range(3,16)],'#4A4A56')
             put(bars,[(x,3+drop) for x in range(-2,17)],'#4A4A56')
         fr.append((comp(shadow(),xform(p,shake,dy,**sq),fx,bars,gavel(ang) if i<30 else None,txt),60))
-    fr[16]=(fr[16][0],200)
-    if N==64: fr[-1]=(fr[-1][0],600)
+    fr[16]=(fr[16][0],200); fr[-1]=(fr[-1][0],600)
     return fr
 
 SWEAT='#7FB2E5'
@@ -1090,12 +1048,12 @@ def stash():
     return fr
 
 # ---------- detached HEAD · 头掉了 ----------
-def detached(N=64):
-    fr=[]
+def detached():
+    fr=[]; N=64
     for i in range(N):
         img=canvas(); textc(img,'detached HEAD',138,cy(-6),4,'#3A3A44')
         bx=kf(i,[(12,0),(20,5),(28,-5),(36,0)])
-        p=base(); fx={}; dy=0
+        p=base(); fx={}
         if i<8: face(p,'n')
         elif i<12: face(p,'x')
         elif i<44: face(p,'n',1 if bx>0.5 else -1 if bx<-0.5 else 0)
@@ -1110,13 +1068,9 @@ def detached(N=64):
             if 8<=i<12: fx={(1,4):'#F2C14E',(13,4):'#F2C14E',(7,1):'#F2C14E'}
         else:
             sq=squash(kf(i,[(46,0.85),(49,1)])) if 46<=i<49 else {}
-            if N>64 and i>=50:   # longer takes hop, relieved, soon after the head is back
-                t=((i-50)%10)/10; dy=-2.5*math.sin(math.pi*t)
-                if dy<-0.8: arms(p,UP,UP)
-                if t<0.1: sq=squash(0.86)
-            layers=[xform(p,0,dy,**sq)]
-        fr.append((comp(shadow(-dy),img,*layers,fx),60))
-    if N==64: fr[-1]=(fr[-1][0],300)
+            layers=[xform(p,0,0,**sq)]
+        fr.append((comp(shadow(),img,*layers,fx),60))
+    fr[-1]=(fr[-1][0],300)
     return fr
 
 # ---------- cherry-pick · 摘樱桃 ----------
@@ -1290,82 +1244,6 @@ def simple():
     fr[-1]=(fr[-1][0],500)
     return fr
 
-# ---------- clawd-on-desk theme-only SVGs: Idle · 待机, Roam · 散步, Drag · 拎起来 ----------
-# SVG + CSS rather than frames: the browser animates them smoothly at sub-pixel steps.
-# Coordinates are body cells, the same grid as base(); legs run up behind the torso so lifting them leaves no gap.
-def svg_rect(x,y,w,h,c=None): return f'<rect x="{x}" y="{y}" width="{w}" height="{h}"'+(f' fill="{c}"' if c else '')+'/>'
-def svg_doc(vb,css,body):
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb["x"]} {vb["y"]} {vb["width"]} {vb["height"]}" width="{H*S}" height="{H*S}">\n'
-            f'  <defs>\n    <style>\n{css}    </style>\n  </defs>\n{body}</svg>\n')
-def svg_legs(cls=('','','','')):
-    return ''.join(f'<g class="{c}">{svg_rect(x,11,1,4)}</g>' if c else svg_rect(x,11,1,4) for x,c in zip((3,5,9,11),cls))
-# Same structure and ids as clawd-on-desk's built-in clawd-idle-follow.svg, so its eye tracking drives #eyes-js.
-def idle_svg(vb):
-    r=svg_rect
-    return svg_doc(vb,"""      .breathe { transform-origin: 7.5px 13px; animation: breathe 3.2s infinite ease-in-out; }
-      .blink { transform-origin: 7.5px 9px; animation: blink 4s infinite ease-in-out; }
-      #eyes-js, #body-js, #shadow-js { transition: transform 0.2s ease-out; }
-      #shadow-js { transform-origin: 7.5px 15px; }
-      @keyframes breathe { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.02, 0.98) translate(0, 0.5px); } }
-      @keyframes blink { 0%, 10%, 100% { transform: scaleY(1); } 5% { transform: scaleY(0.1); } }
-""",f'''  <g id="shadow-js">{r(3,15,9,1,tc('#D9D2CB'))}</g>
-  <g id="legs" fill="{BODY}">{svg_legs()}</g>
-  <g id="body-js">
-    <g class="breathe" fill="{BODY}">
-      {r(2,6,11,7)}{r(0,9,2,2)}{r(13,9,2,2)}
-      <g id="eyes-js" fill="{K}"><g class="blink">{r(4,8,1,2)}{r(10,8,1,2)}</g></g>
-    </g>
-  </g>
-''')
-# Walks right (clawd-on-desk mirrors it for leftward walks): legs and arms step in pairs, body bobs on each step.
-def roam_svg(vb):
-    r=svg_rect
-    return svg_doc(vb,"""      .bob { animation: bob 0.3s infinite ease-in-out; }
-      .step-a, .step-b { animation: step 0.6s infinite step-end; }
-      .step-b { animation-delay: -0.3s; }
-      .blink { transform-origin: 7.5px 9px; animation: blink 3.6s infinite ease-in-out; }
-      .shadow { transform-origin: 7.5px 15.5px; animation: shadow 0.3s infinite ease-in-out; }
-      @keyframes bob { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0, -0.6px); } }
-      @keyframes step { 0% { transform: translate(0, -1px); } 50% { transform: none; } }
-      @keyframes blink { 0%, 8%, 100% { transform: scaleY(1); } 4% { transform: scaleY(0.1); } }
-      @keyframes shadow { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.9); } }
-""",f'''  <g class="shadow">{r(3,15,9,1,tc('#D9D2CB'))}</g>
-  <g class="bob" fill="{BODY}">
-    {svg_legs(('step-a','step-b','step-a','step-b'))}
-    {r(2,6,11,7)}<g class="step-a">{r(0,9,2,2)}</g><g class="step-b">{r(13,9,2,2)}</g>
-    <g fill="{K}"><g class="blink">{r(5,8,1,2)}{r(11,8,1,2)}</g></g>
-  </g>
-''')
-# Held up by the scruff: swings from the top, arms flail, legs kick, > < eyes and flying sweat.
-def drag_svg(vb):
-    r=svg_rect; eyes=''.join(r(x,y,1,1) for x,y in [(3,7),(4,8),(3,9),(11,7),(10,8),(11,9)])
-    return svg_doc(vb,"""      .sway { transform-origin: 7.5px 4px; animation: sway 0.9s infinite alternate ease-in-out; }
-      .kick-a, .kick-b, .flail-a, .flail-b { animation: kick 0.24s infinite step-end; }
-      .kick-b, .flail-b { animation-delay: -0.12s; }
-      .flail-a, .flail-b { animation-name: flail; }
-      .drop-l, .drop-r { animation: drop-l 0.8s infinite ease-out; }
-      .drop-r { animation-name: drop-r; animation-delay: -0.4s; }
-      .shadow { transform-origin: 7.5px 15.5px; animation: shadow 0.9s infinite alternate ease-in-out; }
-      @keyframes sway { 0% { transform: translate(0, -1px) rotate(-7deg); } 100% { transform: translate(0, -1px) rotate(7deg); } }
-      @keyframes kick { 0% { transform: translate(0, -1px); } 50% { transform: none; } }
-      @keyframes flail { 0% { transform: translate(0, -1px); } 50% { transform: translate(0, 1px); } }
-      @keyframes drop-l { 0% { transform: none; opacity: 1; } 100% { transform: translate(-3px, 2px); opacity: 0; } }
-      @keyframes drop-r { 0% { transform: none; opacity: 1; } 100% { transform: translate(3px, 2px); opacity: 0; } }
-      @keyframes shadow { 0% { transform: translateX(-1px) scaleX(0.9); } 100% { transform: translateX(1px) scaleX(0.9); } }
-""",f'''  <g class="shadow" opacity="0.6">{r(5,15,5,1,tc('#D9D2CB'))}</g>
-  <g class="sway" fill="{BODY}">
-    {svg_legs(('kick-a','kick-b','kick-a','kick-b'))}
-    {r(2,6,11,7)}<g class="flail-a">{r(0,7,2,2)}</g><g class="flail-b">{r(13,7,2,2)}</g>
-    <g fill="{K}">{eyes}</g>
-    <g fill="{SWEAT}"><g class="drop-l">{r(0,4,1,1)}</g><g class="drop-r">{r(14,4,1,1)}</g></g>
-  </g>
-''')
-SVGS={'idle':idle_svg,'roam':roam_svg,'drag':drag_svg}
-def dizzy(): return limit(spin=True)   # theme only: usage limit, spun round by the mouse
-def passed_long(): return passed(N=72)   # theme only: keeps hopping for as long as LGTM, ending on a full hop
-def detached_long(): return detached(N=90)   # theme only: fills the double-click pool instead of freezing
-def banned_long(): return banned(N=88)
-
 def to_gif(frames,path):
     gf=[]
     for im,_ in frames:
@@ -1394,98 +1272,7 @@ ALL=['hello','thinking','ultrathink','plan','todo',
      'works','passed','deploy','deadline','overtime',
      'coffee','fish','offwork','sleep','bye']
 FILE={'clear_ctx':'clear'}   # clear() is already a drawing helper
-
-# ---------- clawd-on-desk theme (--theme) ----------
-# https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/docs/guides/guide-theme-creation.md
-# viewBox is in body cells, the same grid as the built-in Clawd theme (body x 0..15, feet at y=15).
-THEME_ID='clawd-dev-life'+('-dark' if DARK_MODE else '')
-THEME={
- 'states':{'idle':['idle'],'thinking':['thinking','ultrathink','plan'],'working':['todo','simple','bug'],
-           'juggling':['subagents'],'sweeping':['compact'],'carrying':['clone'],'notification':['proceed'],
-           'attention':['passed_long','lgtm'],'error':['error'],'sleeping':['sleep'],'roam':['roam'],
-           'dizzy':['dizzy'],
-           'yawning':['yawn'],'dozing':['sleep'],'collapsing':['sleep'],'waking':['wake']},
- 'workingTiers':[(3,['deadline']),(2,['loop']),(1,['todo','simple','bug'])],
- 'idleAnimations':['fish','coffee','duck','hello','works','blame','deploy','overtime'],
- 'reactions':{'drag':'drag','clickLeft':'hello','clickRight':'right','annoyed':'notfound','double':['rmrf','detached_long','banned_long']},
-}
-ONESHOT=['attention','error','notification','carrying','dizzy']   # hold until the animation has played once
-HOLD=300   # ms of extra stillness on the last frame of an animation played once for a fixed time
-def to_apng(frames,path):
-    frames[0][0].save(path,format='PNG',save_all=True,append_images=[im for im,_ in frames[1:]],
-                      duration=[d for _,d in frames],loop=0,disposal=0,blend=0)
-    return os.path.getsize(path)
-def theme():
-    import json
-    out=os.path.join(HERE,'..','theme',THEME_ID); ad=os.path.join(out,'assets')
-    os.makedirs(ad,exist_ok=True)
-    names=list(dict.fromkeys(n for v in THEME['states'].values() for n in v))
-    names+=[n for _,ns in THEME['workingTiers'] for n in ns]+THEME['idleAnimations']
-    names+=[n for v in THEME['reactions'].values() for n in ([v] if isinstance(v,str) else v)]
-    vb={'x':-OX-(H-W)/2,'y':-OY,'width':H,'height':H}
-    for nm,fn in SVGS.items():
-        with open(os.path.join(ad,nm+'.svg'),'w',encoding='utf-8') as fp: fp.write(fn(vb))
-    st=THEME['states']; first=lambda s:ms[st[s][0]]
-    # Animations clawd-on-desk plays once for a fixed time. Each gets HOLD ms of extra stillness on its
-    # last frame, so a timer firing a little late never shows the loop restart. A reaction or state pool
-    # shares one duration, so its shorter members hold their last frame until the longest one ends.
-    once=set(THEME['idleAnimations'])|{n for s in ONESHOT+['yawning','waking'] for n in st[s]}
-    once|={n for k,v in THEME['reactions'].items() if k!='drag' for n in ([v] if isinstance(v,str) else v)}
-    pools=[v for v in THEME['reactions'].values() if not isinstance(v,str)]+[st[s] for s in ONESHOT if len(st[s])>1]
-    ms={}; pending={}; f=lambda n:n+('.svg' if n in SVGS else '.apng')
-    def write(nm,fr,pad=0):
-        if nm in once: fr[-1]=(fr[-1][0],fr[-1][1]+pad+HOLD)
-        n=to_apng(fr,os.path.join(ad,f(nm)))
-        print(f'{nm}: {len(fr)} frames, {ms[nm]}ms'+(f' (+{pad}ms hold)' if pad else '')+f', {n//1024}KB')
-    for nm in dict.fromkeys(n for n in names if n not in SVGS):
-        fr=square(globals()[{v:k for k,v in FILE.items()}.get(nm,nm)]())
-        ms[nm]=sum(d for _,d in fr)
-        if any(nm in p for p in pools): pending[nm]=fr
-        else: write(nm,fr)
-    for p in pools:
-        T=max(ms[n] for n in p)
-        for n in p: pad=T-ms[n]; ms[n]=T; write(n,pending[n],pad)
-    cfg={
-     'schemaVersion':1,
-     'name':'Dev Life · 克码人生'+(' (Dark)' if DARK_MODE else ''),
-     'author':'alwinecor','version':'1.0.0',
-     'description':'Clawd Stickers 的 Dev Life 主题：思考、写码、压缩上下文、报错都有对应的小剧场。'
-                   '非官方同人作品，与 Anthropic 无关。'+('适合深色桌面。' if DARK_MODE else ''),
-     'preview':f('idle'),
-     'viewBox':vb,
-     'layout':{'contentBox':{'x':0,'y':6,'width':15,'height':10},'centerX':7.5,'baselineY':16,
-               'visibleHeightRatio':0.29,'baselineBottomRatio':0.05},
-     # Same values as the built-in Clawd; the ratios place the eyes (7.5, 9) inside our viewBox.
-     'eyeTracking':{'enabled':True,'states':['idle'],
-                    'eyeRatioX':(7.5-vb['x'])/vb['width'],'eyeRatioY':round((9-vb['y'])/vb['height'],3),
-                    'maxOffset':3,'bodyScale':0.33,'shadowStretch':0.15,'shadowShift':0.3,
-                    'ids':{'eyes':'eyes-js','body':'body-js','shadow':'shadow-js'},'shadowOrigin':'7.5px 15px'},
-     'customization':{'petTint':False},
-     'states':{s:[f(n) for n in v] for s,v in st.items()},
-     # yawning hands over to dozing/collapsing/sleeping, which all show Good Night: the yawn ends on its
-     # first frame, and deepSleepTimeout/collapseDuration move on at once so the picture never changes.
-     'sleepSequence':{'mode':'full'},
-     'workingTiers':[{'minSessions':k,'file':f(ns[0]),**({'files':[f(n) for n in ns]} if len(ns)>1 else {})}
-                     for k,ns in THEME['workingTiers']],
-     'idleAnimations':[{'file':f(n),'duration':ms[n]} for n in THEME['idleAnimations']],
-     'reactions':{k:({'file':f(v)} if k=='drag' else {'file':f(v),'duration':ms[v]} if isinstance(v,str) else
-                     {'files':[f(n) for n in v],'duration':max(ms[n] for n in v)})
-                  for k,v in THEME['reactions'].items()},
-     'timings':{'minDisplay':{**{s:first(s) for s in ONESHOT},'sweeping':first('sweeping'),
-                              'working':1000,'thinking':1000},
-                'autoReturn':{**{s:first(s) for s in ONESHOT},'sweeping':300000},
-                'mouseIdleTimeout':20000,'mouseSleepTimeout':60000,
-                'yawnDuration':first('yawning'),'deepSleepTimeout':60000+first('yawning'),'collapseDuration':100,
-                'wakeDuration':first('waking')},
-     'hitBoxes':{'default':{'x':-1,'y':5,'w':17,'h':11}},
-     'miniMode':{'supported':False},
-    }
-    with open(os.path.join(out,'theme.json'),'w',encoding='utf-8') as fp:
-        json.dump(cfg,fp,ensure_ascii=False,indent=2); fp.write('\n')
-    print(f'theme -> {os.path.normpath(out)}')
-
 if __name__=='__main__':
-    if '--theme' in sys.argv: theme(); sys.exit()
     for nm in ([a for a in sys.argv[1:] if a!='--dark'] or ALL):
         nm={v:k for k,v in FILE.items()}.get(nm,nm)
         save(FILE.get(nm,nm),globals()[nm]())

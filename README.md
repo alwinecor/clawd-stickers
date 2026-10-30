@@ -131,13 +131,23 @@ python dev-life/src/clawd_dev.py thinking compact clear
 # Generate the dark-background set (combines with the arguments above)
 python dev-life/src/clawd_dev.py --dark
 
-# Generate the clawd-on-desk theme (add --dark for the dark version)
-python dev-life/src/clawd_dev.py --theme
 ```
 
-Output is saved to [`dev-life/gif/`](dev-life/gif/), or [`dev-life/gif-dark/`](dev-life/gif-dark/) with `--dark`, replacing GIFs with the same names. `--theme` writes APNG animations and a `theme.json` to [`dev-life/theme/`](dev-life/theme/); the `THEME` table in the script maps states to animations. The dark colour swaps are listed in the `DARK` table at the top of the script. The script prints each sticker's name, frame count and file size.
+Output is saved to [`dev-life/gif/`](dev-life/gif/), or [`dev-life/gif-dark/`](dev-life/gif-dark/) with `--dark`, replacing GIFs with the same names. The dark colour swaps are listed in the `DARK` table at the top of the script. The script prints each sticker's name, frame count and file size.
 
 Arguments generally match GIF filenames without the `.gif` extension, such as `thinking`, `compact` and `clear`. Browse the output directory for the full list. The script's `ALL` list and `FILE` mapping define the generator entry points and output names; `clear` maps to the `clear_ctx()` function.
+
+### Generate the clawd-on-desk theme
+
+```bash
+# Light theme
+python dev-life/theme/build.py
+
+# Dark theme
+python dev-life/theme/build.py --dark
+```
+
+The theme is built from the finished GIFs in `gif/` or `gif-dark/`, so regenerate a sticker first if you changed it. Output is written to `clawd-dev-life/` or `clawd-dev-life-dark/` under [`dev-life/theme/`](dev-life/theme/). To change the theme, edit only that folder: the `THEME` table in `build.py` maps states to animations, `animations.py` holds the frame animations made only for the theme, and `svg.py` holds the idle, walking and dragging animations.
 
 ## Repository structure
 
@@ -155,8 +165,11 @@ clawd-stickers/
     ├── gif/                   # 40 finished GIFs
     ├── gif-dark/              # 40 finished GIFs (dark background)
     ├── theme/                 # clawd-on-desk desktop pet themes (light, dark)
+    │   ├── build.py           # Theme generator and state mapping
+    │   ├── animations.py      # Theme-only frame animations
+    │   └── svg.py             # Theme-only SVG animations
     └── src/
-        └── clawd_dev.py       # Drawing, animation, GIF and theme export
+        └── clawd_dev.py       # Sticker drawing, animation and GIF export
 ```
 
 ## License and usage

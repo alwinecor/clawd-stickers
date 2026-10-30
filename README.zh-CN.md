@@ -131,13 +131,23 @@ python dev-life/src/clawd_dev.py thinking compact clear
 # 生成深色背景版（可与上面的参数组合）
 python dev-life/src/clawd_dev.py --dark
 
-# 生成 clawd-on-desk 主题（加 --dark 生成深色版）
-python dev-life/src/clawd_dev.py --theme
 ```
 
-生成结果写入 [`dev-life/gif/`](dev-life/gif/)，加 `--dark` 时写入 [`dev-life/gif-dark/`](dev-life/gif-dark/)，会覆盖同名 GIF；`--theme` 写入 [`dev-life/theme/`](dev-life/theme/)，包含 APNG 动画和 `theme.json`，状态与动画的对应关系见脚本里的 `THEME` 表。深色版的换色规则见脚本开头的 `DARK` 表。脚本会输出每个表情的名称、帧数与文件大小。
+生成结果写入 [`dev-life/gif/`](dev-life/gif/)，加 `--dark` 时写入 [`dev-life/gif-dark/`](dev-life/gif-dark/)，会覆盖同名 GIF。深色版的换色规则见脚本开头的 `DARK` 表。脚本会输出每个表情的名称、帧数与文件大小。
 
 参数通常与 GIF 文件名一致，不含 `.gif` 后缀，例如 `thinking`、`compact`、`clear`。完整名称可查看成品目录；脚本中的 `ALL` 列表及 `FILE` 映射定义了生成入口与输出名称，其中 `clear` 对应函数 `clear_ctx()`。
+
+### 生成 clawd-on-desk 主题
+
+```bash
+# 浅色主题
+python dev-life/theme/build.py
+
+# 深色主题
+python dev-life/theme/build.py --dark
+```
+
+主题直接由 `gif/` 或 `gif-dark/` 里的成品 GIF 生成，所以改了表情要先重新生成它。结果写入 [`dev-life/theme/`](dev-life/theme/) 下的 `clawd-dev-life/` 或 `clawd-dev-life-dark/`。修改主题时只需要动这个目录：`build.py` 里的 `THEME` 表是状态与动画的对应关系，`animations.py` 是主题专用的逐帧动画，`svg.py` 是待机、走动和拖拽动画。
 
 ## 目录结构
 
@@ -155,8 +165,11 @@ clawd-stickers/
     ├── gif/                   # 40 个成品 GIF
     ├── gif-dark/              # 40 个成品 GIF（深色背景）
     ├── theme/                 # clawd-on-desk 桌宠主题（浅色、深色）
+    │   ├── build.py           # 主题生成脚本和状态对应表
+    │   ├── animations.py      # 主题专用逐帧动画
+    │   └── svg.py             # 主题专用 SVG 动画
     └── src/
-        └── clawd_dev.py       # 绘图、动画、GIF 与主题导出脚本
+        └── clawd_dev.py       # 表情绘图、动画与 GIF 导出脚本
 ```
 
 ## 许可与使用范围
