@@ -143,10 +143,6 @@
       "duration": 4320
     },
     {
-      "file": "hello.apng",
-      "duration": 4350
-    },
-    {
       "file": "works.apng",
       "duration": 4200
     },
@@ -165,6 +161,18 @@
     {
       "file": "offwork.apng",
       "duration": 4280
+    },
+    {
+      "file": "leak.apng",
+      "duration": 3940
+    },
+    {
+      "file": "overflow.apng",
+      "duration": 4370
+    },
+    {
+      "file": "cherry.apng",
+      "duration": 3940
     }
   ],
   "reactions": {

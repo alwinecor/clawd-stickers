@@ -26,7 +26,7 @@ THEME={
            'dizzy':['dizzy'],
            'yawning':['yawn'],'dozing':['sleep'],'collapsing':['sleep'],'waking':['wake']},
  'workingTiers':[(3,['team3']),(2,['team2','conflict']),(1,['todo','simple','bug','loop','deadline'])],
- 'idleAnimations':['fish','coffee','duck','hello','works','blame','deploy','overtime','offwork'],
+ 'idleAnimations':['fish','coffee','duck','works','blame','deploy','overtime','offwork','leak','overflow','cherry'],
  'hitBoxes':{'conflict':{'x':-4,'y':5,'w':23,'h':11},'team2':{'x':-3,'y':2,'w':21,'h':14},'team3':{'x':-3,'y':-4,'w':21,'h':20}},   # wider than one Clawd
  'reactions':{'drag':'drag','clickLeft':'hello','clickRight':'right','annoyed':'notfound','double':['rmrf','detached_long','banned_long']},
 }

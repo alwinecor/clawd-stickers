@@ -77,7 +77,7 @@ The set is also packaged as a desktop pet theme for [clawd-on-desk](https://gith
 
 | State | Animation |
 |---|---|
-| Idle | Breathing and blinking, eyes following the mouse, with occasional Slacking Off, Coffee Break, Rubber Duck, hello world, Works on My Machine, git blame, Friday Deploy, Overtime and Clock Out |
+| Idle | Breathing and blinking, eyes following the mouse, with occasional Slacking Off, Coffee Break, Rubber Duck, Works on My Machine, git blame, Friday Deploy, Overtime, Clock Out, Memory Leak, Stack Overflow and cherry-pick |
 | Thinking | One of Thinking / ultrathink / Plan Mode at random |
 | Working | 1 session: Todo List / It's Simple / Bug Hunt / while(true) / Deadline at random; 2: two Clawds side by side, one coding and one running tests, or Merge Conflict at random; 3 or more: a third stands on their screens sipping coffee |
 | Subagents | Subagents |
