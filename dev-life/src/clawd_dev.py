@@ -1406,7 +1406,7 @@ THEME={
            'dizzy':['dizzy'],
            'yawning':['yawn'],'dozing':['sleep'],'collapsing':['sleep'],'waking':['wake']},
  'workingTiers':[(3,['deadline']),(2,['loop']),(1,['todo','simple','bug'])],
- 'idleAnimations':['fish','coffee','duck','hello','works'],
+ 'idleAnimations':['fish','coffee','duck','hello','works','blame','deploy','overtime'],
  'reactions':{'drag':'drag','clickLeft':'hello','clickRight':'right','annoyed':'notfound','double':['rmrf','detached_long','banned_long']},
 }
 ONESHOT=['attention','error','notification','carrying','dizzy']   # hold until the animation has played once

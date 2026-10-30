@@ -141,6 +141,18 @@
     {
       "file": "works.apng",
       "duration": 4200
+    },
+    {
+      "file": "blame.apng",
+      "duration": 4420
+    },
+    {
+      "file": "deploy.apng",
+      "duration": 4480
+    },
+    {
+      "file": "overtime.apng",
+      "duration": 5120
     }
   ],
   "reactions": {
