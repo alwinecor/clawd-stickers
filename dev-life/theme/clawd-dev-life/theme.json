@@ -95,7 +95,7 @@
       "sleep.apng"
     ],
     "waking": [
-      "coffee.apng"
+      "wake.apng"
     ]
   },
   "sleepSequence": {
@@ -191,7 +191,7 @@
     "yawnDuration": 5760,
     "deepSleepTimeout": 65760,
     "collapseDuration": 100,
-    "wakeDuration": 4710
+    "wakeDuration": 5690
   },
   "hitBoxes": {
     "default": {

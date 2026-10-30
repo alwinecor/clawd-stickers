@@ -439,9 +439,9 @@ def error():
     return fr
 
 # ---------- Coffee Break · 咖啡续命 ----------
+MUG=["wwww.","wrrwh","wwwwh","wwww."]; MUG_PAL={'w':'#4F7BD9','r':'#FFFFFF','h':'#3A5FB0'}
 def coffee():
     fr=[]; N=64
-    MUG=["wwww.","wrrwh","wwwwh","wwww."]; pal={'w':'#4F7BD9','r':'#FFFFFF','h':'#3A5FB0'}
     for i in range(N):
         p=base(); dx=0; dy=0; rot=0; fx={}
         mx=round(kf(i,[(18,14),(24,9),(34,9),(40,14)])); my=round(kf(i,[(18,8),(24,5),(34,5),(40,8)]))
@@ -455,13 +455,24 @@ def coffee():
             if i<50: fx.update(bang(-2,3))
             for k,(x,y) in enumerate([(-2,9),(16,5),(0,1)]):
                 if (i+k)%4<2: fx.update({(x,y):'#F2C14E',(x+1,y-1):'#F2C14E'})
-        p.update(spr(MUG,mx,my,pal))
+        p.update(spr(MUG,mx,my,MUG_PAL))
         if not 22<=i<36:
             for k in range(3):
                 t=((i+k*5)%15)/15; fx[(mx+1+k%2+round(0.6*math.sin(t*6)),my-1-round(t*4))]='#D8D2CA'
         fr.append((comp(shadow(),xform(p,dx,dy,rot=rot),fx),70))
     fr[30]=(fr[30][0],300)
     return fr
+
+# ---------- Wake · 醒来 (clawd-on-desk theme only) ----------
+def wake():
+    """From the Good Night pose the eyes crack open, the nightcap lifts away and the mug slides in,
+    landing on frame 0 of Coffee Break, which then plays through."""
+    fr=[]
+    for j in range(14):
+        cap=round(kf(j,[(5,0),(13,16)])); mx=round(kf(j,[(5,24),(13,14)]))
+        scene=sleep_scene(min(8+j,22.5),born=-1,cap=cap,eyes='shut' if j<4 else 'half')
+        fr.append((comp(scene,spr(MUG,mx,8,MUG_PAL)),70))
+    return fr+coffee()
 
 # ---------- Friday Deploy · 周五上线 ----------
 def deploy():
@@ -1383,7 +1394,7 @@ THEME={
            'juggling':['subagents'],'sweeping':['compact'],'carrying':['clone'],'notification':['proceed'],
            'attention':['passed'],'error':['error'],'sleeping':['sleep'],'roam':['roam'],
            'dizzy':['dizzy'],
-           'yawning':['yawn'],'dozing':['sleep'],'collapsing':['sleep'],'waking':['coffee']},
+           'yawning':['yawn'],'dozing':['sleep'],'collapsing':['sleep'],'waking':['wake']},
  'workingTiers':[(3,['deadline']),(2,['loop']),(1,['todo','simple','bug'])],
  'idleAnimations':['fish','coffee','duck','hello','works'],
  'reactions':{'drag':'drag','clickLeft':'blame','clickRight':'esc','annoyed':'forcepush','double':['rmrf','detached','banned']},
