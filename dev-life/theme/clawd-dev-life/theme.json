@@ -111,7 +111,11 @@
     },
     {
       "minSessions": 2,
-      "file": "team2.apng"
+      "file": "team2.apng",
+      "files": [
+        "team2.apng",
+        "conflict.apng"
+      ]
     },
     {
       "minSessions": 1,
@@ -157,6 +161,10 @@
     {
       "file": "overtime.apng",
       "duration": 5120
+    },
+    {
+      "file": "offwork.apng",
+      "duration": 4280
     }
   ],
   "reactions": {
@@ -219,6 +227,12 @@
     }
   },
   "fileHitBoxes": {
+    "conflict.apng": {
+      "x": -4,
+      "y": 5,
+      "w": 23,
+      "h": 11
+    },
     "team2.apng": {
       "x": -3,
       "y": 2,
