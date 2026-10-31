@@ -112,8 +112,8 @@ Run the included Python script to edit animations or regenerate GIFs.
 
 ### Requirements
 
-- Python 3 and pip.
-- The Pillow image library.
+- Python 3.10 or later and pip.
+- The Pillow image library, at the version pinned in [`requirements.txt`](requirements.txt).
 - Git if cloning the repository; downloading a ZIP is also supported.
 
 ### Get the repository and install dependencies
@@ -121,7 +121,7 @@ Run the included Python script to edit animations or regenerate GIFs.
 ```bash
 git clone https://github.com/alwinecor/clawd-stickers.git
 cd clawd-stickers
-python -m pip install Pillow
+python -m pip install -r requirements.txt
 ```
 
 ### Generate stickers
@@ -161,6 +161,14 @@ python dev-life/theme/build.py --dark
 
 Output is written to `clawd-dev-life/` or `clawd-dev-life-dark/` under [`dev-life/theme/`](dev-life/theme/), replacing the corresponding configuration and animation assets with the same names. The `THEME` table in `build.py` maps states to animations, `animations.py` holds theme-specific frame animations that differ from the original stickers, and `svg.py` holds the idle, walking and dragging animations.
 
+### Check generated files
+
+This command rebuilds all stickers and themes in a temporary copy, then lists any committed files that no longer match their source. It changes nothing in the repository and also runs automatically on GitHub for pushes to `main` and for pull requests.
+
+```bash
+python dev-life/check.py
+```
+
 ## Repository structure
 
 ```text
@@ -168,12 +176,15 @@ clawd-stickers/
 ├── README.md                  # English project guide
 ├── README.zh-CN.md            # Chinese project guide
 ├── LICENSE                    # Standard MIT License
+├── requirements.txt           # Pinned Python dependencies
+├── .github/workflows/         # Automatic check of generated files
 ├── promo/                     # Share images (3:4, 20 stickers per page)
 │   ├── covers/                # Animated pages and stills, dark and light
 │   └── make_covers.py         # Share image generator
 └── dev-life/                  # Dev Life sticker set
     ├── README.md              # English sticker content guide
     ├── README.zh-CN.md        # Chinese sticker content guide
+    ├── check.py               # Check that generated files match their source
     ├── gif/                   # 40 finished GIFs
     ├── gif-dark/              # 40 finished GIFs (dark background)
     ├── theme/                 # clawd-on-desk desktop pet themes
@@ -193,7 +204,7 @@ Issues are welcome for sticker ideas and bug reports, as are PRs improving anima
 - **Report a problem**: describe the affected sticker or theme and the steps to reproduce it. Include a screenshot or animation where possible. For desktop pet issues, also include your operating system and clawd-on-desk version. Please report issues with the clawd-on-desk application itself, rather than this theme, to the upstream project.
 - **Change stickers**: drawing and animation code lives in [`dev-life/src/clawd_dev.py`](dev-life/src/clawd_dev.py). Keep the existing pixel style and generate both light- and dark-background GIFs. When adding a sticker, update `ALL`, the `FILE` mapping if needed, and the set guides and home page previews in both languages.
 - **Change desktop pet themes**: state mappings, theme-specific frame animations and SVG animations live in `build.py`, `animations.py` and `svg.py` under `dev-life/theme/`, respectively. Edit the source files and rebuild both light and dark themes. If a source sticker has changed, regenerate its GIF first.
-- **Submit a PR**: describe the changes, include previews where applicable, and submit the source files together with updated assets and relevant documentation. Check transparency, text readability and loop transitions on both light and dark backgrounds. For desktop pet changes, also check the affected states or interactions. Update both English and Chinese documentation when usage or the collection changes.
+- **Submit a PR**: describe the changes, include previews where applicable, and submit the source files together with updated assets and relevant documentation. Run `python dev-life/check.py` before submitting. Check transparency, text readability and loop transitions on both light and dark backgrounds. For desktop pet changes, also check the affected states or interactions. Update both English and Chinese documentation when usage or the collection changes.
 
 ## License and usage
 

@@ -1,0 +1,2 @@
+# Pinned: the committed GIFs and APNGs are compared byte for byte by dev-life/check.py.
+Pillow==12.0.0

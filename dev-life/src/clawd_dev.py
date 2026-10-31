@@ -5,7 +5,7 @@ clawd-stickers · 01 Dev Life (克码人生) — inspired by clawd-moji by Qisi3
 https://github.com/Qisi3344/clawd-moji
 Generates the animated Clawd stickers in ../gif/ (288x288, also fine as WeChat stickers).
 
-  pip install pillow
+  pip install -r ../../requirements.txt
   python clawd_dev.py             # all
   python clawd_dev.py compact     # just one
   python clawd_dev.py --dark      # dark-background set -> ../gif-dark/
