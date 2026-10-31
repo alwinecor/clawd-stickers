@@ -741,35 +741,44 @@ def esc():
     return fr
 
 # ---------- Usage Limit · 额度用完 ----------
+def battery(img,i):
+    """The battery at step i: drains until 28, blinks while empty, then refills from 56."""
+    RED='#E5484D'; YEL='#F2C14E'; G='#2FB15A'; OL='#3A3A44'
+    f=kf(i,[(0,1),(28,0),(56,0),(62,1)]) if i<62 else 1
+    bx0,bx1,by0,by1=cx(2),cx(12),cy(-6),cy(-2)
+    empty=f<0.02
+    if not (empty and 32<=i<56 and (i//3)%2):   # empty battery blinks
+        box(img,bx0,by0,bx1,by1,OL); box(img,bx0+5,by0+5,bx1-5,by1-5,(0,0,0,0))
+        box(img,bx1,by0+14,bx1+8,by1-14,OL)
+        col=G if f>0.5 else YEL if f>0.2 else RED
+        if f>0: box(img,bx0+9,by0+9,bx0+9+(bx1-bx0-18)*f,by1-9,col)
+    if 30<=i<58: textc(img,'limit reached',138,cy(-1)-2,5,RED)
+def melt(p,i):
+    """Clawd from step 28: melts flat while the battery is empty, then bounces back. Returns dy, its scale, fx."""
+    dy=0; fx={}
+    if i<56:
+        face(p,'n',blink=True); arms(p,DOWN,DOWN)
+        sy=kf(i,[(28,0.92),(34,0.5)]); sq=dict(sy=sy,sx=sy**-0.4)
+        if 36<=i<54 and (i//6)%2==0:
+            fx[(15,8)]='#7FB2E5'; fx[(15,9)]='#7FB2E5'
+    else:
+        face(p,'hap'); arms(p,UP,UP)
+        sy=kf(i,[(56,0.5),(60,1.2),(63,0.9),(66,1)]); sq=dict(sy=sy,sx=sy**-0.4)
+        dy=-kf(i,[(58,0),(61,2),(64,0)])
+    return dy,sq,fx
 def limit():
     """A battery drains while Clawd types; at empty it reads 'limit reached' and Clawd melts flat."""
-    fr=[]; N=72; RED='#E5484D'; YEL='#F2C14E'; G='#2FB15A'; OL='#3A3A44'
+    fr=[]; N=72
     for i in range(N):
-        f=kf(i,[(0,1),(28,0),(56,0),(62,1)]) if i<62 else 1
-        img=canvas(); bx0,bx1,by0,by1=cx(2),cx(12),cy(-6),cy(-2)
-        empty=f<0.02
-        if not (empty and 32<=i<56 and (i//3)%2):   # empty battery blinks
-            box(img,bx0,by0,bx1,by1,OL); box(img,bx0+5,by0+5,bx1-5,by1-5,(0,0,0,0))
-            box(img,bx1,by0+14,bx1+8,by1-14,OL)
-            col=G if f>0.5 else YEL if f>0.2 else RED
-            if f>0: box(img,bx0+9,by0+9,bx0+9+(bx1-bx0-18)*f,by1-9,col)
-        if 30<=i<58: textc(img,'limit reached',138,cy(-1)-2,5,RED)
-        p=base(); dx=0; dy=0; sq={}; fx={}
+        img=canvas(); battery(img,i)
+        p=base(); dy=0; sq={}; fx={}
         if i<28:
             slow=1+2*(i>=18)          # typing slows as the battery runs low
             face(p,'n',0,1 if i<18 else 0,blink=(i>=20))
             tap=(i//slow)%2; arms(p,UP if tap else MID,MID if tap else UP)
             if i>=20: sq=dict(sy=kf(i,[(20,1),(28,0.92)]),sx=1)
-        elif i<56:
-            face(p,'n',blink=True); arms(p,DOWN,DOWN)
-            sy=kf(i,[(28,0.92),(34,0.5)]); sq=dict(sy=sy,sx=sy**-0.4)
-            if 36<=i<54 and (i//6)%2==0:
-                fx[(15,8)]='#7FB2E5'; fx[(15,9)]='#7FB2E5'
-        else:
-            face(p,'hap'); arms(p,UP,UP)
-            sy=kf(i,[(56,0.5),(60,1.2),(63,0.9),(66,1)]); sq=dict(sy=sy,sx=sy**-0.4)
-            dy=-kf(i,[(58,0),(61,2),(64,0)])
-        fr.append((comp(shadow(-dy),img,xform(p,dx,dy,**sq),fx),70))
+        else: dy,sq,fx=melt(p,i)
+        fr.append((comp(shadow(-dy),img,xform(p,0,dy,**sq),fx),70))
     fr[31]=(fr[31][0],300); fr[-1]=(fr[-1][0],300)
     return fr
 
@@ -925,26 +934,29 @@ def right():
     return fr
 
 # ---------- /exit · 拜拜 ----------
+def exit_prompt(img,x0,y0,i):
+    """The terminal text of /exit at frame i: the command is typed, then bye! appears."""
+    FG='#E6E1DA'; ORG='#E8845F'; tx,ty,px=x0+14,y0+14,4
+    x=text(img,'> ',tx,ty,px,ORG); x=text(img,'/exit'[:clamp((i-2)//2,0,5)],x,ty,px,FG)
+    if i<14 and (i//4)%2==0: box(img,x+px,ty,x+4*px,ty+5*px,FG)
+    if i>=42:
+        x=text(img,'bye!',tx,ty+36,px,FG)
+        if (i//4)%2==0: box(img,x+px,ty+36,x+4*px,ty+36+5*px,FG)
+def exit_clawd(p,i):
+    """Clawd for frames 0-41 of /exit: types, waves, then shrinks into the terminal."""
+    if i<14:
+        face(p,'n',0,-1)
+        if 2<=i<12: arms(p,UP if i%2 else MID,MID if i%2 else UP)
+        return xform(p)
+    if i<30:
+        face(p,'hap'); arms(p,DOWN,UP if (i//3)%2 else MID); return xform(p,0,0,rot=3*math.sin(TAU*i/12))
+    face(p,'hap'); arms(p,UP,UP)
+    cs=round(kf(i,[(30,12),(41,1)])); return render(p,cs,138,kf(i,[(30,264),(41,108)]))
 def bye():
-    fr=[]; N=60; FG='#E6E1DA'; ORG='#E8845F'
+    fr=[]; N=60
     for i in range(N):
-        img=canvas(); X0,Y0,X1,Y1=cx(-3),cy(-6),cx(18),cy(1); term(img,X0,Y0,X1,Y1)
-        tx,ty,px=X0+14,Y0+14,4
-        x=text(img,'> ',tx,ty,px,ORG); x=text(img,'/exit'[:clamp((i-2)//2,0,5)],x,ty,px,FG)
-        if i<14 and (i//4)%2==0: box(img,x+px,ty,x+4*px,ty+5*px,FG)
-        if i>=42:
-            x=text(img,'bye!',tx,ty+36,px,FG)
-            if (i//4)%2==0: box(img,x+px,ty+36,x+4*px,ty+36+5*px,FG)
-        p=base(); ch=None
-        if i<14:
-            face(p,'n',0,-1)
-            if 2<=i<12: arms(p,UP if i%2 else MID,MID if i%2 else UP)
-            ch=xform(p)
-        elif i<30:
-            face(p,'hap'); arms(p,DOWN,UP if (i//3)%2 else MID); ch=xform(p,0,0,rot=3*math.sin(TAU*i/12))
-        elif i<42:
-            face(p,'hap'); arms(p,UP,UP)
-            cs=round(kf(i,[(30,12),(41,1)])); ch=render(p,cs,138,kf(i,[(30,264),(41,108)]))
+        img=canvas(); X0,Y0,X1,Y1=cx(-3),cy(-6),cx(18),cy(1); term(img,X0,Y0,X1,Y1); exit_prompt(img,X0,Y0,i)
+        ch=exit_clawd(base(),i) if i<42 else None
         fr.append((comp(shadow() if i<30 else None,ch,img),60))
     fr[13]=(fr[13][0],200); fr[-1]=(fr[-1][0],600)
     return fr

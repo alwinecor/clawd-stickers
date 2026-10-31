@@ -19,35 +19,19 @@ def banned_long():
 ROLL=[(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]   # eye offsets going round clockwise
 def dizzy():
     """Usage Limit spun round by the mouse: no keyboard, the eyes roll round and Clawd sways as the battery drains."""
-    fr=[]; N=72; RED='#E5484D'; YEL='#F2C14E'; G='#2FB15A'; OL='#3A3A44'
+    fr=[]; N=72
     # i counts 70 ms steps; the spin runs at half steps so its eyes and sway move smoothly
     ts=[k/2 for k in range(56)]+list(range(28,N))
     for i in ts:
-        f=kf(i,[(0,1),(28,0),(56,0),(62,1)]) if i<62 else 1
-        img=canvas(); bx0,bx1,by0,by1=cx(2),cx(12),cy(-6),cy(-2)
-        empty=f<0.02
-        if not (empty and 32<=i<56 and (i//3)%2):   # empty battery blinks
-            box(img,bx0,by0,bx1,by1,OL); box(img,bx0+5,by0+5,bx1-5,by1-5,(0,0,0,0))
-            box(img,bx1,by0+14,bx1+8,by1-14,OL)
-            col=G if f>0.5 else YEL if f>0.2 else RED
-            if f>0: box(img,bx0+9,by0+9,bx0+9+(bx1-bx0-18)*f,by1-9,col)
-        if 30<=i<58: textc(img,'limit reached',138,cy(-1)-2,5,RED)
-        p=base(); dx=0; dy=0; sq={}; fx={}
+        img=canvas(); battery(img,i)
+        p=base(); dy=0; sq={}; fx={}
         if i<28:
             ph=i if i<18 else 18+(i-18)/1.5   # spin winds down with the battery
             face(p,'n',*ROLL[int(ph)%8]); arms(p,MID,MID)
             rot=6*math.sin(TAU*ph/6)
             sq=dict(sy=kf(i,[(20,1),(28,0.92)]),sx=1,rot=rot)
-        elif i<56:
-            face(p,'n',blink=True); arms(p,DOWN,DOWN)
-            sy=kf(i,[(28,0.92),(34,0.5)]); sq=dict(sy=sy,sx=sy**-0.4)
-            if 36<=i<54 and (i//6)%2==0:
-                fx[(15,8)]='#7FB2E5'; fx[(15,9)]='#7FB2E5'
-        else:
-            face(p,'hap'); arms(p,UP,UP)
-            sy=kf(i,[(56,0.5),(60,1.2),(63,0.9),(66,1)]); sq=dict(sy=sy,sx=sy**-0.4)
-            dy=-kf(i,[(58,0),(61,2),(64,0)])
-        fr.append((comp(shadow(-dy),img,xform(p,dx,dy,**sq),fx),70 if i>=28 else 35))
+        else: dy,sq,fx=melt(p,i)
+        fr.append((comp(shadow(-dy),img,xform(p,0,dy,**sq),fx),70 if i>=28 else 35))
     k=ts.index(31); fr[k]=(fr[k][0],300); fr[-1]=(fr[-1][0],300)
     return fr
 
@@ -80,28 +64,16 @@ def wake():
 def bye_long():
     """/exit, except Clawd comes back: the terminal closes, a shadow grows on the ground and Clawd drops from
     the sky, lands flat, shakes off the stars and ends on the idle pose."""
-    fr=[]; N=84; FG='#E6E1DA'; ORG='#E8845F'
+    fr=[]; N=84
     for i in range(N):
         img=canvas(); X0,Y0,X1,Y1=cx(-3),cy(-6),cx(18),cy(1); mid=(Y0+Y1)//2
         h=round(kf(i,[(52,(Y1-Y0)//2),(56,0)]))
         if h>2: term(img,X0,mid-h,X1,mid+h)
-        if i<52:
-            tx,ty,px=X0+14,Y0+14,4
-            x=text(img,'> ',tx,ty,px,ORG); x=text(img,'/exit'[:clamp((i-2)//2,0,5)],x,ty,px,FG)
-            if i<14 and (i//4)%2==0: box(img,x+px,ty,x+4*px,ty+5*px,FG)
-            if i>=42:
-                x=text(img,'bye!',tx,ty+36,px,FG)
-                if (i//4)%2==0: box(img,x+px,ty+36,x+4*px,ty+36+5*px,FG)
+        if i<52: exit_prompt(img,X0,Y0,i)
         p=base(); ch=None; sh=None; fx={}
-        if i<14:
-            face(p,'n',0,-1)
-            if 2<=i<12: arms(p,UP if i%2 else MID,MID if i%2 else UP)
-            ch=xform(p); sh=shadow()
-        elif i<30:
-            face(p,'hap'); arms(p,DOWN,UP if (i//3)%2 else MID); ch=xform(p,0,0,rot=3*math.sin(TAU*i/12)); sh=shadow()
-        elif i<42:
-            face(p,'hap'); arms(p,UP,UP)
-            cs=round(kf(i,[(30,12),(41,1)])); ch=render(p,cs,138,kf(i,[(30,264),(41,108)]))
+        if i<42:
+            ch=exit_clawd(p,i)
+            if i<30: sh=shadow()
         elif 57<=i<69:
             sh=shadow(kf(i,[(57,3.5),(69,0)]))
             if i>=64:
