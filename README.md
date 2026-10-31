@@ -124,9 +124,17 @@ cd clawd-stickers
 python -m pip install -r requirements.txt
 ```
 
+### Generate everything
+
+This command generates all stickers and both themes, light and dark, in one go:
+
+```bash
+python dev-life/build_all.py
+```
+
 ### Generate stickers
 
-Run these commands from the repository root:
+To generate only some stickers, run these commands from the repository root:
 
 ```bash
 # Generate all 40 stickers
@@ -145,11 +153,11 @@ python dev-life/src/clawd_dev.py --dark
 
 Output is saved to [`dev-life/gif/`](dev-life/gif/), or [`dev-life/gif-dark/`](dev-life/gif-dark/) with `--dark`, replacing GIFs with the same names. The dark colour swaps are listed in the `DARK` table at the top of the script. The script prints each sticker's name, frame count and file size.
 
-Arguments generally match GIF filenames without the `.gif` extension, such as `thinking`, `compact` and `clear`. Browse the output directory for the full list. The script's `ALL` list and `FILE` mapping define the generator entry points and output names; `clear` maps to the `clear_ctx()` function.
+Arguments match GIF filenames without the `.gif` extension, such as `thinking`, `compact` and `clear`. Run the script with `--help` for the full list. The script's `ALL` list and `FILE` mapping define the generator entry points and output names; `clear` maps to the `clear_ctx()` function.
 
 ### Generate the clawd-on-desk theme
 
-Rebuild only after changing animations or the theme configuration. The theme reads the finished GIFs from `gif/` or `gif-dark/` for the matching variant. **After changing a sticker, regenerate its GIF before building the theme.**
+Rebuild only after changing animations or the theme configuration. The theme calls the sticker generators directly, so it doesn't depend on the files in `gif/` or `gif-dark/`.
 
 ```bash
 # Light theme
@@ -184,6 +192,7 @@ clawd-stickers/
 └── dev-life/                  # Dev Life sticker set
     ├── README.md              # English sticker content guide
     ├── README.zh-CN.md        # Chinese sticker content guide
+    ├── build_all.py           # Generate all stickers and themes
     ├── check.py               # Check that generated files match their source
     ├── gif/                   # 40 finished GIFs
     ├── gif-dark/              # 40 finished GIFs (dark background)
@@ -202,8 +211,8 @@ clawd-stickers/
 Issues are welcome for sticker ideas and bug reports, as are PRs improving animations, desktop pet themes, documentation and translations. See [Generate locally](#generate-locally) for setup and generation commands.
 
 - **Report a problem**: describe the affected sticker or theme and the steps to reproduce it. Include a screenshot or animation where possible. For desktop pet issues, also include your operating system and clawd-on-desk version. Please report issues with the clawd-on-desk application itself, rather than this theme, to the upstream project.
-- **Change stickers**: drawing and animation code lives in [`dev-life/src/clawd_dev.py`](dev-life/src/clawd_dev.py). Keep the existing pixel style and generate both light- and dark-background GIFs. When adding a sticker, update `ALL`, the `FILE` mapping if needed, and the set guides and home page previews in both languages.
-- **Change desktop pet themes**: state mappings, theme-specific frame animations and SVG animations live in `build.py`, `animations.py` and `svg.py` under `dev-life/theme/`, respectively. Edit the source files and rebuild both light and dark themes. If a source sticker has changed, regenerate its GIF first.
+- **Change stickers**: drawing and animation code lives in [`dev-life/src/clawd_dev.py`](dev-life/src/clawd_dev.py). Keep the existing pixel style and run `python dev-life/build_all.py` to update the GIFs and themes. When adding a sticker, update `ALL`, the `FILE` mapping if needed, and the set guides and home page previews in both languages.
+- **Change desktop pet themes**: state mappings, theme-specific frame animations and SVG animations live in `build.py`, `animations.py` and `svg.py` under `dev-life/theme/`, respectively. Edit the source files and rebuild both light and dark themes.
 - **Submit a PR**: describe the changes, include previews where applicable, and submit the source files together with updated assets and relevant documentation. Run `python dev-life/check.py` before submitting. Check transparency, text readability and loop transitions on both light and dark backgrounds. For desktop pet changes, also check the affected states or interactions. Update both English and Chinese documentation when usage or the collection changes.
 
 ## License and usage

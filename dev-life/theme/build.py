@@ -1,16 +1,15 @@
 # SPDX-License-Identifier: MIT
 # License: ../../LICENSE
 """
-Builds the clawd-on-desk themes in this folder from the sticker GIFs in ../gif/ (../gif-dark/ with --dark),
+Builds the clawd-on-desk themes in this folder from the sticker generators in ../src/clawd_dev.py,
 plus the theme-only animations in animations.py and svg.py.
 
   python build.py          # light theme -> clawd-dev-life/
   python build.py --dark   # dark theme -> clawd-dev-life-dark/
 
-Run ../src/clawd_dev.py first if a sticker has changed.
 https://github.com/rullerzhou-afk/clawd-on-desk/blob/main/docs/guides/guide-theme-creation.md
 """
-import json, os, sys
+import argparse, json, os, sys
 THEME_DIR=os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0,os.path.join(THEME_DIR,'..','src'))
 from clawd_dev import *
@@ -18,7 +17,6 @@ from animations import banned_long, detached_long, dizzy, passed_long, team2, te
 from svg import SVGS
 
 # viewBox is in body cells, the same grid as the built-in Clawd theme (body x 0..15, feet at y=15).
-THEME_ID='clawd-dev-life'+('-dark' if DARK_MODE else '')
 THEME={
  'states':{'idle':['idle'],'thinking':['thinking','ultrathink','plan'],'working':['todo','simple','bug','loop','deadline'],
            'juggling':['subagents'],'sweeping':['compact'],'carrying':['clone'],'notification':['proceed'],
@@ -37,15 +35,10 @@ def to_apng(frames,path):
     frames[0][0].save(path,format='PNG',save_all=True,append_images=[im for im,_ in frames[1:]],
                       duration=[d for _,d in frames],loop=0,disposal=0,blend=0)
     return os.path.getsize(path)
-def sticker(nm):
-    im=Image.open(os.path.join(OUT,nm+'.gif')); fr=[]
-    for k in range(im.n_frames):
-        im.seek(k); c=im.convert('RGBA')   # blank the colour under transparent pixels, which GIF leaves behind
-        fr.append((Image.composite(c,Image.new('RGBA',c.size),c.getchannel('A')),im.info['duration']))
-    return fr
-def frames(nm): return square(ANIMATIONS[nm]()) if nm in ANIMATIONS else sticker(nm)
-def theme():
-    out=os.path.join(THEME_DIR,THEME_ID); ad=os.path.join(out,'assets')
+def frames(nm): return square((ANIMATIONS.get(nm) or STICKERS[nm])())
+def theme(dark=False):
+    set_dark(dark)
+    out=os.path.join(THEME_DIR,'clawd-dev-life'+('-dark' if dark else '')); ad=os.path.join(out,'assets')
     os.makedirs(ad,exist_ok=True)
     names=list(dict.fromkeys(n for v in THEME['states'].values() for n in v))
     names+=[n for _,ns in THEME['workingTiers'] for n in ns]+THEME['idleAnimations']
@@ -75,10 +68,10 @@ def theme():
         for n in p: pad=T-ms[n]; ms[n]=T; write(n,pending[n],pad)
     cfg={
      'schemaVersion':1,
-     'name':'Clawd Dev Life'+(' (Dark)' if DARK_MODE else ''),
+     'name':'Clawd Dev Life'+(' (Dark)' if dark else ''),
      'author':'alwinecor','version':'1.0.0',
      'description':'Clawd Dev Life 主题：思考、写码、压缩上下文、报错都有对应的小剧场。'
-                   '非官方同人作品，与 Anthropic 无关。'+('适合深色桌面。' if DARK_MODE else ''),
+                   '非官方同人作品，与 Anthropic 无关。'+('适合深色桌面。' if dark else ''),
      'preview':f('idle'),
      'viewBox':vb,
      'layout':{'contentBox':{'x':0,'y':6,'width':15,'height':10},'centerX':7.5,'baselineY':16,
@@ -114,4 +107,6 @@ def theme():
     print(f'theme -> {os.path.normpath(out)}')
 
 if __name__=='__main__':
-    theme()
+    ap=argparse.ArgumentParser(description='Build a clawd-on-desk theme.')
+    ap.add_argument('--dark',action='store_true',help='build the dark theme in clawd-dev-life-dark/')
+    theme(ap.parse_args().dark)

@@ -12,8 +12,6 @@ promo/ is left out, as its fonts differ between systems.
 import os, shutil, subprocess, sys, tempfile
 HERE=os.path.dirname(os.path.abspath(__file__))
 OUTPUTS=('gif','gif-dark','theme/clawd-dev-life','theme/clawd-dev-life-dark')
-# Stickers first: the themes read the finished GIFs.
-BUILDS=(('src/clawd_dev.py',),('src/clawd_dev.py','--dark'),('theme/build.py',),('theme/build.py','--dark'))
 def read(path):
     data=open(path,'rb').read()
     return data.replace(b'\r\n',b'\n') if path.endswith(('.json','.svg')) else data   # git may check out either
@@ -31,9 +29,8 @@ def check():
         copy=os.path.join(tmp,'dev-life')
         shutil.copytree(HERE,copy,ignore=shutil.ignore_patterns('__pycache__'))
         for sub in OUTPUTS: shutil.rmtree(os.path.join(copy,sub))   # so a file with no source shows up too
-        for build in BUILDS:
-            subprocess.run([sys.executable,*build],cwd=copy,check=True,stdout=subprocess.DEVNULL,
-                           env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'})
+        subprocess.run([sys.executable,'build_all.py'],cwd=copy,check=True,stdout=subprocess.DEVNULL,
+                       env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'})
         built=outputs(copy)
     have=outputs(HERE)
     return sorted(k for k in have.keys()|built.keys() if have.get(k)!=built.get(k)),len(built)
@@ -42,6 +39,6 @@ if __name__=='__main__':
     if stale:
         print(f'{len(stale)} of {n} generated files are out of date:')
         for k in stale: print(' ',k)
-        print('Regenerate the stickers, then the themes, light and dark. See "Generate locally" in README.md.')
+        print('Run python dev-life/build_all.py to regenerate them.')
         sys.exit(1)
     print(f'{n} generated files are up to date')

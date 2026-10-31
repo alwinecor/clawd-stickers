@@ -15,19 +15,20 @@ No external font needed: command text uses the tiny pixel font defined below.
 Clawd rules kept in every frame: 15x16 body grid, colour #D77757 (official clawd_body),
 1x2 black square eyes, no mouth.
 """
-import math, os, sys, random
+import argparse, math, os, random
 from PIL import Image, ImageDraw
 S=12; W,H=23,24; OX,OY=4,7
 BODY='#D77757'; K='#1a1a1a'; WH='#FFFFFF'; BANG='#E5484D'
 HERE=os.path.dirname(os.path.abspath(__file__))
-DARK_MODE='--dark' in sys.argv
-OUT=os.path.join(HERE,'..','gif-dark' if DARK_MODE else 'gif')
+DARK_MODE=False   # change it with set_dark(): a star import only copies the value
 # Dark-background theme: colours that vanish or glare on a dark chat are swapped at draw time.
 DARK={'#3A3A44':'#E6E1DA',   # text / outlines
       '#D9D2CB':'#3A3A42',   # ground shadow, dust
       '#CFC8C0':'#8F8A84',   # speed lines, smoke
       '#3A3A48':'#6A6A7A'}   # terminal frame
 def tc(c): return DARK.get(c.upper(),c) if DARK_MODE and isinstance(c,str) else c
+def set_dark(on):
+    global DARK_MODE; DARK_MODE=on
 
 # ---------- shared helpers, adapted from Qisi3344/clawd-moji 01-movie-night ----------
 def rect(x0,y0,x1,y1): return [(x,y) for x in range(x0,x1+1) for y in range(y0,y1+1)]
@@ -1258,9 +1259,10 @@ def square(frames):
         c=Image.new('RGBA',(H*S,H*S),(0,0,0,0)); c.paste(im,((H*S-W*S)//2,0)); sq.append((c,d))
     return sq
 def save(nm,fr):
-    os.makedirs(OUT,exist_ok=True)
+    out=os.path.join(HERE,'..','gif-dark' if DARK_MODE else 'gif')
+    os.makedirs(out,exist_ok=True)
     fr=square(fr)
-    n=to_gif(fr,os.path.join(OUT,nm+'.gif'))
+    n=to_gif(fr,os.path.join(out,nm+'.gif'))
     print(f'{nm}: {len(fr)} frames, {n//1024}KB')
 
 ALL=['hello','thinking','ultrathink','plan','todo',
@@ -1272,7 +1274,14 @@ ALL=['hello','thinking','ultrathink','plan','todo',
      'works','passed','deploy','deadline','overtime',
      'coffee','fish','offwork','sleep','bye']
 FILE={'clear_ctx':'clear'}   # clear() is already a drawing helper
+STICKERS={FILE.get(a,a):globals()[a] for a in ALL}   # output name -> generator
+def build_stickers(names=STICKERS):
+    for nm in names: save(nm,STICKERS[nm]())
 if __name__=='__main__':
-    for nm in ([a for a in sys.argv[1:] if a!='--dark'] or ALL):
-        nm={v:k for k,v in FILE.items()}.get(nm,nm)
-        save(FILE.get(nm,nm),globals()[nm]())
+    ap=argparse.ArgumentParser(description='Generate the Dev Life sticker GIFs.')
+    ap.add_argument('names',nargs='*',metavar='name',help='stickers to generate (default: all): '+' '.join(STICKERS))
+    ap.add_argument('--dark',action='store_true',help='generate the dark-background set in ../gif-dark/')
+    args=ap.parse_args()
+    unknown=[nm for nm in args.names if nm not in STICKERS]
+    if unknown: ap.error('unknown sticker: '+', '.join(unknown))
+    set_dark(args.dark); build_stickers(args.names or STICKERS)

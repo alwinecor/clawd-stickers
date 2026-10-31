@@ -124,9 +124,17 @@ cd clawd-stickers
 python -m pip install -r requirements.txt
 ```
 
+### 一键生成全部内容
+
+以下命令会一次生成全部表情和浅色、深色两套主题：
+
+```bash
+python dev-life/build_all.py
+```
+
 ### 生成表情
 
-在仓库根目录执行以下命令：
+如只需生成部分表情，在仓库根目录执行以下命令：
 
 ```bash
 # 生成整套 40 个表情
@@ -145,11 +153,11 @@ python dev-life/src/clawd_dev.py --dark
 
 生成结果写入 [`dev-life/gif/`](dev-life/gif/)，加 `--dark` 时写入 [`dev-life/gif-dark/`](dev-life/gif-dark/)，会覆盖同名 GIF。深色版的换色规则见脚本开头的 `DARK` 表。脚本会输出每个表情的名称、帧数与文件大小。
 
-参数通常与 GIF 文件名一致，不含 `.gif` 后缀，例如 `thinking`、`compact`、`clear`。完整名称可查看成品目录；脚本中的 `ALL` 列表及 `FILE` 映射定义了生成入口与输出名称，其中 `clear` 对应函数 `clear_ctx()`。
+参数与 GIF 文件名一致，不含 `.gif` 后缀，例如 `thinking`、`compact`、`clear`。完整名称可通过 `--help` 查看；脚本中的 `ALL` 列表及 `FILE` 映射定义了生成入口与输出名称，其中 `clear` 对应函数 `clear_ctx()`。
 
 ### 生成 clawd-on-desk 主题
 
-仅在修改动画或主题配置后需要重新构建。主题会读取 `gif/` 或 `gif-dark/` 中对应版本的成品 GIF；**改了表情后，先重新生成 GIF，再构建主题**。
+仅在修改动画或主题配置后需要重新构建。主题会直接调用表情的生成函数，不依赖 `gif/` 或 `gif-dark/` 中的文件。
 
 ```bash
 # 浅色主题
@@ -184,6 +192,7 @@ clawd-stickers/
 └── dev-life/                  # 克码人生主题套装
     ├── README.md              # 英文表情包内容说明
     ├── README.zh-CN.md        # 中文表情包内容说明
+    ├── build_all.py           # 一键生成全部表情和主题
     ├── check.py               # 检查生成文件是否与源码一致
     ├── gif/                   # 40 个成品 GIF
     ├── gif-dark/              # 40 个成品 GIF（深色背景）
@@ -202,8 +211,8 @@ clawd-stickers/
 欢迎通过 Issue 分享表情创意、反馈问题，也欢迎提交 PR 改进动画、桌宠主题、文档和翻译。开发环境与生成命令见[本地生成](#本地生成)。
 
 - **反馈问题**：请说明涉及的表情或主题、复现步骤，尽量附上截图或动图。桌宠相关问题请补充操作系统与 clawd-on-desk 版本。涉及 clawd-on-desk 应用而不属于主题的问题，请向上游反馈。
-- **修改表情**：绘图和动画位于 [`dev-life/src/clawd_dev.py`](dev-life/src/clawd_dev.py)。请保持现有像素风格，生成对应的浅色、深色 GIF；新增表情时同步更新 `ALL`、必要的 `FILE` 映射，以及中英文套装说明和首页预览。
-- **修改桌宠主题**：状态映射、主题专用逐帧动画和 SVG 动画分别位于 `dev-life/theme/` 下的 `build.py`、`animations.py` 和 `svg.py`。请修改源文件后重新构建浅色、深色主题；如果依赖的表情有变化，先生成对应 GIF。
+- **修改表情**：绘图和动画位于 [`dev-life/src/clawd_dev.py`](dev-life/src/clawd_dev.py)。请保持现有像素风格，运行 `python dev-life/build_all.py` 更新 GIF 和主题；新增表情时同步更新 `ALL`、必要的 `FILE` 映射，以及中英文套装说明和首页预览。
+- **修改桌宠主题**：状态映射、主题专用逐帧动画和 SVG 动画分别位于 `dev-life/theme/` 下的 `build.py`、`animations.py` 和 `svg.py`。请修改源文件后重新构建浅色、深色主题。
 - **提交 PR**：请附上改动说明和适用的预览，将源文件、更新后的成品及相关文档一并提交。提交前请运行 `python dev-life/check.py`。在浅色、深色背景下检查透明区域、文字可读性和循环衔接；涉及桌宠时，再检查受影响的状态或交互。用法或收录内容有变化时，请同步更新中英文文档。
 
 ## 许可与使用范围
