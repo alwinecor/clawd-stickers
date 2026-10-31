@@ -32,7 +32,7 @@ def dizzy():
             sq=dict(sy=kf(i,[(20,1),(28,0.92)]),sx=1,rot=rot)
         else: dy,sq,fx=melt(p,i)
         fr.append((comp(shadow(-dy),img,xform(p,0,dy,**sq),fx),70 if i>=28 else 35))
-    k=ts.index(31); fr[k]=(fr[k][0],300); fr[-1]=(fr[-1][0],300)
+    hold(fr,{ts.index(31):300,-1:300})
     return fr
 
 # ---------- Yawn · 打哈欠 ----------
@@ -88,15 +88,15 @@ def bye_long():
                 ch=xform(p,0,0,rot=5*math.sin(TAU*(i-74)/4) if dizzy_ else 0)
                 if dizzy_:
                     for k in range(3):
-                        a=TAU*(i/6+k/3); fx[(round(7.5+5*math.cos(a)),round(4+1.2*math.sin(a)))]='#F2C14E'
+                        a=TAU*(i/6+k/3); fx[(round(7.5+5*math.cos(a)),round(4+1.2*math.sin(a)))]=GOLD
         fr.append((comp(sh,ch,fx,img),60))
-    fr[13]=(fr[13][0],200)
+    hold(fr,{13:200})
     return fr
 
 # ---------- Team · 多人协作 (2 and 3 sessions) ----------
 # Two Clawds at 2/3 size work side by side at their own screens; with 3 sessions a third stands on top of the
 # screens, so nothing else moves between the two. Both loop every 72 frames.
-CS=8; FOOT=cy(15); LEFT,RIGHT,TOP=72,204,138; DESK=106   # DESK: top edge of the screens, where the third stands
+CS=8; LEFT,RIGHT,TOP=72,204,MIDX; DESK=106   # DESK: top edge of the screens, where the third stands
 LINES=[(13,'#E8845F'),(8,'#9A9AA6'),(12,'#2FB15A'),(6,'#9A9AA6'),(10,'#7FB2E5'),(13,'#9A9AA6')]
 FAILS=4   # which of the six tests goes red
 def screen(ax):
@@ -111,20 +111,20 @@ def coder(i):
         w,c=LINES[(i//12+r)%6]
         if r==2: w*=(i%12+1)/12   # the bottom line is the one being typed
         box(img,x,DESK+14+r*16,x+w*7,DESK+24+r*16,c)
-    q=base(); face(q,'n',0,-1,blink=i%32<2); tap=(i//2)%2; arms(q,UP if tap else MID,MID if tap else UP)
+    q=base(); face(q,'n',0,-1,blink=i%32<2); flap(q,(i//2)%2)
     return img,ground(LEFT),render(q,CS,LEFT,FOOT)
 def tester(i):
     """Runs the tests one by one and panics for a moment when one fails."""
     img=screen(RIGHT); x=RIGHT-46; s=i//12
     for r in range(3):
         k=(s+r)%6; y=DESK+14+r*16; running=r==2 and i%12<8
-        col='#E8845F' if running else '#E5484D' if k==FAILS else '#2FB15A'
+        col='#E8845F' if running else RED if k==FAILS else '#2FB15A'
         if not (running and (i//2)%2): box(img,x,y,x+10,y+10,col)
         box(img,x+18,y+2,x+18+(LINES[k][0]*6),y+8,'#9A9AA6')
     q=base(); h=0; fx=canvas()
     if 32<=i<44:
         face(q,'x'); arms(q,UP,UP); h=round(10*abs(math.sin(math.pi*(i-32)/6)))
-        if (i//2)%2: box(fx,RIGHT+64,FOOT-74,RIGHT+68,FOOT-58,BANG); box(fx,RIGHT+64,FOOT-54,RIGHT+68,FOOT-50,BANG)
+        if (i//2)%2: box(fx,RIGHT+64,FOOT-74,RIGHT+68,FOOT-58,RED); box(fx,RIGHT+64,FOOT-54,RIGHT+68,FOOT-50,RED)
     else: face(q,'n',0,-1,blink=(i+11)%40<2); arms(q,MID,MID)
     return img,ground(RIGHT),render(q,CS,RIGHT,FOOT-h),fx
 def lookout(i):
