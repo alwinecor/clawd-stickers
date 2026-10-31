@@ -19,6 +19,7 @@
 - [桌宠主题](#桌宠主题)
 - [本地生成](#本地生成)
 - [目录结构](#目录结构)
+- [贡献指引](#贡献指引)
 - [许可与使用范围](#许可与使用范围)
 - [致谢](#致谢)
 
@@ -185,6 +186,15 @@ clawd-stickers/
         └── clawd_dev.py       # 表情绘图、动画与 GIF 导出脚本
 ```
 
+## 贡献指引
+
+欢迎通过 Issue 分享表情创意、反馈问题，也欢迎提交 PR 改进动画、桌宠主题、文档和翻译。开发环境与生成命令见[本地生成](#本地生成)。
+
+- **反馈问题**：请说明涉及的表情或主题、复现步骤，尽量附上截图或动图。桌宠相关问题请补充操作系统与 clawd-on-desk 版本。涉及 clawd-on-desk 应用而不属于主题的问题，请向上游反馈。
+- **修改表情**：绘图和动画位于 [`dev-life/src/clawd_dev.py`](dev-life/src/clawd_dev.py)。请保持现有像素风格，生成对应的浅色、深色 GIF；新增表情时同步更新 `ALL`、必要的 `FILE` 映射，以及中英文套装说明和首页预览。
+- **修改桌宠主题**：状态映射、主题专用逐帧动画和 SVG 动画分别位于 `dev-life/theme/` 下的 `build.py`、`animations.py` 和 `svg.py`。请修改源文件后重新构建浅色、深色主题；如果依赖的表情有变化，先生成对应 GIF。
+- **提交 PR**：请附上改动说明和适用的预览，将源文件、更新后的成品及相关文档一并提交。在浅色、深色背景下检查透明区域、文字可读性和循环衔接；涉及桌宠时，再检查受影响的状态或交互。用法或收录内容有变化时，请同步更新中英文文档。
+
 ## 许可与使用范围
 
 除另有注明的第三方内容及权利外，本项目贡献者拥有版权的代码、文档与原创美术贡献默认采用 [MIT 许可](LICENSE)，包括表情素材中的原创部分。
@@ -196,4 +206,5 @@ clawd-stickers/
 
 - 感谢 [@Qisi3344](https://github.com/Qisi3344) 的 [clawd-moji](https://github.com/Qisi3344/clawd-moji) 提供了本项目使用的绘图工具和创作思路！
 - 本仓库 [`clawd_dev.py`](dev-life/src/clawd_dev.py) 中的绘图工具函数（如 `base`、`xform`、`squash`、`kf`、`face`、`render` 等）改编自该项目的 `clawd_movies.py` 与 `clawd_movies_more.py`。
+- 感谢 [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk) 提供桌宠应用与自定义主题支持，让这套表情能以桌面伙伴的形式陪伴开发日常。
 - [Anthropic](https://www.anthropic.com)：Clawd 角色的权利方。

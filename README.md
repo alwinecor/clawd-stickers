@@ -19,6 +19,7 @@ Light and dark [clawd-on-desk themes](#desktop-pet-theme) are also included, bri
 - [Desktop pet theme](#desktop-pet-theme)
 - [Generate locally](#generate-locally)
 - [Repository structure](#repository-structure)
+- [Contributing](#contributing)
 - [License and usage](#license-and-usage)
 - [Credits](#credits)
 
@@ -185,6 +186,15 @@ clawd-stickers/
         └── clawd_dev.py       # Sticker drawing, animation and GIF export
 ```
 
+## Contributing
+
+Issues are welcome for sticker ideas and bug reports, as are PRs improving animations, desktop pet themes, documentation and translations. See [Generate locally](#generate-locally) for setup and generation commands.
+
+- **Report a problem**: describe the affected sticker or theme and the steps to reproduce it. Include a screenshot or animation where possible. For desktop pet issues, also include your operating system and clawd-on-desk version. Please report issues with the clawd-on-desk application itself, rather than this theme, to the upstream project.
+- **Change stickers**: drawing and animation code lives in [`dev-life/src/clawd_dev.py`](dev-life/src/clawd_dev.py). Keep the existing pixel style and generate both light- and dark-background GIFs. When adding a sticker, update `ALL`, the `FILE` mapping if needed, and the set guides and home page previews in both languages.
+- **Change desktop pet themes**: state mappings, theme-specific frame animations and SVG animations live in `build.py`, `animations.py` and `svg.py` under `dev-life/theme/`, respectively. Edit the source files and rebuild both light and dark themes. If a source sticker has changed, regenerate its GIF first.
+- **Submit a PR**: describe the changes, include previews where applicable, and submit the source files together with updated assets and relevant documentation. Check transparency, text readability and loop transitions on both light and dark backgrounds. For desktop pet changes, also check the affected states or interactions. Update both English and Chinese documentation when usage or the collection changes.
+
 ## License and usage
 
 Except for third-party material and rights otherwise noted, this project's code, documentation and original artistic contributions are licensed under the [MIT License](LICENSE), to the extent that contributors hold the relevant copyright. This includes original contributions to the sticker artwork.
@@ -196,4 +206,5 @@ Except for third-party material and rights otherwise noted, this project's code,
 
 - Thanks to [@Qisi3344](https://github.com/Qisi3344) and [clawd-moji](https://github.com/Qisi3344/clawd-moji) for the drawing tools and creative inspiration used in this project!
 - Drawing helpers in this repository's [`clawd_dev.py`](dev-life/src/clawd_dev.py), including `base`, `xform`, `squash`, `kf`, `face` and `render`, are adapted from that project's `clawd_movies.py` and `clawd_movies_more.py`.
+- Thanks to [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk) for the desktop pet app and custom theme support, bringing these stickers to the desktop as a companion for everyday development.
 - [Anthropic](https://www.anthropic.com) owns the Clawd character.
