@@ -7,9 +7,9 @@ the 40 stickers split over two pages, 5 x 4 each, with their English names.
   python promo/make_covers.py 2              # just page 2
   python promo/make_covers.py --light 1 2    # cream theme
 
-Output: page-N-{dark,light}.gif, plus page-N-{dark,light}-static.png, a still
-built from a hand-picked key frame per sticker (KEY below) rather than one
-moment of the whole page.
+Output: stickers-N-{dark,light}.gif, plus stickers-N-{dark,light}-static.png,
+a still built from a hand-picked key frame per sticker (KEY below) rather than
+one moment of the whole page.
 
 The dark theme uses the dark-background set in dev-life/gif-dark/,
 the cream theme the regular set in dev-life/gif/.
@@ -184,4 +184,4 @@ def cli(pages):
     return args or list(pages)
 
 if __name__=='__main__':
-    for n in cli(('1','2')): render(f'page-{n}',*page(int(n)))
+    for n in cli(('1','2')): render(f'stickers-{n}',*page(int(n)))
