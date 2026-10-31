@@ -97,6 +97,8 @@ The themes directory depends on your operating system:
 
 ### Animations and interactions
 
+See the [theme guide](dev-life/README.md#desktop-pet-theme--clawd-dev-life) for when each animation plays and previews of the theme-only animations.
+
 - **State-driven animations**: thinking, working, subagents, context compaction, permission requests, task completion, errors and other states each have matching animations.
 - **Multiple sessions**: a single session uses the original stickers; two sessions or three or more sessions use new animations featuring multiple Clawds.
 - **Desktop interactions**: Clawd breathes and blinks while idle, follows the mouse with its eyes and randomly plays everyday scenes. It supports walking, dragging, clicking, repeated clicks and a dizzy reaction when you circle the mouse around it. The dizzy reaction is a variation of Usage Limit rather than a conventional dizzy animation.
