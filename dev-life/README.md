@@ -64,7 +64,7 @@ Where a row lists several animations, one of them plays.
 | Task completed | Tests Passed (extended), LGTM |
 | Tool failure | Error |
 | No activity | Idle |
-| Random idle scene | Slacking Off, Coffee Break, Rubber Duck, Works on My Machine, git blame, Friday Deploy, Overtime, Clock Out, Memory Leak, Stack Overflow, cherry-pick |
+| Random idle scene | Slacking Off, Coffee Break, Rubber Duck, Works on My Machine, git blame, Friday Deploy, Overtime, Clock Out, Memory Leak, Stack Overflow, cherry-pick, Esc, Force Push, git stash, /clear, /exit |
 | Free roam | Walk |
 | Dragged | Drag |
 | Double-click | hello, world on the left, You're Absolutely Right! on the right; a 50% chance of 404 Not Found instead |

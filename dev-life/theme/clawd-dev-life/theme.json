@@ -173,6 +173,26 @@
     {
       "file": "cherry.apng",
       "duration": 3940
+    },
+    {
+      "file": "esc.apng",
+      "duration": 3660
+    },
+    {
+      "file": "forcepush.apng",
+      "duration": 4180
+    },
+    {
+      "file": "stash.apng",
+      "duration": 3840
+    },
+    {
+      "file": "clear.apng",
+      "duration": 4080
+    },
+    {
+      "file": "bye.apng",
+      "duration": 4280
     }
   ],
   "reactions": {

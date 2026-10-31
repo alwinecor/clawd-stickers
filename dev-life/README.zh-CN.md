@@ -64,7 +64,7 @@
 | 任务完成 | Tests Passed (extended)、LGTM |
 | 工具调用失败 | Error |
 | 没有活动 | Idle |
-| 空闲时随机播放 | Slacking Off、Coffee Break、Rubber Duck、Works on My Machine、git blame、Friday Deploy、Overtime、Clock Out、Memory Leak、Stack Overflow、cherry-pick |
+| 空闲时随机播放 | Slacking Off、Coffee Break、Rubber Duck、Works on My Machine、git blame、Friday Deploy、Overtime、Clock Out、Memory Leak、Stack Overflow、cherry-pick、Esc、Force Push、git stash、/clear、/exit |
 | 自由走动 | Walk |
 | 被拖拽 | Drag |
 | 双击 | 左侧播放 hello, world，右侧播放 You're Absolutely Right!；有一半概率触发 404 Not Found |
