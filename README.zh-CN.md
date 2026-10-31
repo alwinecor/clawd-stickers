@@ -72,7 +72,7 @@
 
 ## 桌宠主题
 
-这套表情也打包成了 [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk) 的 **Clawd Dev Life** 桌宠主题。保留了原版表情包的大部分动画，跟随 Claude Code 的工作状态同步播放。此外还补充了待机、走动、拖拽等主题专用动画，对部分表情做了适配调整，并加入了用于 2 个会话同时进行 / 3个及以上会话同时进行的专用动画。
+这套表情也打包成了 [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk) 的 **Clawd Dev Life** 桌宠主题。保留了原版表情包的全部动画，跟随 Claude Code 的工作状态同步播放。此外还补充了待机、走动、拖拽等主题专用动画，对部分表情做了适配调整，并加入了用于 2 个会话同时进行 / 3个及以上会话同时进行的专用动画。
 
 ### 安装主题
 

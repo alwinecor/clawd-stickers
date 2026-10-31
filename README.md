@@ -72,7 +72,7 @@ Saved GIFs can be sent directly in chat apps such as WeChat, Xiaohongshu and Wha
 
 ## Desktop pet theme
 
-The set is also packaged as the **Clawd Dev Life** theme for [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk). It retains most of the original sticker animations, playing them in sync with Claude Code's working state. It also adds theme-specific idle, walking and dragging animations, adapts some stickers for desktop use, and includes dedicated animations for two simultaneous sessions and for three or more sessions.
+The set is also packaged as the **Clawd Dev Life** theme for [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk). It retains all of the original sticker animations, playing them in sync with Claude Code's working state. It also adds theme-specific idle, walking and dragging animations, adapts some stickers for desktop use, and includes dedicated animations for two simultaneous sessions and for three or more sessions.
 
 ### Install the theme
 
