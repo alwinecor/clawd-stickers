@@ -193,9 +193,10 @@ clawd-stickers/
 ├── LICENSE                    # 标准 MIT 许可
 ├── requirements.txt           # 固定版本的 Python 依赖
 ├── .github/workflows/         # 生成文件的自动检查
-├── promo/                     # 分享图（3:4，每张 20 个表情）
+├── promo/                     # 分享图（3:4）
 │   ├── covers/                # 深浅两版动图与静态图
-│   └── make_covers.py         # 分享图生成脚本
+│   ├── make_covers.py         # 表情分享图生成脚本（每张 20 个表情）
+│   └── make_theme_covers.py   # 桌宠主题分享图生成脚本
 └── dev-life/                  # 克码人生主题套装
     ├── README.md              # 英文表情包内容说明
     ├── README.zh-CN.md        # 中文表情包内容说明

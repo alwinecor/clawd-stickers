@@ -26,8 +26,8 @@ OUT=os.path.join(HERE,'covers')
 CW,CH=1080,1440
 ORANGE='#D77757'; TERM_TXT='#EDE6DE'; TERM_DIM='#8C827A'
 THEMES={
-    'dark': dict(bg='#161412',ink='#E8E1D9',bar='#26211E',bar_hi='#332D29',mono=True,suffix='-dark',gif='gif-dark'),
-    'light':dict(bg='#FBF6EE',ink='#2B2522',bar='#211D1B',bar_hi='#2E2926',mono=False,suffix='-light',gif='gif'),
+    'dark': dict(bg='#161412',ink='#E8E1D9',bar='#26211E',bar_hi='#332D29',mono=True,suffix='-dark',gif='gif-dark',theme='clawd-dev-life-dark'),
+    'light':dict(bg='#FBF6EE',ink='#2B2522',bar='#211D1B',bar_hi='#2E2926',mono=False,suffix='-light',gif='gif',theme='clawd-dev-life'),
 }
 TH=THEMES['dark']
 BAR=76   # height of the terminal bars at the top and bottom
@@ -60,12 +60,16 @@ KEY={'hello':36,'thinking':15,'ultrathink':44,'plan':24,'todo':20,
 
 # ---------- loading ----------
 _cache={}
+def source(nm):
+    """The sticker's GIF, or the APNG for animations only the theme has."""
+    p=os.path.join(SET,TH['gif'],nm+'.gif')
+    return p if os.path.exists(p) else os.path.join(SET,'theme',TH['theme'],'assets',nm+'.apng')
 def load(nm):
     """[(RGBA frame cropped to the 23x24-cell drawing, duration ms)]"""
     if nm not in _cache:
-        im=Image.open(os.path.join(SET,TH['gif'],nm+'.gif')); fr=[]
+        im=Image.open(source(nm)); fr=[]
         for i in range(im.n_frames):
-            im.seek(i); fr.append((im.convert('RGBA').crop((6,0,282,288)),im.info['duration']))
+            im.seek(i); fr.append((im.convert('RGBA').crop((6,0,282,288)),int(im.info['duration'])))
         _cache[nm]=fr
     return _cache[nm]
 def scaled(nm,b):
@@ -131,11 +135,8 @@ def timeline(names,hold=700,minf=40):
     for t in sorted(ts):
         if t<end and (not out or t-out[-1]>=minf): out.append(t)
     return out,end
-def render(n):
-    bg,items,cursor=page(n)
-    names=[nm for nm,*_ in items]
-    times,end=timeline(names)
-    # one shared palette: every sticker colour exactly, plus the static background
+def palette(names,bg):
+    """One shared palette: every sticker colour exactly, plus the static background."""
     cols=set()
     for nm in set(names):
         for f,_ in load(nm):
@@ -145,6 +146,17 @@ def render(n):
     cols+=[c for _,c in bgq.getcolors(1<<16) if c not in cols]
     flat=[v for c in cols[:256] for v in c]; flat+=[0]*(768-len(flat))
     palimg=Image.new('P',(1,1)); palimg.putpalette(flat)
+    return bgq,palimg
+def save_gif(stem,frames,times,end):
+    durs=[b-a for a,b in zip(times,times[1:]+[end])]
+    os.makedirs(OUT,exist_ok=True)
+    path=os.path.join(OUT,f"{stem}{TH['suffix']}.gif")
+    frames[0].save(path,save_all=True,append_images=frames[1:],duration=durs,loop=0,optimize=False)
+    print(f'{stem}: {len(frames)} frames, {end/1000:.1f}s, {os.path.getsize(path)//1024}KB')
+def render(stem,bg,items,cursor):
+    names=[nm for nm,*_ in items]
+    times,end=timeline(names)
+    bgq,palimg=palette(names,bg)
     frames=[]
     for t in times:
         im=bgq.copy()
@@ -152,21 +164,17 @@ def render(n):
             f=frame_at(scaled(nm,b),t); im.paste(f,(x,y),f)
         if t//BLINK%2==0: ImageDraw.Draw(im).rectangle(cursor,fill=TERM_TXT)
         frames.append(im.quantize(palette=palimg,dither=Image.Dither.NONE))
-    durs=[b-a for a,b in zip(times,times[1:]+[end])]
-    os.makedirs(OUT,exist_ok=True)
-    path=os.path.join(OUT,f"page-{n}{TH['suffix']}.gif")
-    frames[0].save(path,save_all=True,append_images=frames[1:],duration=durs,loop=0,optimize=False)
-    print(f'page {n}: {len(frames)} frames, {end/1000:.1f}s, {os.path.getsize(path)//1024}KB')
-    still(n,bg,items,cursor)
-def still(n,bg,items,cursor):
+    save_gif(stem,frames,times,end)
+    still(stem,bg,items,cursor)
+def still(stem,bg,items,cursor):
     """Static version: every sticker at its key frame, cursor shown."""
     im=bg.copy()
     for nm,b,x,y in items:
         f=scaled(nm,b)[KEY[nm]][0]; im.paste(f,(x,y),f)
     ImageDraw.Draw(im).rectangle(cursor,fill=TERM_TXT)
-    im.save(os.path.join(OUT,f"page-{n}{TH['suffix']}-static.png"))
+    im.save(os.path.join(OUT,f"{stem}{TH['suffix']}-static.png"))
 
 if __name__=='__main__':
     args=sys.argv[1:]
     if '--light' in args: args.remove('--light'); TH=THEMES['light']
-    for n in (args or ['1','2']): render(int(n))
+    for n in (args or ['1','2']): render(f'page-{n}',*page(int(n)))
