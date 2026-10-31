@@ -97,7 +97,12 @@
 
 ### 动画与交互
 
-各动画的触发时机和主题专属动画预览见[主题说明](dev-life/README.zh-CN.md#桌宠主题--clawd-dev-life)。
+<table>
+  <tr><td align="center" width="20%"><b>Team of Two</b></td><td align="center" width="20%"><b>Team of Three</b></td><td align="center" width="20%"><b>Dizzy</b></td><td align="center" width="20%"><b>Yawn</b></td><td align="center" width="20%"><b>Wake</b></td></tr>
+  <tr><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/team2.apng" width="110" alt="Team of Two"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/team3.apng" width="110" alt="Team of Three"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/dizzy.apng" width="110" alt="Dizzy"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/yawn.apng" width="110" alt="Yawn"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/wake.apng" width="110" alt="Wake"></td></tr>
+</table>
+
+各动画的触发时机和全部主题专属动画预览见[主题说明](dev-life/README.zh-CN.md#桌宠主题--clawd-dev-life)。
 
 - **状态联动**：思考、工作、子代理、上下文压缩、等待授权、任务完成和报错等都有对应动画。
 - **多会话动画**：单会话使用原版表情包，双会话或三个及以上会话使用全新动画，包含多个 Clawd。

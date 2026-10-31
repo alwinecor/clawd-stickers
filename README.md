@@ -97,7 +97,12 @@ The themes directory depends on your operating system:
 
 ### Animations and interactions
 
-See the [theme guide](dev-life/README.md#desktop-pet-theme--clawd-dev-life) for when each animation plays and previews of the theme-only animations.
+<table>
+  <tr><td align="center" width="20%"><b>Team of Two</b></td><td align="center" width="20%"><b>Team of Three</b></td><td align="center" width="20%"><b>Dizzy</b></td><td align="center" width="20%"><b>Yawn</b></td><td align="center" width="20%"><b>Wake</b></td></tr>
+  <tr><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/team2.apng" width="110" alt="Team of Two"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/team3.apng" width="110" alt="Team of Three"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/dizzy.apng" width="110" alt="Dizzy"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/yawn.apng" width="110" alt="Yawn"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/wake.apng" width="110" alt="Wake"></td></tr>
+</table>
+
+See the [theme guide](dev-life/README.md#desktop-pet-theme--clawd-dev-life) for when each animation plays and previews of all the theme-only animations.
 
 - **State-driven animations**: thinking, working, subagents, context compaction, permission requests, task completion, errors and other states each have matching animations.
 - **Multiple sessions**: a single session uses the original stickers; two sessions or three or more sessions use new animations featuring multiple Clawds.
