@@ -504,7 +504,7 @@ def works():
 # ---------- Bug Hunt · 抓虫 ----------
 def bug():
     fr=[]; N=56
-    BA=[".gg.","gGgk","l.l."]; BB=[".gg.","gGgk",".l.l"]; pal={'g':'#4C9A4F','G':'#2E6B30','k':'#222222','l':'#222222'}
+    BA=[".gg.","gGgk","l.l."]; BB=[".gg.","gGgk",".l.l"]; pal={'g':'#4C9A4F','G':'#2E6B30','k':'#222222','l':'#8F8A84' if DARK_MODE else '#222222'}
     for i in range(N):
         if i<20: bx=lerp(-5,6,i/20)
         elif i<32: bx=6
