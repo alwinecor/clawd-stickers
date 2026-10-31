@@ -109,6 +109,7 @@ def comp(*layers):
         out.alpha_composite(L)
     return out
 def bang(x,y): return {(x,y):BANG,(x,y+1):BANG,(x,y+2):BANG,(x,y+4):BANG}
+QMARK=[(6,-2),(7,-3),(8,-3),(9,-2),(9,-1),(8,0),(8,1),(8,3)]
 def cx(x): return (x+OX)*S   # scene cell -> px
 def cy(y): return (y+OY)*S
 
@@ -231,8 +232,7 @@ def compact():
             for k,(x,y) in enumerate([(-2,13),(17,13),(-3,11),(18,11)]):
                 ph=((i-22)/6+k/4)%1; fx[(x+(-1 if x<7 else 1)*round(ph*2),y-round(ph*2))]='#C9C4BC'
         if i>=52:
-            q=[(6,-2),(7,-3),(8,-3),(9,-2),(9,-1),(8,0),(8,1),(8,3)]
-            fx.update({(x,y+round(kf(i,[(52,1),(55,0)]))):'#3B82F6' for x,y in q})
+            fx.update({(x,y+round(kf(i,[(52,1),(55,0)]))):'#3B82F6' for x,y in QMARK})
         fr.append((comp(shadow(),ch,img,fx),60))
     fr[17]=(fr[17][0],200); fr[33]=(fr[33][0],300); fr[-1]=(fr[-1][0],700)
     return fr
@@ -395,8 +395,8 @@ def lgtm():
     return fr
 
 # ---------- Tests Passed · 测试通过 ----------
-def passed():
-    fr=[]; N=56; G='#2FB15A'; G2='#1F7A3E'
+def passed(N=56,second_wave=False):
+    fr=[]; G='#2FB15A'; G2='#1F7A3E'
     path=[(4,-3),(5,-2),(6,-1),(7,-2),(8,-3),(9,-4),(10,-5),(11,-6)]
     for i in range(N):
         n=clamp(i-3,0,len(path)); ck={}
@@ -410,7 +410,9 @@ def passed():
             face(p,'hap')
             if dy<-0.8: arms(p,UP,UP)
             if t<0.1: sq=squash(0.86)
-        fr.append((comp(shadow(-dy),ck,xform(p,dx,dy,**sq),confetti(i,12)),60))
+        conf=confetti(i,12)
+        if second_wave: conf.update(confetti(i,48,seed=5))   # the first wave has landed by now
+        fr.append((comp(shadow(-dy),ck,xform(p,dx,dy,**sq),conf),60))
     fr[11]=(fr[11][0],200)
     return fr
 
@@ -439,9 +441,9 @@ def error():
     return fr
 
 # ---------- Coffee Break · 咖啡续命 ----------
+MUG=["wwww.","wrrwh","wwwwh","wwww."]; MUG_PAL={'w':'#4F7BD9','r':'#FFFFFF','h':'#3A5FB0'}
 def coffee():
     fr=[]; N=64
-    MUG=["wwww.","wrrwh","wwwwh","wwww."]; pal={'w':'#4F7BD9','r':'#FFFFFF','h':'#3A5FB0'}
     for i in range(N):
         p=base(); dx=0; dy=0; rot=0; fx={}
         mx=round(kf(i,[(18,14),(24,9),(34,9),(40,14)])); my=round(kf(i,[(18,8),(24,5),(34,5),(40,8)]))
@@ -455,7 +457,7 @@ def coffee():
             if i<50: fx.update(bang(-2,3))
             for k,(x,y) in enumerate([(-2,9),(16,5),(0,1)]):
                 if (i+k)%4<2: fx.update({(x,y):'#F2C14E',(x+1,y-1):'#F2C14E'})
-        p.update(spr(MUG,mx,my,pal))
+        p.update(spr(MUG,mx,my,MUG_PAL))
         if not 22<=i<36:
             for k in range(3):
                 t=((i+k*5)%15)/15; fx[(mx+1+k%2+round(0.6*math.sin(t*6)),my-1-round(t*4))]='#D8D2CA'
@@ -596,24 +598,27 @@ def overtime():
     return fr
 
 # ---------- Good Night · 晚安 ----------
-def sleep():
-    fr=[]; N=60
-    CAP=["...........ww",".........bbww",".......bbbb..","....bbbbbb...","..bbbbbbbb...","wwwwwwwwwww.."]
-    for i in range(N):
-        p=base(); face(p,'n'); clear(p,[(4,8),(4,9),(10,8),(10,9)]); put(p,[(4,8),(4,9),(10,8),(10,9)],BODY)
+CAP=["...........ww",".........bbww",".......bbbb..","....bbbbbb...","..bbbbbbbb...","wwwwwwwwwww.."]
+def sleep_scene(i,born=None,cap=0,eyes='shut'):
+    """Frame i of Good Night. born: only z's at most this many frames old exist yet; cap: nightcap raised
+    this many cells; eyes: 'open', 'half' (squinting) or 'shut' (the sleeping lines)."""
+    p=base(); face(p,'n',blink=eyes=='half')
+    if eyes=='shut':
+        clear(p,[(4,8),(4,9),(10,8),(10,9)]); put(p,[(4,8),(4,9),(10,8),(10,9)],BODY)
         put(p,[(3,9),(4,9),(10,9),(11,9)],K)
-        p.update(spr(CAP,2,0,{'b':'#4C6EF5','w':'#C9D3F2'}))
-        sy=1-0.035*(1+math.sin(TAU*i/30))
-        img=canvas()
-        for k in range(3):
-            t=((i+k*20)%60)/60
-            text(img,'z',round(cx(-3)+t*24),round(cy(5)-t*110),[3,4,5,6][min(3,int(t*4))],'#7C8FD9')
-        fr.append((comp(shadow(),xform(p,0,0,sy=sy),img),90))
-    return fr
+    p.update(spr(CAP,2,-cap,{'b':'#4C6EF5','w':'#C9D3F2'}))
+    sy=1-0.035*(1+math.sin(TAU*i/30))
+    img=canvas()
+    for k in range(3):
+        a=(i+k*20)%60; t=a/60
+        if born is not None and a>born: continue
+        text(img,'z',round(cx(-3)+t*24),round(cy(5)-t*110),[3,4,5,6][min(3,int(t*4))],'#7C8FD9')
+    return comp(shadow(),xform(p,0,0,sy=sy),img)
+def sleep(): return [(sleep_scene(i),90) for i in range(60)]
 
 # ---------- 404 Not Found · 找不到 ----------
 def notfound():
-    fr=[]; N=60; Q=[(6,-2),(7,-3),(8,-3),(9,-2),(9,-1),(8,0),(8,1),(8,3)]
+    fr=[]; N=60
     for i in range(N):
         bx={}; put(bx,rect(-1,9,15,16),'#C8925A'); put(bx,rect(-1,9,15,9),'#B98249')
         put(bx,rect(-1,10,-1,15)+rect(15,10,15,15)+rect(-1,16,15,16),'#A6743F')
@@ -625,7 +630,7 @@ def notfound():
         elif i<30: face(p,'n')
         else: face(p,'x')
         fx={}
-        if 34<=i<52: fx={(x,y+5+round(kf(i,[(34,1),(37,0)]))):'#3B82F6' for x,y in Q}
+        if 34<=i<52: fx={(x,y+5+round(kf(i,[(34,1),(37,0)]))):'#3B82F6' for x,y in QMARK}
         fr.append((comp(xform(p,0,dy),bx,lab,fx),60))
     fr[29]=(fr[29][0],250); fr[-1]=(fr[-1][0],300)
     return fr
@@ -648,9 +653,7 @@ def loop():
         put(wh,rect(6,4,7,5),'#8D93A0')
         img=canvas(); textc(img,'while(true)',138,4,4,'#3A3A44')
         p=base(); f=(i//2)%2
-        clear(p,rect(3,13,11,14))
-        for x in (3,9) if f else (5,11): put(p,[(x,13)],BODY)
-        for x in (5,11) if f else (3,9): put(p,[(x,13),(x,14)],BODY)
+        run_legs(p,f)
         arms(p,MID if f else DOWN,DOWN if f else MID); fx={}
         if i<24: face(p,'n',1)
         else:
@@ -826,9 +829,9 @@ def clear_ctx():
     return fr
 
 # ---------- ultrathink · 深度思考 ----------
+BULB=[".yyy.","yyyyy","yyyyy",".yyy.",".ggg.","..g.."]; BULB_PAL={'y':'#FFE066','g':'#9AA0AA'}
 def ultrathink():
     fr=[]; N=60; RAIN=['#E5484D','#F2994A','#F2C14E','#2FB15A','#3B82F6','#8B5CF6']
-    BULB=[".yyy.","yyyyy","yyyyy",".yyy.",".ggg.","..g.."]
     w='ultrathink'; px=5
     for i in range(N):
         img=canvas(); x=round(138-text_w(w)*px/2)
@@ -842,7 +845,7 @@ def ultrathink():
             for k in range(4):
                 t=((i+k*3)%12)/12; fx[(3+k*3+round(math.sin(t*6+k)),round(5-t*6))]='#CFC8C0' if t<0.6 else '#E6E1DA'
         else:
-            face(p,'hap'); fx.update(spr(BULB,5,-2,{'y':'#FFE066','g':'#9AA0AA'}))
+            face(p,'hap'); fx.update(spr(BULB,5,-2,BULB_PAL))
             if (i//3)%2: fx.update({(3,-2):'#FFE066',(11,-2):'#FFE066',(3,2):'#FFE066',(11,2):'#FFE066',(7,-4):'#FFE066'})
         hot=mix(BODY,'#E0402A',heat)
         p={k:(hot if c==BODY else c) for k,c in p.items()}
@@ -947,8 +950,8 @@ def bye():
     return fr
 
 # ---------- Banned · 封号 ----------
-def banned():
-    fr=[]; N=64; RED='#E5484D'; GRAY='#9C9A97'
+def banned(N=64,tears=56,end=600):
+    fr=[]; RED='#E5484D'; GRAY='#9C9A97'
     def gavel(ang):
         img=canvas(); g={}
         put(g,rect(3,0,9,5),'#6B4A3A'); put(g,rect(3,1,9,1)+rect(3,4,9,4),'#C9A27A')
@@ -969,7 +972,7 @@ def banned():
                     if (i+k)%2: fx[(x,y)]='#F2C14E'
             g=kf(i,[(16,0),(24,1)])
             p={k:(mix(BODY,GRAY,g) if c==BODY else c) for k,c in p.items()}
-            if 40<=i<56 and (i//8)%2==0: fx[(11,10)]='#7FB2E5'; fx[(11,11)]='#7FB2E5'
+            if 40<=i<tears and (i//8)%2==0: fx[(11,10)]='#7FB2E5'; fx[(11,11)]='#7FB2E5'
         txt=None
         if i>=16 and not (i>=40 and (i//4)%2):
             txt=canvas(); px=[9,7,6][min(i-16,2)]; w=text_w('BANNED')*px; y0=cy(-6)
@@ -983,7 +986,7 @@ def banned():
             for x in range(-2,18,3): put(bars,[(x,y+drop) for y in range(3,16)],'#4A4A56')
             put(bars,[(x,3+drop) for x in range(-2,17)],'#4A4A56')
         fr.append((comp(shadow(),xform(p,shake,dy,**sq),fx,bars,gavel(ang) if i<30 else None,txt),60))
-    fr[16]=(fr[16][0],200); fr[-1]=(fr[-1][0],600)
+    fr[16]=(fr[16][0],200); fr[-1]=(fr[-1][0],end)
     return fr
 
 SWEAT='#7FB2E5'
@@ -1049,12 +1052,12 @@ def stash():
     return fr
 
 # ---------- detached HEAD · 头掉了 ----------
-def detached():
-    fr=[]; N=64
+def detached(N=64,hops=False,end=300):
+    fr=[]
     for i in range(N):
         img=canvas(); textc(img,'detached HEAD',138,cy(-6),4,'#3A3A44')
         bx=kf(i,[(12,0),(20,5),(28,-5),(36,0)])
-        p=base(); fx={}
+        p=base(); fx={}; dy=0
         if i<8: face(p,'n')
         elif i<12: face(p,'x')
         elif i<44: face(p,'n',1 if bx>0.5 else -1 if bx<-0.5 else 0)
@@ -1069,9 +1072,13 @@ def detached():
             if 8<=i<12: fx={(1,4):'#F2C14E',(13,4):'#F2C14E',(7,1):'#F2C14E'}
         else:
             sq=squash(kf(i,[(46,0.85),(49,1)])) if 46<=i<49 else {}
-            layers=[xform(p,0,0,**sq)]
-        fr.append((comp(shadow(),img,*layers,fx),60))
-    fr[-1]=(fr[-1][0],300)
+            if hops and i>=50:
+                t=((i-50)%10)/10; dy=-2.5*math.sin(math.pi*t)
+                if dy<-0.8: arms(p,UP,UP)
+                if t<0.1: sq=squash(0.86)
+            layers=[xform(p,0,dy,**sq)]
+        fr.append((comp(shadow(-dy),img,*layers,fx),60))
+    fr[-1]=(fr[-1][0],end)
     return fr
 
 # ---------- cherry-pick · 摘樱桃 ----------
@@ -1108,7 +1115,6 @@ def cherry():
 def duck():
     fr=[]; N=64; rng=random.Random(4)
     DUCK=[".yyy...","oykyy..",".yyy...","..yyyyy",".yyyyyy","..YYYY."]
-    BULB=[".yyy.","yyyyy","yyyyy",".yyy.",".ggg.","..g.."]
     bars=[[rng.randint(4,13) for _ in range(3)] for _ in range(20)]
     for i in range(N):
         img=canvas()
@@ -1123,7 +1129,7 @@ def duck():
         if i<28: face(p,'n',1); arms(p,UP if (i//3)%2 else MID,MID if (i//3)%2 else UP)
         elif i<36: face(p,'n',1,blink=(i in (32,33)))
         else:
-            face(p,'hap'); fx.update(spr(BULB,1,-3,{'y':'#FFE066','g':'#9AA0AA'}))
+            face(p,'hap'); fx.update(spr(BULB,1,-3,BULB_PAL))
             if (i//3)%2: fx.update({(-1,-3):'#FFE066',(7,-3):'#FFE066',(-1,1):'#FFE066',(7,1):'#FFE066'})
             if i<52: dy=-2*abs(math.sin(math.pi*(i-36)/6)); arms(p,UP,UP)
         db=-1 if (i//4)%2 and i<28 else 0
