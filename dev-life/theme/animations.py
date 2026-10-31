@@ -176,6 +176,51 @@ def wake():
         fr.append((comp(scene,spr(MUG,mx,8,MUG_PAL)),70))
     return fr+coffee()
 
+# ---------- /exit · 拜拜, extended ----------
+def bye_long():
+    """/exit, except Clawd comes back: the terminal closes, a shadow grows on the ground and Clawd drops from
+    the sky, lands flat, shakes off the stars and ends on the idle pose."""
+    fr=[]; N=84; FG='#E6E1DA'; ORG='#E8845F'
+    for i in range(N):
+        img=canvas(); X0,Y0,X1,Y1=cx(-3),cy(-6),cx(18),cy(1); mid=(Y0+Y1)//2
+        h=round(kf(i,[(52,(Y1-Y0)//2),(56,0)]))
+        if h>2: term(img,X0,mid-h,X1,mid+h)
+        if i<52:
+            tx,ty,px=X0+14,Y0+14,4
+            x=text(img,'> ',tx,ty,px,ORG); x=text(img,'/exit'[:clamp((i-2)//2,0,5)],x,ty,px,FG)
+            if i<14 and (i//4)%2==0: box(img,x+px,ty,x+4*px,ty+5*px,FG)
+            if i>=42:
+                x=text(img,'bye!',tx,ty+36,px,FG)
+                if (i//4)%2==0: box(img,x+px,ty+36,x+4*px,ty+36+5*px,FG)
+        p=base(); ch=None; sh=None; fx={}
+        if i<14:
+            face(p,'n',0,-1)
+            if 2<=i<12: arms(p,UP if i%2 else MID,MID if i%2 else UP)
+            ch=xform(p); sh=shadow()
+        elif i<30:
+            face(p,'hap'); arms(p,DOWN,UP if (i//3)%2 else MID); ch=xform(p,0,0,rot=3*math.sin(TAU*i/12)); sh=shadow()
+        elif i<42:
+            face(p,'hap'); arms(p,UP,UP)
+            cs=round(kf(i,[(30,12),(41,1)])); ch=render(p,cs,138,kf(i,[(30,264),(41,108)]))
+        elif 57<=i<69:
+            sh=shadow(kf(i,[(57,3.5),(69,0)]))
+            if i>=64:
+                face(p,'x'); arms(p,UP,UP); ch=xform(p,0,-22*(1-((i-64)/5)**2),sy=1.1,sx=0.95)
+        elif i>=69:
+            sh=shadow()
+            if i<74:
+                face(p,'x'); ch=xform(p,0,0,**squash(kf(i,[(69,0.62),(71,1.12),(74,1)])))
+                if i<72: fx={(-1,14):'#D9D2CB',(0,13):'#D9D2CB',(-2,13):'#D9D2CB',(15,14):'#D9D2CB',(14,13):'#D9D2CB',(16,13):'#D9D2CB'}
+            else:
+                dizzy_=i<80; face(p,'x' if dizzy_ else 'n')
+                ch=xform(p,0,0,rot=5*math.sin(TAU*(i-74)/4) if dizzy_ else 0)
+                if dizzy_:
+                    for k in range(3):
+                        a=TAU*(i/6+k/3); fx[(round(7.5+5*math.cos(a)),round(4+1.2*math.sin(a)))]='#F2C14E'
+        fr.append((comp(sh,ch,fx,img),60))
+    fr[13]=(fr[13][0],200)
+    return fr
+
 # ---------- Team · 多人协作 (2 and 3 sessions) ----------
 # Two Clawds at 2/3 size work side by side at their own screens; with 3 sessions a third stands on top of the
 # screens, so nothing else moves between the two. Both loop every 72 frames.

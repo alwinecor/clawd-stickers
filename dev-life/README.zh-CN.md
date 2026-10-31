@@ -64,7 +64,7 @@
 | 任务完成 | Tests Passed (extended)、LGTM |
 | 工具调用失败 | Error |
 | 没有活动 | Idle |
-| 空闲时随机播放 | Slacking Off、Coffee Break、Rubber Duck、Works on My Machine、git blame、Friday Deploy、Overtime、Clock Out、Memory Leak、Stack Overflow、cherry-pick、Esc、Force Push、git stash、/clear、/exit |
+| 空闲时随机播放 | Slacking Off、Coffee Break、Rubber Duck、Works on My Machine、git blame、Friday Deploy、Overtime、Clock Out、Memory Leak、Stack Overflow、cherry-pick、Esc、Force Push、git stash、/clear、/exit (extended) |
 | 自由走动 | Walk |
 | 被拖拽 | Drag |
 | 双击 | 左侧播放 hello, world，右侧播放 You're Absolutely Right!；有一半概率触发 404 Not Found |
@@ -85,12 +85,9 @@
 | **Tests Passed (extended)** | <img src="theme/clawd-dev-life/assets/passed_long.apng" width="120"> | 原表情包的加长版，多落下一轮彩纸。 |
 | **detached HEAD (extended)** | <img src="theme/clawd-dev-life/assets/detached_long.apng" width="120"> | 加长版，脑袋装回去后，松了口气蹦起来。 |
 | **Banned (extended)** | <img src="theme/clawd-dev-life/assets/banned_long.apng" width="120"> | 加长版，整段反应里牌子一直闪，眼泪一直掉。 |
+| **/exit (extended)** | <img src="theme/clawd-dev-life/assets/bye_long.apng" width="120"> | 加长版，终端合上后，从天上掉回来，摔扁又弹起，甩掉头上的星星。 |
 | **Dizzy** | <img src="theme/clawd-dev-life/assets/dizzy.apng" width="120"> | Usage Limit 的变体：被鼠标绕晕，眼睛转圈，身体跟着摇晃，电池慢慢耗尽。 |
 | **Yawn** | <img src="theme/clawd-dev-life/assets/yawn.apng" width="120"> | 强撑着不闭眼，最后还是合上了；睡帽落下，z 开始飘起来。后面接续 Good Night。 |
 | **Wake** | <img src="theme/clawd-dev-life/assets/wake.apng" width="120"> | 眼睛睁开一条缝，睡帽飘走，马克杯滑进画面。后面接续 Coffee Break。 |
 | **Team of Two** | <img src="theme/clawd-dev-life/assets/team2.apng" width="120"> | 两只小克并排工作：一只写代码，一只跑测试，测试失败时慌成一团。 |
 | **Team of Three** | <img src="theme/clawd-dev-life/assets/team3.apng" width="120"> | 第三只小克站到屏幕上，边喝咖啡边看另外两只干活。 |
-
-### 未用于主题的表情
-
-/clear、Esc、git stash、Force Push 和 /exit 目前没有出现在主题中，可能是暂无合适的触发时机，或实装效果欠佳。

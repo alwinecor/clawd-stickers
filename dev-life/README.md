@@ -64,7 +64,7 @@ Where a row lists several animations, one of them plays.
 | Task completed | Tests Passed (extended), LGTM |
 | Tool failure | Error |
 | No activity | Idle |
-| Random idle scene | Slacking Off, Coffee Break, Rubber Duck, Works on My Machine, git blame, Friday Deploy, Overtime, Clock Out, Memory Leak, Stack Overflow, cherry-pick, Esc, Force Push, git stash, /clear, /exit |
+| Random idle scene | Slacking Off, Coffee Break, Rubber Duck, Works on My Machine, git blame, Friday Deploy, Overtime, Clock Out, Memory Leak, Stack Overflow, cherry-pick, Esc, Force Push, git stash, /clear, /exit (extended) |
 | Free roam | Walk |
 | Dragged | Drag |
 | Double-click | hello, world on the left, You're Absolutely Right! on the right; a 50% chance of 404 Not Found instead |
@@ -85,12 +85,9 @@ These animations appear only in the theme, or are variations of the original sti
 | **Tests Passed (extended)** | <img src="theme/clawd-dev-life/assets/passed_long.apng" width="120"> | An extended version of the original sticker, with an extra wave of confetti. |
 | **detached HEAD (extended)** | <img src="theme/clawd-dev-life/assets/detached_long.apng" width="120"> | Extended version: hops with relief once its head is back on. |
 | **Banned (extended)** | <img src="theme/clawd-dev-life/assets/banned_long.apng" width="120"> | Extended version: the sign keeps flashing and the tears keep falling for the whole reaction. |
+| **/exit (extended)** | <img src="theme/clawd-dev-life/assets/bye_long.apng" width="120"> | Extended version: the terminal closes and Clawd drops back from the sky, lands flat and shakes off the stars. |
 | **Dizzy** | <img src="theme/clawd-dev-life/assets/dizzy.apng" width="120"> | A variation of Usage Limit: dizzy from the circling mouse, its eyes roll round and it sways as the battery drains. |
 | **Yawn** | <img src="theme/clawd-dev-life/assets/yawn.apng" width="120"> | Fights to keep its eyes open, then they shut, the nightcap drops on and the z's begin. Followed by Good Night. |
 | **Wake** | <img src="theme/clawd-dev-life/assets/wake.apng" width="120"> | Its eyes crack open, the nightcap lifts away and a mug slides in. Followed by Coffee Break. |
 | **Team of Two** | <img src="theme/clawd-dev-life/assets/team2.apng" width="120"> | Two Clawds share the desk: one writes code, the other runs tests and panics when one fails. |
 | **Team of Three** | <img src="theme/clawd-dev-life/assets/team3.apng" width="120"> | A third Clawd joins them, standing on top of the screens and sipping coffee. |
-
-### Stickers not in the theme
-
-/clear, Esc, git stash, Force Push and /exit don't currently appear in the theme, either because they have no fitting trigger yet or because they didn't work well in practice.
