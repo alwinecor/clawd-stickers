@@ -98,8 +98,8 @@ The themes directory depends on your operating system:
 ### Animations and interactions
 
 <table>
-  <tr><td align="center" width="20%"><b>Team of Two</b></td><td align="center" width="20%"><b>Team of Three</b></td><td align="center" width="20%"><b>Dizzy</b></td><td align="center" width="20%"><b>Yawn</b></td><td align="center" width="20%"><b>Wake</b></td></tr>
-  <tr><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/team2.apng" width="110" alt="Team of Two"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/team3.apng" width="110" alt="Team of Three"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/dizzy.apng" width="110" alt="Dizzy"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/yawn.apng" width="110" alt="Yawn"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/wake.apng" width="110" alt="Wake"></td></tr>
+  <tr><td align="center" width="16%"><b>Team of Two</b></td><td align="center" width="16%"><b>Team of Three</b></td><td align="center" width="16%"><b>Dizzy</b></td><td align="center" width="16%"><b>Yawn</b></td><td align="center" width="16%"><b>Wake</b></td><td align="center" width="16%"><b>/exit (extended)</b></td></tr>
+  <tr><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/team2.apng" width="110" alt="Team of Two"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/team3.apng" width="110" alt="Team of Three"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/dizzy.apng" width="110" alt="Dizzy"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/yawn.apng" width="110" alt="Yawn"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/wake.apng" width="110" alt="Wake"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/bye_long.apng" width="110" alt="/exit (extended)"></td></tr>
 </table>
 
 See the [theme guide](dev-life/README.md#desktop-pet-theme--clawd-dev-life) for when each animation plays and previews of all the theme-only animations.
