@@ -26,8 +26,8 @@ OUT=os.path.join(HERE,'covers')
 CW,CH=1080,1440
 ORANGE='#D77757'; TERM_TXT='#EDE6DE'; TERM_DIM='#8C827A'
 THEMES={
-    'dark': dict(bg='#161412',ink='#E8E1D9',bar='#26211E',bar_hi='#332D29',mono=True,suffix='-dark',gif='gif-dark',theme='clawd-dev-life-dark'),
-    'light':dict(bg='#FBF6EE',ink='#2B2522',bar='#211D1B',bar_hi='#2E2926',mono=False,suffix='-light',gif='gif',theme='clawd-dev-life'),
+    'dark': dict(bg='#161412',ink='#E8E1D9',dim=TERM_DIM,bar='#26211E',bar_hi='#332D29',mono=True,suffix='-dark',gif='gif-dark',theme='clawd-dev-life-dark'),
+    'light':dict(bg='#FBF6EE',ink='#2B2522',dim='#6F655E',bar='#211D1B',bar_hi='#2E2926',mono=False,suffix='-light',gif='gif',theme='clawd-dev-life'),
 }
 TH=THEMES['dark']
 BAR=76   # height of the terminal bars at the top and bottom
@@ -174,7 +174,14 @@ def still(stem,bg,items,cursor):
     ImageDraw.Draw(im).rectangle(cursor,fill=TERM_TXT)
     im.save(os.path.join(OUT,f"{stem}{TH['suffix']}-static.png"))
 
-if __name__=='__main__':
+def cli(pages):
+    """Apply --light and return the pages asked for, all of them by default."""
+    global TH
     args=sys.argv[1:]
     if '--light' in args: args.remove('--light'); TH=THEMES['light']
-    for n in (args or ['1','2']): render(f'page-{n}',*page(int(n)))
+    for n in args:
+        if n not in pages: sys.exit(f"no page {n}: choose from {', '.join(pages)}")
+    return args or list(pages)
+
+if __name__=='__main__':
+    for n in cli(('1','2')): render(f'page-{n}',*page(int(n)))

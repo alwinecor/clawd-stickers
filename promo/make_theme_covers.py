@@ -14,26 +14,23 @@ style as make_covers.py:
 Output: theme-N-{dark,light}.gif, plus theme-N-{dark,light}-static.png.
 The triggers follow the table in dev-life/README.md.
 """
-import sys
 from PIL import Image, ImageDraw
 import make_covers as mc
 from make_covers import CW,CH,BAR,BLINK,ORANGE,TERM_TXT,TERM_DIM,font,label
 
 GREEN='#3FB96B'; BLUE='#6FA8DC'
-DIM={'dark':TERM_DIM,'light':'#6F655E'}
 NOTE='Unofficial fan project. Not affiliated with Anthropic.'
 # frame index of each theme-only animation's punchline, for the stills
 mc.KEY.update(passed_long=65,team2=30,team3=30,dizzy=40,yawn=30,wake=30)
 
-def dim(): return DIM['dark' if mc.TH is mc.THEMES['dark'] else 'light']
-def centered(d,s,y,px,fill):
-    f=font(px,mono=True); d.text(((CW-d.textlength(s,font=f))/2,y),s,font=f,fill=fill)
+def centered(d,s,y,px,fill,cx=CW/2):
+    f=font(px,mono=True); d.text((cx-d.textlength(s,font=f)/2,y),s,font=f,fill=fill)
 def frame(heading=None,sub=None):
     """Page background: terminal bars and heading."""
     img=Image.new('RGB',(CW,CH),mc.TH['bg']); d=ImageDraw.Draw(img)
     cursor=mc.terminal_bars(d)
     if heading: centered(d,heading,BAR+38,54,ORANGE)
-    if sub: centered(d,sub,BAR+108,28,dim())
+    if sub: centered(d,sub,BAR+108,28,mc.TH['dim'])
     return img,d,cursor
 
 # ---------- page 1: a mock session ----------
@@ -61,11 +58,10 @@ def window(d,k,chars):
     d.rectangle([x0,y0,x1,y0+46],fill=bar)
     for i,c in enumerate(('#FF5F57','#FEBC2E','#28C840')):
         cx=x0+30+i*30; d.ellipse([cx-9,y0+14,cx+9,y0+32],fill=c)
-    f=font(24,mono=True); w=d.textlength('claude',font=f)
-    d.text(((x0+x1-w)/2,y0+9),'claude',font=f,fill=TERM_DIM)
+    centered(d,'claude',y0+9,24,TERM_DIM,(x0+x1)/2)
     f=font(30,mono=True); y=y0+66
     lines=[[('> ',ORANGE),(TYPED[:chars],TERM_TXT)]]
-    for s in SCENES[:k+1]: lines+=s[4]
+    for *_,added in SCENES[:k+1]: lines+=added
     for ln in lines:
         x=x0+28
         for s,c in ln:
@@ -76,20 +72,22 @@ def hero_bg(k,chars=len(TYPED)):
     """Background at step k, with the prompt typed up to chars."""
     if (k,chars) not in _bg:
         img,d,cursor=frame('Clawd Dev Life','a clawd-on-desk theme that reacts to Claude Code')
-        centered(d,NOTE,CH-BAR-44,22,dim())
+        dim=mc.TH['dim']
+        centered(d,NOTE,CH-BAR-44,22,dim)
         window(d,k,chars)
         y=740
         for i,(_,_,name,what,_) in enumerate(SCENES):
             on=i==k
             if on: d.text((64,y+18),'>',font=font(36,mono=True),fill=ORANGE)
-            d.text((104,y),what,font=font(28,mono=True),fill=mc.TH['ink'] if on else dim())
-            d.text((104,y+38),name,font=font(34,mono=True),fill=ORANGE if on else dim())
+            d.text((104,y),what,font=font(28,mono=True),fill=mc.TH['ink'] if on else dim)
+            d.text((104,y+38),name,font=font(34,mono=True),fill=ORANGE if on else dim)
             y+=128
         _bg[(k,chars)]=(img,cursor)
     return _bg[(k,chars)]
 def hero():
-    names=[s[0] for s in SCENES]
-    starts=[sum(s[1] for s in SCENES[:i]) for i in range(len(SCENES)+1)]
+    names=[nm for nm,*_ in SCENES]
+    spans=[ms for _,ms,*_ in SCENES]
+    starts=[sum(spans[:i]) for i in range(len(spans)+1)]
     end=-(-starts[-1]//(2*BLINK))*2*BLINK   # whole blink cycles
     ts=set()
     for nm,t0,t1 in zip(names,starts,starts[1:]+[end]):
@@ -128,32 +126,28 @@ def triggers():
         x0=k%3*cw; y0=gy+k//3*rh
         items.append((nm,b,x0+(cw-sw)//2,y0))
         label(d,name,x0+cw/2,y0+sh-2,cw-16,px=28)
-        f=font(23,mono=True); w=d.textlength(what,font=f)
-        d.text((x0+(cw-w)/2,y0+sh+36),what,font=f,fill=dim())
+        centered(d,what,y0+sh+36,23,mc.TH['dim'],x0+cw/2)
     return img,items,cursor
 
 # ---------- page 3: theme-only animations ----------
-def caption(d,name,what,cx,y):
-    label(d,name,cx,y,CW//3,px=30)
-    f=font(24,mono=True); w=d.textlength(what,font=f)
-    d.text((cx-w/2,y+44),what,font=f,fill=dim())
+TEAMS=(('team2','Team of Two','2 sessions at once'),('team3','Team of Three','3 or more sessions'))
+SOLOS=(('dizzy','Dizzy','Circle the mouse'),('yawn','Yawn','Left alone'),('wake','Wake','Back to work'))
+def row(d,items,stickers,b,y):
+    """Lay out captioned stickers evenly across the page; returns where they end."""
+    for i,(nm,name,what) in enumerate(stickers):
+        cx=CW*(2*i+1)//(2*len(stickers))
+        items.append((nm,b,cx-23*b//2,y))
+        label(d,name,cx,y+24*b+4,CW//3,px=30)
+        centered(d,what,y+24*b+48,24,mc.TH['dim'],cx)
+    return y+24*b
 def exclusives():
     img,d,cursor=frame()
-    d.text((60,BAR+36),'# new animations for desktop',font=font(32,mono=True),fill=dim())
-    items=[]; b=20; sw=23*b; y=BAR+90
-    for i,(nm,name,what) in enumerate((('team2','Team of Two','2 sessions at once'),('team3','Team of Three','3 or more sessions'))):
-        cx=CW*(2*i+1)//4
-        items.append((nm,b,cx-sw//2,y)); caption(d,name,what,cx,y+24*b+4)
-    b=14; sw=23*b; y+=24*20+160
-    for i,(nm,name,what) in enumerate((('dizzy','Dizzy','Circle the mouse'),('yawn','Yawn','Left alone'),('wake','Wake','Back to work'))):
-        cx=CW*(2*i+1)//6
-        items.append((nm,b,cx-sw//2,y)); caption(d,name,what,cx,y+24*b+4)
+    d.text((60,BAR+36),'# new animations for desktop',font=font(32,mono=True),fill=mc.TH['dim'])
+    items=[]
+    y=row(d,items,TEAMS,20,BAR+90)
+    row(d,items,SOLOS,14,y+160)
     return img,items,cursor
 
+PAGES={'1':hero,'2':lambda: mc.render('theme-2',*triggers()),'3':lambda: mc.render('theme-3',*exclusives())}
 if __name__=='__main__':
-    args=sys.argv[1:]
-    if '--light' in args: args.remove('--light'); mc.TH=mc.THEMES['light']
-    for n in (args or ['1','2','3']):
-        if n=='1': hero()
-        elif n=='2': mc.render('theme-2',*triggers())
-        elif n=='3': mc.render('theme-3',*exclusives())
+    for n in mc.cli(PAGES): PAGES[n]()
