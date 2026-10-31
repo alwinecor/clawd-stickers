@@ -75,9 +75,9 @@ def theme():
         for n in p: pad=T-ms[n]; ms[n]=T; write(n,pending[n],pad)
     cfg={
      'schemaVersion':1,
-     'name':'Dev Life · 克码人生'+(' (Dark)' if DARK_MODE else ''),
+     'name':'Clawd Dev Life'+(' (Dark)' if DARK_MODE else ''),
      'author':'alwinecor','version':'1.0.0',
-     'description':'Clawd Stickers 的 Dev Life 主题：思考、写码、压缩上下文、报错都有对应的小剧场。'
+     'description':'Clawd Dev Life 主题：思考、写码、压缩上下文、报错都有对应的小剧场。'
                    '非官方同人作品，与 Anthropic 无关。'+('适合深色桌面。' if DARK_MODE else ''),
      'preview':f('idle'),
      'viewBox':vb,

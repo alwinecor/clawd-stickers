@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "name": "Dev Life · 克码人生",
+  "name": "Clawd Dev Life",
   "author": "alwinecor",
   "version": "1.0.0",
-  "description": "Clawd Stickers 的 Dev Life 主题：思考、写码、压缩上下文、报错都有对应的小剧场。非官方同人作品，与 Anthropic 无关。",
+  "description": "Clawd Dev Life 主题：思考、写码、压缩上下文、报错都有对应的小剧场。非官方同人作品，与 Anthropic 无关。",
   "preview": "idle.svg",
   "viewBox": {
     "x": -4.5,

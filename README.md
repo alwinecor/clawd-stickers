@@ -6,6 +6,8 @@ A collection of pixel-art animated stickers starring **Clawd**, the Claude Code 
 
 The collection currently contains **40 animated stickers** with the theme **Dev Life · 克码人生**.
 
+Light and dark [clawd-on-desk themes](#desktop-pet-theme) are also included, bringing Clawd to your desktop with animations that follow Claude Code's working state.
+
 > [!NOTE]
 > This is an unofficial fan project, unaffiliated with and not endorsed by Anthropic. Content whose copyright is held by this project's contributors is [MIT-licensed](LICENSE) by default. Third-party rights, including the Claude Code mascot, are excluded.
 
@@ -14,6 +16,7 @@ The collection currently contains **40 animated stickers** with the theme **Dev 
 - [Features](#features)
 - [Sticker preview](#sticker-preview)
 - [Download and use](#download-and-use)
+- [Desktop pet theme](#desktop-pet-theme)
 - [Generate locally](#generate-locally)
 - [Repository structure](#repository-structure)
 - [License and usage](#license-and-usage)
@@ -26,6 +29,7 @@ The collection currently contains **40 animated stickers** with the theme **Dev 
 - **Ready-to-use GIFs**: every sticker is 288×288 with a transparent background and loops continuously. Download and use them directly, with no development environment needed.
 - **Light and dark sets**: the dark set brightens text and outlines and darkens ground shadows for dark-mode chats.
 - **Generated with code**: the Python script uses Pillow, with no extra fonts to download. Generate all stickers or selected ones locally.
+- **Import into clawd-on-desk**: the stickers have been adapted into a dedicated theme for clawd-on-desk. Import it manually as a custom theme to replace the built-in one.
 
 ## Sticker preview
 
@@ -65,36 +69,41 @@ Select **Code → Download ZIP** on the repository home page, extract the archiv
 
 Saved GIFs can be sent directly in chat apps such as WeChat, Xiaohongshu and WhatsApp. If the app supports custom stickers, you can also add them manually. All GIFs are 288×288 with a transparent background and loop continuously.
 
-### Use as a clawd-on-desk theme
+## Desktop pet theme
 
-The set is also packaged as a desktop pet theme for [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk), so Clawd switches animations as Claude Code changes state.
+The set is also packaged as the **Clawd Dev Life** theme for [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk). It retains most of the original sticker animations, playing them in sync with Claude Code's working state. It also adds theme-specific idle, walking and dragging animations, adapts some stickers for desktop use, and includes dedicated animations for two simultaneous sessions and for three or more sessions.
 
-1. Copy the `clawd-dev-life` folder from [`dev-life/theme/`](dev-life/theme/) (or `clawd-dev-life-dark` for dark desktops) into the themes directory:
-   - Windows: `%APPDATA%/clawd-on-desk/themes/`
-   - macOS: `~/Library/Application Support/clawd-on-desk/themes/`
-   - Linux: `~/.config/clawd-on-desk/themes/`
-2. In clawd-on-desk, open `Settings...` → `Theme` and select **Dev Life · 克码人生**. Restart clawd-on-desk if it doesn't appear.
+### Install the theme
 
-| State | Animation |
+Install clawd-on-desk first. Ready-to-install themes are included in this repository.
+
+| Desktop background | Theme folder | Name shown in the app |
+|---|---|---|
+| Light | [`clawd-dev-life`](dev-life/theme/clawd-dev-life/) | Clawd Dev Life |
+| Dark | [`clawd-dev-life-dark`](dev-life/theme/clawd-dev-life-dark/) | Clawd Dev Life (Dark) |
+
+The themes directory depends on your operating system:
+
+| System | Themes directory |
 |---|---|
-| Idle | Breathing and blinking, eyes following the mouse, with occasional Slacking Off, Coffee Break, Rubber Duck, Works on My Machine, git blame, Friday Deploy, Overtime, Clock Out, Memory Leak, Stack Overflow and cherry-pick |
-| Thinking | One of Thinking / ultrathink / Plan Mode at random |
-| Working | 1 session: Todo List / It's Simple / Bug Hunt / while(true) / Deadline at random; 2: two Clawds side by side, one coding and one running tests, or Merge Conflict at random; 3 or more: a third stands on their screens sipping coffee |
-| Subagents | Subagents |
-| Context compaction | /compact |
-| Creating a worktree | git clone |
-| Waiting for permission | Yes, Proceed |
-| Task complete | One of Tests Passed / LGTM at random |
-| Error | Error |
-| Falling asleep | Its eyes slowly narrow, fight to stay open and close, then the nightcap goes on and it runs straight into Good Night |
-| Sleeping | Good Night |
-| Waking up | Eyes crack open, the nightcap floats off and the mug slides in, running into Coffee Break |
-| Walking around the desktop | Strolling along, swinging its arms |
-| Dizzy (circling the mouse around it) | A theme version of Usage Limit: no keyboard, its eyes roll and it sways while the battery drains |
-| Dragging | Picked up and dangling: arms and legs flailing, > < eyes, sweat flying |
-| Clicking | Left: hello world; right: You're Absolutely Right!; annoyed: 404 Not Found; double-click: one of rm -rf / detached HEAD / Banned at random |
+| Windows | `%APPDATA%/clawd-on-desk/themes/` |
+| macOS | `~/Library/Application Support/clawd-on-desk/themes/` |
+| Linux | `~/.config/clawd-on-desk/themes/` |
 
-Mini mode isn't supported yet.
+1. Download this repository and choose the folder in `dev-life/theme/` that suits your desktop background.
+2. Copy the **entire folder** into the themes directory listed above, keeping its `theme.json` and `assets/` intact.
+3. In clawd-on-desk, open **Settings... → Theme** and select the matching theme name. Restart clawd-on-desk if it doesn't appear.
+
+### Animations and interactions
+
+- **State-driven animations**: thinking, working, subagents, context compaction, permission requests, task completion, errors and other states each have matching animations.
+- **Multiple sessions**: a single session uses the original stickers; two sessions or three or more sessions use new animations featuring multiple Clawds.
+- **Desktop interactions**: Clawd breathes and blinks while idle, follows the mouse with its eyes and randomly plays everyday scenes. It supports walking, dragging, clicking, repeated clicks and a dizzy reaction when you circle the mouse around it. The dizzy reaction is a variation of Usage Limit rather than a conventional dizzy animation.
+- **Sleep sequence**: Clawd struggles to keep its eyes open before putting on a nightcap and falling asleep. The wake-up animation leads into Coffee Break.
+
+Mini mode and snapping to screen edges are currently unsupported. No custom sound effects are included.
+
+You can view and adjust the animation configuration in clawd-on-desk settings. Any animations you don't like can be disabled or replaced manually.
 
 ## Generate locally
 
@@ -139,6 +148,8 @@ Arguments generally match GIF filenames without the `.gif` extension, such as `t
 
 ### Generate the clawd-on-desk theme
 
+Rebuild only after changing animations or the theme configuration. The theme reads the finished GIFs from `gif/` or `gif-dark/` for the matching variant. **After changing a sticker, regenerate its GIF before building the theme.**
+
 ```bash
 # Light theme
 python dev-life/theme/build.py
@@ -147,7 +158,7 @@ python dev-life/theme/build.py
 python dev-life/theme/build.py --dark
 ```
 
-The theme is built from the finished GIFs in `gif/` or `gif-dark/`, so regenerate a sticker first if you changed it. Output is written to `clawd-dev-life/` or `clawd-dev-life-dark/` under [`dev-life/theme/`](dev-life/theme/). To change the theme, edit only that folder: the `THEME` table in `build.py` maps states to animations, `animations.py` holds the frame animations made only for the theme, and `svg.py` holds the idle, walking and dragging animations.
+Output is written to `clawd-dev-life/` or `clawd-dev-life-dark/` under [`dev-life/theme/`](dev-life/theme/), replacing the corresponding configuration and animation assets with the same names. The `THEME` table in `build.py` maps states to animations, `animations.py` holds theme-specific frame animations that differ from the original stickers, and `svg.py` holds the idle, walking and dragging animations.
 
 ## Repository structure
 
@@ -164,7 +175,9 @@ clawd-stickers/
     ├── README.zh-CN.md        # Chinese sticker content guide
     ├── gif/                   # 40 finished GIFs
     ├── gif-dark/              # 40 finished GIFs (dark background)
-    ├── theme/                 # clawd-on-desk desktop pet themes (light, dark)
+    ├── theme/                 # clawd-on-desk desktop pet themes
+    │   ├── clawd-dev-life/       # Light theme package
+    │   ├── clawd-dev-life-dark/  # Dark theme package
     │   ├── build.py           # Theme generator and state mapping
     │   ├── animations.py      # Theme-only frame animations
     │   └── svg.py             # Theme-only SVG animations
