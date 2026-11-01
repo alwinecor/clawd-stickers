@@ -102,7 +102,7 @@ The themes directory depends on your operating system:
   <tr><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/team2.apng" width="110" alt="Team of Two"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/team3.apng" width="110" alt="Team of Three"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/dizzy.apng" width="110" alt="Dizzy"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/yawn.apng" width="110" alt="Yawn"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/wake.apng" width="110" alt="Wake"></td><td align="center"><img src="dev-life/theme/clawd-dev-life/assets/bye_long.apng" width="110" alt="/exit (extended)"></td></tr>
 </table>
 
-See the [theme guide](dev-life/README.md#desktop-pet-theme--clawd-dev-life) for when each animation plays and previews of all the theme-only animations.
+See the [theme guide](dev-life/theme/clawd-dev-life/README.md) for all the animations and when each one plays.
 
 - **State-driven animations**: thinking, working, subagents, context compaction, permission requests, task completion, errors and other states each have matching animations.
 - **Multiple sessions**: a single session uses the original stickers; two sessions or three or more sessions use new animations featuring multiple Clawds.
@@ -219,7 +219,7 @@ Issues are welcome for sticker ideas and bug reports, as are PRs improving anima
 
 - **Report a problem**: describe the affected sticker or theme and the steps to reproduce it. Include a screenshot or animation where possible. For desktop pet issues, also include your operating system and clawd-on-desk version. Please report issues with the clawd-on-desk application itself, rather than this theme, to the upstream project.
 - **Change stickers**: drawing and animation code lives in [`dev-life/src/clawd_dev.py`](dev-life/src/clawd_dev.py). Keep the existing pixel style and run `python dev-life/build_all.py` to update the GIFs and themes. When adding a sticker, update `ALL`, the `FILE` mapping if needed, and the set guides and home page previews in both languages.
-- **Change desktop pet themes**: state mappings, theme-specific frame animations and SVG animations live in `build.py`, `animations.py` and `svg.py` under `dev-life/theme/`, respectively. Edit the source files and rebuild both light and dark themes.
+- **Change desktop pet themes**: state mappings, theme-specific frame animations and SVG animations live in `build.py`, `animations.py` and `svg.py` under `dev-life/theme/`, respectively. Edit the source files, update the animation tables in `package/` when animations or their triggers change, and rebuild both light and dark themes.
 - **Submit a PR**: describe the changes, include previews where applicable, and submit the source files together with updated assets and relevant documentation. Run `python dev-life/check.py` before submitting. Check transparency, text readability and loop transitions on both light and dark backgrounds. For desktop pet changes, also check the affected states or interactions. Update both English and Chinese documentation when usage or the collection changes.
 
 ## License and usage
