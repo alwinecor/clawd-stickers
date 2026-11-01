@@ -14,11 +14,6 @@ Status: to be confirmed. The clawd-moji README says the code in each set's `src/
 
 ## clawd-on-desk
 
-The desktop pet themes are built for [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk), whose artwork is not covered by its AGPL-3.0 source licence and is all rights reserved. The themes contain none of that artwork. `idle.svg`, `roam.svg` and `drag.svg` show the same Clawd body shape as clawd-on-desk's artwork because both depict the same character.
+The desktop pet themes are built for [clawd-on-desk](https://github.com/rullerzhou-afk/clawd-on-desk), whose artwork is not covered by its AGPL-3.0 source licence and is all rights reserved. The themes contain none of that artwork.
 
-| Theme file | Source |
-| --- | --- |
-| `idle.svg` | Breathing and blinking follow this project's stickers. The `eyes-js`, `body-js` and `shadow-js` ids and the eye tracking settings in `theme.json` follow the clawd-on-desk theme format. |
-| `roam.svg`, `drag.svg` | Drawn from this project's stickers, including their arm poses and eyes, with their own animation. |
-
-Earlier versions of `idle.svg` reused the breathing and blinking timing, keyframes and layering of `clawd-idle-follow.svg`. This was replaced on 2026-11-01, and this project's licences do not cover that animation in those earlier versions.
+The animations of `idle.svg`, `roam.svg` and `drag.svg` are drawn from this project's own stickers. The `eyes-js`, `body-js` and `shadow-js` ids and the eye tracking settings in `theme.json` follow the clawd-on-desk theme format.
