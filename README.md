@@ -9,7 +9,7 @@ The collection currently contains **40 animated stickers** with the theme **Dev 
 Light and dark [clawd-on-desk themes](#desktop-pet-theme) are also included, bringing Clawd to your desktop with animations that follow Claude Code's working state.
 
 > [!NOTE]
-> This is an unofficial fan project, unaffiliated with and not endorsed by Anthropic. Content whose copyright is held by this project's contributors is [MIT-licensed](LICENSE) by default. Third-party rights, including the Claude Code mascot, are excluded.
+> This is an unofficial fan project, unaffiliated with and not endorsed by Anthropic. Code and documentation are [MIT-licensed](LICENSE); artwork is [CC BY-NC-SA 4.0](LICENSE-ART), so commercial use is not permitted. Third-party rights, including the Claude Code mascot, are excluded. See [License and usage](#license-and-usage).
 
 ## Contents
 
@@ -190,7 +190,9 @@ python dev-life/check.py
 clawd-stickers/
 ├── README.md                  # English project guide
 ├── README.zh-CN.md            # Chinese project guide
-├── LICENSE                    # Standard MIT License
+├── LICENSE                    # MIT License for code and documentation
+├── LICENSE-ART                # CC BY-NC-SA 4.0 for artwork
+├── NOTICE.md                  # Third-party material and rights
 ├── requirements.txt           # Pinned Python dependencies
 ├── .github/workflows/         # Automatic check of generated files
 └── dev-life/                  # Dev Life sticker set
@@ -203,6 +205,7 @@ clawd-stickers/
     ├── theme/                 # clawd-on-desk desktop pet themes
     │   ├── clawd-dev-life/       # Light theme package
     │   ├── clawd-dev-life-dark/  # Dark theme package
+    │   ├── package/           # LICENSE and README shipped in each theme
     │   ├── build.py           # Theme generator and state mapping
     │   ├── animations.py      # Theme-only frame animations
     │   └── svg.py             # Theme-only SVG animations
@@ -221,10 +224,19 @@ Issues are welcome for sticker ideas and bug reports, as are PRs improving anima
 
 ## License and usage
 
-Except for third-party material and rights otherwise noted, this project's code, documentation and original artistic contributions are licensed under the [MIT License](LICENSE), to the extent that contributors hold the relevant copyright. This includes original contributions to the sticker artwork.
+Code and artwork are licensed separately, to the extent that contributors hold the relevant copyright:
 
-- **Content covered by MIT**: use, modification, distribution and commercial use are permitted. Retain applicable copyright and license notices when distributing copies or substantial portions, including attribution for adapted upstream code.
-- **Third-party material and rights**: The Claude Code mascot belongs to Anthropic.
+| Content | License |
+| --- | --- |
+| Code and documentation | [MIT](LICENSE) |
+| Stickers, theme images and images regenerated from the code | [CC BY-NC-SA 4.0](LICENSE-ART) |
+| The Clawd character and other third-party material | Not licensed here, see [NOTICE.md](NOTICE.md) |
+
+- **Code and documentation**: use, modification, distribution and commercial use are permitted. Retain applicable copyright and license notices when distributing copies or substantial portions, including attribution for adapted upstream code.
+- **Artwork**: you may share and adapt it for non-commercial purposes. Credit this project, indicate changes and share adaptations under the same license. Commercial use needs separate permission from the relevant rights holders.
+- **Earlier versions**: the artwork license applies from 2026-11-01. Copies published earlier stay under the MIT terms they were released with, to the extent contributors could grant them.
+- **Contributions**: by submitting a PR, you agree to license your code and documentation under MIT and your artwork under CC BY-NC-SA 4.0.
+- **Third-party material and rights**: The Claude Code mascot belongs to Anthropic. Adapted material and open permission questions are listed in [NOTICE.md](NOTICE.md).
 
 ## Credits
 

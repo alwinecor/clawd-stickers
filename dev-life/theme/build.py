@@ -70,7 +70,7 @@ def theme(dark=False):
     cfg={
      'schemaVersion':1,
      'name':'Clawd Dev Life'+(' (Dark)' if dark else ''),
-     'author':'alwinecor','version':'1.0.0',
+     'author':'alwinecor','version':'1.0.0','license':'CC BY-NC-SA 4.0',
      'description':'Clawd Dev Life 主题：思考、写码、压缩上下文、报错都有对应的小剧场。'
                    '非官方同人作品，与 Anthropic 无关。'+('适合深色桌面。' if dark else ''),
      'preview':f('idle'),
@@ -105,6 +105,11 @@ def theme(dark=False):
     }
     with open(os.path.join(out,'theme.json'),'w',encoding='utf-8') as fp:
         json.dump(cfg,fp,ensure_ascii=False,indent=2); fp.write('\n')
+    # package/ holds the documents shipped beside theme.json, shared by both themes.
+    for nm in ('LICENSE','README.md'):
+        with open(os.path.join(THEME_DIR,'package',nm),encoding='utf-8') as fp: text=fp.read()
+        with open(os.path.join(out,nm),'w',encoding='utf-8') as fp:
+            fp.write(text.replace('{name}',cfg['name']).replace('{version}',cfg['version']).replace('{id}',os.path.basename(out)))
     print(f'theme -> {os.path.normpath(out)}')
 
 if __name__=='__main__':

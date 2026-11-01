@@ -13,7 +13,7 @@ HERE=os.path.dirname(os.path.abspath(__file__))
 OUTPUTS=('gif','gif-dark','theme/clawd-dev-life','theme/clawd-dev-life-dark')
 def read(path):
     data=open(path,'rb').read()
-    return data.replace(b'\r\n',b'\n') if path.endswith(('.json','.svg')) else data   # git may check out either
+    return data.replace(b'\r\n',b'\n') if path.endswith(('.json','.svg','.md','LICENSE')) else data   # git may check out either
 def outputs(root):
     """{path relative to root: contents} for every generated file under root."""
     found={}

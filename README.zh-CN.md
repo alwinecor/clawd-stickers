@@ -9,7 +9,7 @@
 另附浅色、深色两版 [clawd-on-desk 桌宠主题](#桌宠主题)，让 Clawd 成为桌宠，随 Claude Code 的工作状态切换动画。
 
 > [!NOTE]
-> 本项目为非官方粉丝创作，与 Anthropic 无关联，亦未获得其背书。本项目贡献者拥有版权的内容默认采用 [MIT 许可](LICENSE)；Claude Code 吉祥物等第三方权利除外。
+> 本项目为非官方粉丝创作，与 Anthropic 无关联，亦未获得其背书。代码和文档采用 [MIT 许可](LICENSE)，美术素材采用 [CC BY-NC-SA 4.0](LICENSE-ART)，不允许商用；Claude Code 吉祥物等第三方权利除外。详见[许可与使用范围](#许可与使用范围)。
 
 ## 目录
 
@@ -190,7 +190,9 @@ python dev-life/check.py
 clawd-stickers/
 ├── README.md                  # 英文项目说明
 ├── README.zh-CN.md            # 中文项目说明
-├── LICENSE                    # 标准 MIT 许可
+├── LICENSE                    # 代码和文档的 MIT 许可
+├── LICENSE-ART                # 美术素材的 CC BY-NC-SA 4.0 许可
+├── NOTICE.md                  # 第三方内容与权利说明
 ├── requirements.txt           # 固定版本的 Python 依赖
 ├── .github/workflows/         # 生成文件的自动检查
 └── dev-life/                  # 克码人生主题套装
@@ -203,6 +205,7 @@ clawd-stickers/
     ├── theme/                 # clawd-on-desk 桌宠主题
     │   ├── clawd-dev-life/       # 浅色主题安装包
     │   ├── clawd-dev-life-dark/  # 深色主题安装包
+    │   ├── package/           # 随主题分发的 LICENSE 和 README
     │   ├── build.py           # 主题生成脚本和状态对应表
     │   ├── animations.py      # 主题专用逐帧动画
     │   └── svg.py             # 主题专用 SVG 动画
@@ -221,10 +224,19 @@ clawd-stickers/
 
 ## 许可与使用范围
 
-除另有注明的第三方内容及权利外，本项目贡献者拥有版权的代码、文档与原创美术贡献默认采用 [MIT 许可](LICENSE)，包括表情素材中的原创部分。
+代码和美术分开授权，均以贡献者拥有相关版权的范围为限：
 
-- **MIT 覆盖的内容**：允许使用、修改、分发和商用；分发副本或实质性部分时须保留适用的版权及许可声明，包括上游改编代码的署名。
-- **第三方内容与权利**：Claude Code 吉祥物角色归 Anthropic 所有。
+| 内容 | 许可 |
+| --- | --- |
+| 代码和文档 | [MIT](LICENSE) |
+| 表情、主题图片，以及由代码重新生成的图片 | [CC BY-NC-SA 4.0](LICENSE-ART) |
+| Clawd 角色及其他第三方内容 | 不在本项目授权范围内，见 [NOTICE.md](NOTICE.md) |
+
+- **代码和文档**：允许使用、修改、分发和商用；分发副本或实质性部分时须保留适用的版权及许可声明，包括上游改编代码的署名。
+- **美术素材**：可以在非商业用途下分享和改编；须署名本项目、注明修改，并以相同许可发布改编内容。商业使用须另行取得相关权利人的许可。
+- **早期版本**：美术许可自 2026-11-01 起适用。此前发布的副本继续适用其发布时的 MIT 条款，以贡献者当时有权授权的范围为限。
+- **贡献**：提交 PR 即表示你同意代码和文档按 MIT 授权，美术素材按 CC BY-NC-SA 4.0 授权。
+- **第三方内容与权利**：Claude Code 吉祥物角色归 Anthropic 所有。改编内容和待确认的授权见 [NOTICE.md](NOTICE.md)。
 
 ## 致谢
 

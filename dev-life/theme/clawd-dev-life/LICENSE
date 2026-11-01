@@ -1,0 +1,55 @@
+Clawd Dev Life theme licence / 主题许可
+
+English
+
+Copyright (c) 2026 alwinecor and contributors
+
+To the extent the contributors can license it, this theme's artwork is licensed
+under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+(CC BY-NC-SA 4.0): https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
+Credit alwinecor and https://github.com/alwinecor/clawd-stickers when you share
+or adapt it.
+
+Distribution: alwinecor permits the Clawd on Desk project to review and keep a
+public fork of the source repository, and to distribute this theme package and
+its preview images through clawd-themes. Users may download, install and use
+the theme.
+
+This licence neither covers nor changes the rights of others:
+
+- The Clawd character belongs to Anthropic.
+- idle.svg follows the structure and animation of clawd-idle-follow.svg from
+  clawd-on-desk, and roam.svg and drag.svg use the same body geometry as that
+  project's artwork. Permission from its maintainers is still to be confirmed.
+- The drawing code is adapted from Qisi3344/clawd-moji.
+
+Commercial use needs separate permission from the relevant rights holders.
+
+This is an unofficial, non-commercial fan theme. It is not affiliated with or
+endorsed by Anthropic.
+
+中文
+
+版权所有 (c) 2026 alwinecor 及贡献者
+
+在贡献者有权授权的范围内，本主题的美术素材采用「知识共享 署名-非商业性使用-
+相同方式共享 4.0 国际」许可协议（CC BY-NC-SA 4.0）：
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.zh-hans
+
+分享或改编时，请署名 alwinecor 并附上
+https://github.com/alwinecor/clawd-stickers 。
+
+分发授权：alwinecor 允许 Clawd on Desk 项目审阅并保留源仓库的公开 fork，并通过
+clawd-themes 分发本主题包及其预览图。用户可以下载、安装和使用本主题。
+
+本许可不涉及也不改变他人的权利：
+
+- Clawd 角色归 Anthropic 所有。
+- idle.svg 沿用了 clawd-on-desk 中 clawd-idle-follow.svg 的结构和动画，roam.svg
+  与 drag.svg 使用了与该项目美术相同的身体造型。其维护者的许可尚待确认。
+- 绘图代码改编自 Qisi3344/clawd-moji。
+
+商业使用须另行取得相关权利人的许可。
+
+本主题是非官方、非商业的粉丝创作，与 Anthropic 无关联，也未获得其背书。

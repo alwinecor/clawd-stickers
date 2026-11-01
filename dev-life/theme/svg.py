@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# License: ../../LICENSE
+# License: ../../LICENSE; the drawn SVGs are artwork, see ../../LICENSE-ART and ../../NOTICE.md
 """Vector animations of the clawd-on-desk theme, which play smoothly at the display refresh rate."""
 from clawd_dev import *
 
