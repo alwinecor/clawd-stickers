@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-4.5 -7 24 24" width="288" height="288">
   <defs>
     <style>
+      .lid { animation: lid 5.4s infinite step-end; }
+      @keyframes lid { 0% { opacity: 1; } 96.6% { opacity: 0; } }
       .bob { animation: bob 0.3s infinite ease-in-out; }
       .step-a, .step-b { animation: step 0.6s infinite step-end; }
       .step-b { animation-delay: -0.3s; }
-      .blink { transform-origin: 7.5px 9px; animation: blink 3.6s infinite ease-in-out; }
       .shadow { transform-origin: 7.5px 15.5px; animation: shadow 0.3s infinite ease-in-out; }
       @keyframes bob { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0, -0.6px); } }
       @keyframes step { 0% { transform: translate(0, -1px); } 50% { transform: none; } }
-      @keyframes blink { 0%, 8%, 100% { transform: scaleY(1); } 4% { transform: scaleY(0.1); } }
       @keyframes shadow { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.9); } }
     </style>
   </defs>
@@ -16,6 +16,6 @@
   <g class="bob" fill="#D77757">
     <g class="step-a"><rect x="3" y="11" width="1" height="4"/></g><g class="step-b"><rect x="5" y="11" width="1" height="4"/></g><g class="step-a"><rect x="9" y="11" width="1" height="4"/></g><g class="step-b"><rect x="11" y="11" width="1" height="4"/></g>
     <rect x="2" y="6" width="11" height="7"/><g class="step-a"><rect x="0" y="9" width="2" height="2"/></g><g class="step-b"><rect x="13" y="9" width="2" height="2"/></g>
-    <g fill="#1a1a1a"><g class="blink"><rect x="5" y="8" width="1" height="2"/><rect x="11" y="8" width="1" height="2"/></g></g>
+    <g fill="#1a1a1a"><g class="lid"><rect x="5" y="8" width="1" height="1"/><rect x="11" y="8" width="1" height="1"/></g><rect x="5" y="9" width="1" height="1"/><rect x="11" y="9" width="1" height="1"/></g>
   </g>
 </svg>

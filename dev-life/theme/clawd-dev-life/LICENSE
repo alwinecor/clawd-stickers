@@ -19,10 +19,9 @@ the theme.
 This licence neither covers nor changes the rights of others:
 
 - The Clawd character belongs to Anthropic.
-- idle.svg follows the structure and animation of clawd-idle-follow.svg from
-  clawd-on-desk, and roam.svg and drag.svg use the same body geometry as that
-  project's artwork. Permission from its maintainers is still to be confirmed.
 - The drawing code is adapted from Qisi3344/clawd-moji.
+
+This theme contains no clawd-on-desk artwork. It uses that project's theme format.
 
 Commercial use needs separate permission from the relevant rights holders.
 
@@ -46,9 +45,9 @@ clawd-themes 分发本主题包及其预览图。用户可以下载、安装和�
 本许可不涉及也不改变他人的权利：
 
 - Clawd 角色归 Anthropic 所有。
-- idle.svg 沿用了 clawd-on-desk 中 clawd-idle-follow.svg 的结构和动画，roam.svg
-  与 drag.svg 使用了与该项目美术相同的身体造型。其维护者的许可尚待确认。
 - 绘图代码改编自 Qisi3344/clawd-moji。
+
+本主题不含 clawd-on-desk 的美术素材，仅使用该项目的主题格式。
 
 商业使用须另行取得相关权利人的许可。
 
