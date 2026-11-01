@@ -193,10 +193,6 @@ clawd-stickers/
 ├── LICENSE                    # Standard MIT License
 ├── requirements.txt           # Pinned Python dependencies
 ├── .github/workflows/         # Automatic check of generated files
-├── promo/                     # Share images (3:4)
-│   ├── covers/                # Animated pages and stills, dark and light
-│   ├── make_covers.py         # Sticker pages generator (20 stickers per page)
-│   └── make_theme_covers.py   # Desktop pet theme pages generator
 └── dev-life/                  # Dev Life sticker set
     ├── README.md              # English sticker content guide
     ├── README.zh-CN.md        # Chinese sticker content guide

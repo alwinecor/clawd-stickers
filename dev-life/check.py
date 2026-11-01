@@ -7,7 +7,6 @@ committed files, so a source change that was never regenerated gets caught. File
   python dev-life/check.py
 
 Compare with the Pillow version pinned in ../requirements.txt: another version can change the bytes.
-promo/ is left out, as its fonts differ between systems.
 """
 import os, shutil, subprocess, sys, tempfile
 HERE=os.path.dirname(os.path.abspath(__file__))
