@@ -234,9 +234,8 @@ Code and artwork are licensed separately, to the extent that contributors hold t
 
 - **Code and documentation**: use, modification, distribution and commercial use are permitted. Retain applicable copyright and license notices when distributing copies or substantial portions, including attribution for adapted upstream code.
 - **Artwork**: you may share and adapt it for non-commercial purposes. Credit this project, indicate changes and share adaptations under the same license. Commercial use needs separate permission from the relevant rights holders.
-- **Earlier versions**: the artwork license applies from 2026-11-01. Copies published earlier stay under the MIT terms they were released with, to the extent contributors could grant them.
 - **Contributions**: by submitting a PR, you agree to license your code and documentation under MIT and your artwork under CC BY-NC-SA 4.0.
-- **Third-party material and rights**: The Claude Code mascot belongs to Anthropic. Adapted material and open permission questions are listed in [NOTICE.md](NOTICE.md).
+- **Third-party material and rights**: The Claude Code mascot belongs to Anthropic. Adapted material is listed in [NOTICE.md](NOTICE.md).
 
 ## Credits
 

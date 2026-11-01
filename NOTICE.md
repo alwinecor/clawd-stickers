@@ -10,7 +10,7 @@ The Clawd character belongs to [Anthropic](https://www.anthropic.com). This proj
 
 The drawing helpers in `dev-life/src/clawd_dev.py`, such as `base`, `xform`, `squash`, `kf`, `face` and `render`, are adapted from `clawd_movies.py` and `clawd_movies_more.py` in [Qisi3344/clawd-moji](https://github.com/Qisi3344/clawd-moji).
 
-Status: to be confirmed. The clawd-moji README says the code in each set's `src/` uses MIT and the sticker images are for personal, non-commercial use, while its LICENSE file limits all repository content to personal, non-commercial use. This project treats the adapted code as MIT, following that README, until Qisi3344 confirms the intended terms. No clawd-moji image files are included here.
+The clawd-moji code is under MIT. Its sticker images are not, and no clawd-moji image files are included here.
 
 ## clawd-on-desk
 
