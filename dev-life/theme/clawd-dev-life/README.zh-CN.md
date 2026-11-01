@@ -48,9 +48,9 @@
 | | <img src="assets/bug.apng" width="96"> | **抓虫**<br>Bug Hunt |
 | | <img src="assets/loop.apng" width="96"> | **死循环**<br>while(true) |
 | | <img src="assets/deadline.apng" width="96"> | **赶工**<br>Deadline |
-| 使用工具（2 个会话） | <img src="assets/team2.apng" width="96"> | **两人组**<br>Team of Two<br>两只小克并排工作：一只写代码，一只跑测试，测试失败时慌成一团。 |
+| 使用工具（2 个会话） | <img src="assets/team2.apng" width="96"> | **两人组**<br>Team of Two |
 | | <img src="assets/conflict.apng" width="96"> | **合并冲突**<br>Merge Conflict |
-| 使用工具（3 个及以上会话） | <img src="assets/team3.apng" width="96"> | **三人组**<br>Team of Three<br>第三只小克站到屏幕上，边喝咖啡边看另外两只干活。 |
+| 使用工具（3 个及以上会话） | <img src="assets/team3.apng" width="96"> | **三人组**<br>Team of Three |
 | 子代理运行中 | <img src="assets/subagents.apng" width="96"> | **子代理**<br>Subagents |
 | 压缩上下文 | <img src="assets/compact.apng" width="96"> | **上下文压缩**<br>/compact |
 | 创建 worktree | <img src="assets/clone.apng" width="96"> | **克隆**<br>git clone |

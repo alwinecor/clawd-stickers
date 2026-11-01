@@ -48,9 +48,9 @@ The theme has 47 animations. Where a moment lists several, one of them plays. Mo
 | | <img src="assets/bug.apng" width="96"> | **Bug Hunt** |
 | | <img src="assets/loop.apng" width="96"> | **while(true)** |
 | | <img src="assets/deadline.apng" width="96"> | **Deadline** |
-| Using tools, two sessions | <img src="assets/team2.apng" width="96"> | **Team of Two**<br>Two Clawds share the desk: one writes code, the other runs tests and panics when one fails. |
+| Using tools, two sessions | <img src="assets/team2.apng" width="96"> | **Team of Two** |
 | | <img src="assets/conflict.apng" width="96"> | **Merge Conflict** |
-| Using tools, three or more sessions | <img src="assets/team3.apng" width="96"> | **Team of Three**<br>A third Clawd joins them, standing on top of the screens and sipping coffee. |
+| Using tools, three or more sessions | <img src="assets/team3.apng" width="96"> | **Team of Three** |
 | A subagent is active | <img src="assets/subagents.apng" width="96"> | **Subagents** |
 | Compacting context | <img src="assets/compact.apng" width="96"> | **/compact** |
 | Creating a worktree | <img src="assets/clone.apng" width="96"> | **git clone** |
