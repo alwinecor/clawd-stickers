@@ -6,7 +6,7 @@
 
 当前收录 **40 个动态表情**，主题为「克码人生 · Dev Life」。
 
-另附浅色、深色两版 [clawd-on-desk 桌宠主题](#桌宠主题)，让 Clawd 成为桌宠，随 Claude Code 的工作状态切换动画。
+另附浅色、深色两版 [clawd-on-desk 桌宠主题](#桌宠主题)，已在应用的社区主题中上架，让 Clawd 成为桌宠，随 Claude Code 的工作状态切换动画。
 
 > [!NOTE]
 > 本项目为非官方粉丝创作，与 Anthropic 无关联，亦未获得其背书。代码和文档采用 [MIT 许可](LICENSE)，美术素材采用 [CC BY-NC-SA 4.0](LICENSE-ART)，不允许商用；Claude Code 吉祥物等第三方权利除外。详见[许可与使用范围](#许可与使用范围)。
@@ -30,7 +30,7 @@
 - **成品直接可用**：全部 GIF 均为 288×288 像素、透明背景、循环播放，可以直接下载使用，无需安装开发环境。
 - **浅色、深色背景各一套**：深色版调亮了文字与描边、压暗了地面阴影，适合深色模式聊天界面。
 - **可用代码重新生成**：生成脚本依赖 Pillow，无需额外下载字体文件，支持本地生成全部或指定表情。
-- **支持导入 clawd-on-desk 桌宠应用**：将原版表情包做成了适配 clawd-on-desk 的专门主题，可以手动导入自定义主题，替换官方原版。
+- **已上架 clawd-on-desk 社区主题**：将原版表情包做成了适配 clawd-on-desk 的专门主题，可以在应用中直接下载，也可以从本仓库手动安装。
 
 ## 表情预览
 
@@ -76,7 +76,9 @@
 
 ### 安装主题
 
-使用前需先安装 clawd-on-desk。仓库中已包含构建好的主题，下载后即可安装。
+**在应用中下载（推荐）**：在 clawd-on-desk 1.5.0 或更新版本中打开 **设置 → 主题**（Settings... → Theme），在「社区主题」中找到「克码人生」或「克码人生（深色）」，下载即可。
+
+**手动安装**：仓库中也包含构建好的主题，版本可能比应用中的更新。先安装 clawd-on-desk，再按以下步骤操作。
 
 | 适用桌面 | 主题文件夹 | 在应用中显示的名称 |
 |---|---|---|
@@ -176,9 +178,11 @@ python dev-life/theme/build.py --dark
 
 结果写入 [`dev-life/theme/`](dev-life/theme/) 下的 `clawd-dev-life/` 或 `clawd-dev-life-dark/`，会覆盖对应的配置和同名动画资源。`build.py` 里的 `THEME` 表是状态与动画的对应关系，`animations.py` 是与原版表情包不同、主题专用的逐帧动画，`svg.py` 是待机、走动和拖拽动画。
 
+运行 `python dev-life/theme/preview.py`（深色主题加 `--dark`），会在 [`dev-life/theme/previews/`](dev-life/theme/previews/) 生成 clawd-themes 目录里显示的 300×300 主题缩略图。每次发布新版本主题都需要附上它。
+
 ### 检查生成文件
 
-以下命令会在临时副本中重建全部表情和主题，并列出与源码不一致的已提交文件。它不会改动仓库，推送到 `main` 和提交 PR 时也会在 GitHub 上自动运行。
+以下命令会在临时副本中重建全部表情、主题和缩略图，并列出与源码不一致的已提交文件。它不会改动仓库，推送到 `main` 和提交 PR 时也会在 GitHub 上自动运行。
 
 ```bash
 python dev-life/check.py
@@ -198,7 +202,7 @@ clawd-stickers/
 └── dev-life/                  # 克码人生主题套装
     ├── README.md              # 英文表情包内容说明
     ├── README.zh-CN.md        # 中文表情包内容说明
-    ├── build_all.py           # 一键生成全部表情和主题
+    ├── build_all.py           # 一键生成全部表情、主题和缩略图
     ├── check.py               # 检查生成文件是否与源码一致
     ├── gif/                   # 40 个成品 GIF
     ├── gif-dark/              # 40 个成品 GIF（深色背景）
@@ -206,8 +210,10 @@ clawd-stickers/
     │   ├── clawd-dev-life/       # 浅色主题安装包
     │   ├── clawd-dev-life-dark/  # 深色主题安装包
     │   ├── package/           # 随主题分发的 LICENSE 和 README
+    │   ├── previews/          # 主题目录缩略图
     │   ├── build.py           # 主题生成脚本和状态对应表
     │   ├── animations.py      # 主题专用逐帧动画
+    │   ├── preview.py         # 主题目录缩略图生成脚本
     │   └── svg.py             # 主题专用 SVG 动画
     └── src/
         └── clawd_dev.py       # 表情绘图、动画与 GIF 导出脚本

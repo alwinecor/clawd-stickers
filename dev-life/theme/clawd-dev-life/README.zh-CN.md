@@ -11,7 +11,9 @@
 
 ## 安装
 
-把本文件夹复制到 clawd-on-desk 的主题目录，然后在 **Settings... → Theme** 中选择本主题。
+在 clawd-on-desk 1.5.0 或更新版本中，可以直接在 **设置 → 主题**（Settings... → Theme）的「社区主题」里下载本主题。
+
+如需手动安装，把本文件夹复制到 clawd-on-desk 的主题目录，然后在 **Settings... → Theme** 中选择本主题。
 
 | 系统 | 主题目录 |
 | --- | --- |
@@ -30,7 +32,7 @@
 - 不支持迷你模式。
 - 已关闭桌宠染色。
 - 无专属音效。
-- 已在 Windows 上的 clawd-on-desk 1.5.0 测试，macOS 和 Linux 尚未测试。
+- 已在 Windows 和 macOS 上的 clawd-on-desk 1.5.0 测试，Linux 尚未测试。
 
 ## 全部动画
 

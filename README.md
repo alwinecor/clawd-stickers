@@ -6,7 +6,7 @@ A collection of pixel-art animated stickers starring **Clawd**, the Claude Code 
 
 The collection currently contains **40 animated stickers** with the theme **Dev Life · 克码人生**.
 
-Light and dark [clawd-on-desk themes](#desktop-pet-theme) are also included, bringing Clawd to your desktop with animations that follow Claude Code's working state.
+Light and dark [clawd-on-desk themes](#desktop-pet-theme) are also included and listed among the app's community themes, bringing Clawd to your desktop with animations that follow Claude Code's working state.
 
 > [!NOTE]
 > This is an unofficial fan project, unaffiliated with and not endorsed by Anthropic. Code and documentation are [MIT-licensed](LICENSE); artwork is [CC BY-NC-SA 4.0](LICENSE-ART), so commercial use is not permitted. Third-party rights, including the Claude Code mascot, are excluded. See [License and usage](#license-and-usage).
@@ -30,7 +30,7 @@ Light and dark [clawd-on-desk themes](#desktop-pet-theme) are also included, bri
 - **Ready-to-use GIFs**: every sticker is 288×288 with a transparent background and loops continuously. Download and use them directly, with no development environment needed.
 - **Light and dark sets**: the dark set brightens text and outlines and darkens ground shadows for dark-mode chats.
 - **Generated with code**: the Python script uses Pillow, with no extra fonts to download. Generate all stickers or selected ones locally.
-- **Import into clawd-on-desk**: the stickers have been adapted into a dedicated theme for clawd-on-desk. Import it manually as a custom theme to replace the built-in one.
+- **Available in clawd-on-desk**: the stickers have been adapted into a dedicated clawd-on-desk theme, listed among the app's community themes. Download it in the app, or install it manually from this repository.
 
 ## Sticker preview
 
@@ -76,7 +76,9 @@ The set is also packaged as the **Clawd Dev Life** theme for [clawd-on-desk](htt
 
 ### Install the theme
 
-Install clawd-on-desk first. Ready-to-install themes are included in this repository.
+**From the app (recommended)**: in clawd-on-desk 1.5.0 or later, open **Settings... → Theme**, find **Clawd Dev Life** or **Clawd Dev Life (Dark)** among the community themes, and download it.
+
+**Manually**: ready-to-install themes are also included in this repository, which may be ahead of the version in the app. Install clawd-on-desk first, then follow the steps below.
 
 | Desktop background | Theme folder | Name shown in the app |
 |---|---|---|
@@ -176,9 +178,11 @@ python dev-life/theme/build.py --dark
 
 Output is written to `clawd-dev-life/` or `clawd-dev-life-dark/` under [`dev-life/theme/`](dev-life/theme/), replacing the corresponding configuration and animation assets with the same names. The `THEME` table in `build.py` maps states to animations, `animations.py` holds theme-specific frame animations that differ from the original stickers, and `svg.py` holds the idle, walking and dragging animations.
 
+`python dev-life/theme/preview.py`, or with `--dark`, draws the 300×300 thumbnail that the clawd-themes catalog shows for the theme into [`dev-life/theme/previews/`](dev-life/theme/previews/). Each new theme version needs one.
+
 ### Check generated files
 
-This command rebuilds all stickers and themes in a temporary copy, then lists any committed files that no longer match their source. It changes nothing in the repository and also runs automatically on GitHub for pushes to `main` and for pull requests.
+This command rebuilds all stickers, themes and thumbnails in a temporary copy, then lists any committed files that no longer match their source. It changes nothing in the repository and also runs automatically on GitHub for pushes to `main` and for pull requests.
 
 ```bash
 python dev-life/check.py
@@ -198,7 +202,7 @@ clawd-stickers/
 └── dev-life/                  # Dev Life sticker set
     ├── README.md              # English sticker content guide
     ├── README.zh-CN.md        # Chinese sticker content guide
-    ├── build_all.py           # Generate all stickers and themes
+    ├── build_all.py           # Generate all stickers, themes and thumbnails
     ├── check.py               # Check that generated files match their source
     ├── gif/                   # 40 finished GIFs
     ├── gif-dark/              # 40 finished GIFs (dark background)
@@ -206,8 +210,10 @@ clawd-stickers/
     │   ├── clawd-dev-life/       # Light theme package
     │   ├── clawd-dev-life-dark/  # Dark theme package
     │   ├── package/           # LICENSE and README shipped in each theme
+    │   ├── previews/          # Catalog thumbnails
     │   ├── build.py           # Theme generator and state mapping
     │   ├── animations.py      # Theme-only frame animations
+    │   ├── preview.py         # Catalog thumbnail generator
     │   └── svg.py             # Theme-only SVG animations
     └── src/
         └── clawd_dev.py       # Sticker drawing, animation and GIF export
