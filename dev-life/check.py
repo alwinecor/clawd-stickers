@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 # License: ../LICENSE
 """
-Rebuilds every sticker and theme in a temporary copy of this folder and compares the result with the
+Rebuilds every sticker, theme and thumbnail in a temporary copy of this folder and compares the result with the
 committed files, so a source change that was never regenerated gets caught. Files here are only read.
 
   python dev-life/check.py
@@ -10,7 +10,7 @@ Compare with the Pillow version pinned in ../requirements.txt: another version c
 """
 import os, shutil, subprocess, sys, tempfile
 HERE=os.path.dirname(os.path.abspath(__file__))
-OUTPUTS=('gif','gif-dark','theme/clawd-dev-life','theme/clawd-dev-life-dark')
+OUTPUTS=('gif','gif-dark','theme/clawd-dev-life','theme/clawd-dev-life-dark','theme/previews')
 def read(path):
     data=open(path,'rb').read()
     return data.replace(b'\r\n',b'\n') if path.endswith(('.json','.svg','.md','LICENSE')) else data   # git may check out either
